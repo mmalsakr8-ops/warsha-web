@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ورشة ويب | أنشئ موقعك بنفسك</title>
+
+  <meta
+    name="description"
+    content="ورشة ويب - أنشئ موقعك بنفسك واختر بين مطعم وكافيه، موقع شخصي، أو متجر إلكتروني."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: #f7f9fc;
+      color: #172033;
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    /* Header */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e8ecf3;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 800;
+      color: #172033;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #172033;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 21px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: #647084;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #172033;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 11px 18px;
+      transition: 0.2s ease;
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      border: 1px solid #dce2eb;
+      color: #172033;
+    }
+
+    .btn-outline:hover {
+      background: #f5f7fa;
+    }
+
+    .btn-primary {
+      background: #172033;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: #0e1525;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 90px 0 70px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(88, 101, 242, 0.12), transparent 30%),
+        radial-gradient(circle at 10% 80%, rgba(38, 198, 218, 0.10), transparent 28%),
+        #ffffff;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #f0f3ff;
+      color: #4d5bd5;
+      padding: 7px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.2;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .hero h1 span {
+      color: #4d5bd5;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: auto;
+      color: #697386;
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions .btn {
+      padding: 14px 26px;
+      font-size: 15px;
+    }
+
+    .trial {
+      margin-top: 18px;
+      color: #687286;
+      font-size: 13px;
+    }
+
+    .trial strong {
+      color: #172033;
+    }
+
+    /* Types */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .section-heading h2 {
+      font-size: 32px;
+      margin-bottom: 9px;
+    }
+
+    .section-heading p {
+      color: #748095;
+    }
+
+    .types {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .type-card {
+      background: #ffffff;
+      border: 1px solid #e6eaf1;
+      border-radius: 22px;
+      padding: 30px 25px;
+      text-align: center;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .type-card:hover {
+      transform: translateY(-5px);
+      border-color: #cdd4e2;
+      box-shadow: 0 15px 35px rgba(24, 34, 54, 0.08);
+    }
+
+    .type-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 18px;
+      border-radius: 18px;
+      background: #f1f3f8;
+      display: grid;
+      place-items: center;
+      font-size: 32px;
+    }
+
+    .type-card h3 {
+      font-size: 21px;
+      margin-bottom: 9px;
+    }
+
+    .type-card p {
+      color: #727e91;
+      font-size: 14px;
+      min-height: 48px;
+    }
+
+    .choose {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #4d5bd5;
+    }
+
+    /* How */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .step {
+      background: #ffffff;
+      border: 1px solid #e7ebf1;
+      border-radius: 20px;
+      padding: 25px;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      background: #172033;
+      color: #ffffff;
+      border-radius: 50%;
+      font-weight: 800;
+      margin-bottom: 17px;
+    }
+
+    .step h3 {
+      margin-bottom: 7px;
+    }
+
+    .step p {
+      color: #737f91;
+      font-size: 14px;
+    }
+
+    /* Trial */
+    .trial-box {
+      background: #172033;
+      color: #ffffff;
+      border-radius: 28px;
+      padding: 48px 30px;
+      text-align: center;
+    }
+
+    .trial-box h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .trial-box p {
+      color: #c7ceda;
+      margin-bottom: 25px;
+    }
+
+    .trial-box .btn {
+      background: #ffffff;
+      color: #172033;
+      padding: 13px 25px;
+    }
+
+    /* Footer */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e8ecf2;
+      padding: 28px 0;
+      color: #758095;
+      font-size: 13px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Mobile */
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+      }
+
+      .types,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 65px 0 50px;
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-buttons .btn-outline {
+        display: none;
+      }
+
+      .nav {
+        min-height: 68px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .logo-icon {
+        width: 37px;
+        height: 37px;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container nav">
+
+      <a href="#" class="logo">
+        <span class="logo-icon">W</span>
+        <span>ورشة ويب</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home">الرئيسية</a>
+        <a href="#types">أنواع المواقع</a>
+        <a href="#how">كيف تعمل؟</a>
+        <a href="#trial">التجربة</a>
+      </nav>
+
+      <div class="nav-buttons">
+        <button class="btn btn-outline">تسجيل الدخول</button>
+        <button class="btn btn-primary" onclick="startBuilding()">
+          ابدأ الآن
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+
+  <main id="home">
+
+    <section class="hero">
+      <div class="container hero-content">
+
+        <div class="badge">
+          🚀 أنشئ موقعك بنفسك
+        </div>
+
+        <h1>
+          اعمل موقعك بنفسك
+          <br>
+          <span>في دقائق</span>
+        </h1>
+
+        <p>
+          اختار نوع موقعك، صممه بطريقتك، أضف المحتوى الخاص بك،
+          وانشره برابط خاص بك بدون الحاجة للبرمجة.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="startBuilding()">
+            ابدأ إنشاء موقعي
+          </button>
+
+          <a href="#types" class="btn btn-outline">
+            استكشف أنواع المواقع
+          </a>
+        </div>
+
+        <div class="trial">
+          🎁 ابدأ بـ <strong>3 شهور تجربة</strong> لموقعك
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="types">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>اختار نوع موقعك</h2>
+          <p>ابدأ من القالب المناسب لفكرتك</p>
+        </div>
+
+        <div class="types">
+
+          <div class="type-card" onclick="chooseType('restaurant')">
+            <div class="type-icon">🍽️</div>
+            <h3>مطعم / كافيه</h3>
+            <p>
+              اعمل موقع احترافي لمطعمك أو كافيهك
+              مع منيو قابلة للتعديل.
+            </p>
+            <span class="choose">ابدأ بهذا النوع ←</span>
+          </div>
+
+          <div class="type-card" onclick="chooseType('personal')">
+            <div class="type-icon">👤</div>
+            <h3>موقع شخصي</h3>
+            <p>
+              اعرض نفسك وأعمالك ومهاراتك وروابط التواصل
+              في موقع واحد.
+            </p>
+            <span class="choose">ابدأ بهذا النوع ←</span>
+          </div>
+
+          <div class="type-card" onclick="chooseType('store')">
+            <div class="type-icon">🛒</div>
+            <h3>متجر إلكتروني</h3>
+            <p>
+              اعرض منتجاتك وأنشئ متجرك الخاص
+              واستعد لاستقبال العملاء.
+            </p>
+            <span class="choose">ابدأ بهذا النوع ←</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="how">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>كيف تعمل ورشة ويب؟</h2>
+          <p>3 خطوات بسيطة وتكون جاهز للنشر</p>
+        </div>
+
+        <div class="steps">
+
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>اختار</h3>
+            <p>
+              اختار نوع الموقع المناسب لفكرتك.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>صمّم وعدّل</h3>
+            <p>
+              أضف بياناتك وصورك ومحتواك وعدّل موقعك
+              بالطريقة التي تناسبك.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>انشر</h3>
+            <p>
+              انشر موقعك واحصل على رابط خاص
+              يقدر أي شخص يدخل عليه مباشرة.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="trial">
+      <div class="container">
+
+        <div class="trial-box">
+
+          <h2>🎁 ابدأ بـ 3 شهور تجربة</h2>
+
+          <p>
+            أنشئ موقعك وجرب المنصة، وبعد انتهاء فترة التجربة
+            تقدر تختار الباقة المناسبة لك.
+          </p>
+
+          <button class="btn" onclick="startBuilding()">
+            ابدأ الآن
+          </button>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <div class="container footer-content">
+      <div>© 2026 ورشة ويب — Warsha Web</div>
+      <div>أنشئ موقعك. انشر فكرتك. 🚀</div>
+    </div>
+  </footer>
+
+
+  <script>
+    function startBuilding() {
+      alert("🚀 قريبًا هنبدأ إنشاء موقعك خطوة بخطوة!");
+    }
+
+    function chooseType(type) {
+      const names = {
+        restaurant: "مطعم / كافيه",
+        personal: "موقع شخصي",
+        store: "متجر إلكتروني"
+      };
+
+      alert(
+        "اخترت: " + names[type] +
+        "\\n\\nالخطوة القادمة: إنشاء حساب ثم بدء تصميم موقعك."
+      );
+    }
+  </script>
+
+</body>
+</html>
