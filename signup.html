@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>إنشاء حساب | ورشة ويب</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7ff, #eef2ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #172033;
+    }
+
+    .signup-container {
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 30px;
+      font-weight: 800;
+      color: #5b4bdb;
+    }
+
+    .logo span {
+      color: #172033;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 32px 26px;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #697386;
+      font-size: 14px;
+      margin-bottom: 25px;
+      line-height: 1.7;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d9deea;
+      border-radius: 12px;
+      outline: none;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+
+    input:focus {
+      border-color: #5b4bdb;
+      box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.10);
+    }
+
+    .signup-btn {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      background: #5b4bdb;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .signup-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .message.success {
+      display: block;
+      background: #eaf8ef;
+      color: #187a3d;
+    }
+
+    .message.error {
+      display: block;
+      background: #fff0f0;
+      color: #b42318;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #697386;
+    }
+
+    .login-link a {
+      color: #5b4bdb;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #697386;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 25px 18px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="signup-container">
+
+    <div class="logo">
+      ورشة <span>ويب</span>
+    </div>
+
+    <div class="card">
+
+      <h1>إنشاء حساب جديد</h1>
+
+      <p class="subtitle">
+        أنشئ حسابك وابدأ في بناء موقعك من ورشة ويب
+      </p>
+
+      <form id="signupForm">
+
+        <div class="field">
+          <label for="fullName">الاسم بالكامل</label>
+          <input
+            type="text"
+            id="fullName"
+            placeholder="اكتب اسمك بالكامل"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="phone">رقم الهاتف</label>
+          <input
+            type="tel"
+            id="phone"
+            placeholder="مثال: 01012345678"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="email">البريد الإلكتروني</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="example@email.com"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">كلمة المرور</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="اكتب كلمة المرور"
+            minlength="6"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">تأكيد كلمة المرور</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="أعد كتابة كلمة المرور"
+            minlength="6"
+            required
+          >
+        </div>
+
+        <button type="submit" class="signup-btn" id="signupBtn">
+          إنشاء الحساب
+        </button>
+
+        <div id="message" class="message"></div>
+
+      </form>
+
+      <div class="login-link">
+        لديك حساب بالفعل؟
+        <a href="login.html">تسجيل الدخول</a>
+      </div>
+
+      <a href="index.html" class="back">
+        ← العودة إلى الصفحة الرئيسية
+      </a>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL = "https://qupoxgclybgbetqxzzwf.supabase.co";
+
+    // هنحط مفتاح Supabase هنا في الخطوة التالية
+    const SUPABASE_PUBLISHABLE_KEY = "PUT_YOUR_PUBLISHABLE_KEY_HERE";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const form = document.getElementById("signupForm");
+    const signupBtn = document.getElementById("signupBtn");
+    const message = document.getElementById("message");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    form.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        showMessage("كلمتا المرور غير متطابقتين.", "error");
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage("كلمة المرور يجب أن تكون 6 أحرف على الأقل.", "error");
+        return;
+      }
+
+      signupBtn.disabled = true;
+      signupBtn.textContent = "جاري إنشاء الحساب...";
+
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: fullName,
+            phone: phone
+          }
+        }
+      });
+
+      signupBtn.disabled = false;
+      signupBtn.textContent = "إنشاء الحساب";
+
+      if (error) {
+        showMessage(error.message, "error");
+        return;
+      }
+
+      showMessage(
+        "تم إنشاء الحساب بنجاح. من فضلك راجع بريدك الإلكتروني لتأكيد الحساب.",
+        "success"
+      );
+
+      form.reset();
+
+    });
+
+  </script>
+
+</body>
+</html>
