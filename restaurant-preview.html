@@ -288,10 +288,6 @@
       color: #fff;
     }
 
-    /* =========================
-       QR
-    ========================= */
-
     .qr-section {
       margin: 0;
       padding: 38px 18px;
@@ -409,6 +405,18 @@
       font-weight: 700;
     }
 
+    .success-debug {
+      max-width: 750px;
+      margin: 15px auto;
+      padding: 12px;
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      font-size: 13px;
+      text-align: center;
+    }
+
     footer {
       text-align: center;
       padding: 25px;
@@ -417,7 +425,6 @@
     }
 
     @media (max-width: 700px) {
-
       .header-inner {
         align-items: stretch;
       }
@@ -451,7 +458,6 @@
         width: 215px;
         height: 215px;
       }
-
     }
   </style>
 </head>
@@ -472,17 +478,11 @@
 
       <div class="header-actions">
 
-        <button
-          class="btn btn-light"
-          onclick="goBack()"
-        >
+        <button class="btn btn-light" onclick="goBack()">
           ← رجوع
         </button>
 
-        <button
-          class="btn btn-primary"
-          onclick="editSite()"
-        >
+        <button class="btn btn-primary" onclick="editSite()">
           ✏️ تعديل الموقع
         </button>
 
@@ -513,10 +513,6 @@
 
   <script>
 
-    /* =========================
-       SUPABASE
-    ========================= */
-
     const SUPABASE_URL =
       "https://qupoxgclybgbetqxzzwf.supabase.co";
 
@@ -533,41 +529,60 @@
     let siteData = null;
     let publicMenuUrl = "";
     let currentSlug = "";
+    let currentMenuId = "";
 
 
     /* =========================
-       PUBLIC URL
+       URL
     ========================= */
 
     function buildPublicMenuUrl(slug) {
 
       if (!slug) return "";
 
-      const url =
-        new URL(
-          "menu.html",
-          window.location.origin + "/"
-        );
-
-      url.searchParams.set(
-        "slug",
-        slug
+      return (
+        window.location.origin +
+        "/menu.html?slug=" +
+        encodeURIComponent(slug)
       );
-
-      return url.href;
 
     }
 
 
     /* =========================
-       SAVE SLUG
+       SLUG
     ========================= */
+
+    function createSlug(name) {
+
+      const base =
+        String(name || "menu")
+          .trim()
+          .toLowerCase()
+          .replace(/[^\u0600-\u06FFa-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .slice(0, 40);
+
+      const random =
+        Math.random()
+          .toString(36)
+          .substring(2, 8);
+
+      return (
+        (base || "menu") +
+        "-" +
+        random
+      );
+
+    }
+
 
     function saveSlug(slug) {
 
       if (!slug) return;
 
-      currentSlug = String(slug);
+      currentSlug =
+        String(slug);
 
       publicMenuUrl =
         buildPublicMenuUrl(
@@ -587,19 +602,15 @@
     }
 
 
-    /* =========================
-       GET LOCAL SLUG
-    ========================= */
-
     function getLocalSlug() {
 
-      let slug =
+      const savedSlug =
         localStorage.getItem(
           "warsha_restaurant_menu_slug"
         ) || "";
 
-      if (slug) {
-        return slug;
+      if (savedSlug) {
+        return savedSlug;
       }
 
 
@@ -609,38 +620,29 @@
         ) || "";
 
 
-      if (savedUrl) {
-
-        try {
-
-          const url =
-            new URL(
-              savedUrl,
-              window.location.origin
-            );
-
-          slug =
-            url.searchParams.get(
-              "slug"
-            ) || "";
-
-          if (slug) {
-            return slug;
-          }
-
-        } catch (error) {
-
-          console.error(
-            "SAVED URL ERROR:",
-            error
-          );
-
-        }
-
+      if (!savedUrl) {
+        return "";
       }
 
 
-      return "";
+      try {
+
+        const url =
+          new URL(
+            savedUrl,
+            window.location.origin
+          );
+
+        return (
+          url.searchParams.get("slug") ||
+          ""
+        );
+
+      } catch (error) {
+
+        return "";
+
+      }
 
     }
 
@@ -662,7 +664,7 @@
 
 
     /* =========================
-       LOAD LOCAL DATA
+       LOCAL DATA
     ========================= */
 
     function loadLocalData() {
@@ -673,7 +675,6 @@
           localStorage.getItem(
             "warsha_restaurant_site"
           );
-
 
         if (raw) {
 
@@ -692,39 +693,22 @@
       }
 
 
-      /*
-       أول مصدر للـslug:
-       localStorage
-      */
-
-      let slug =
+      const localSlug =
         getLocalSlug();
 
 
-      /*
-       ثاني مصدر:
-       siteData.public_slug
-      */
+      if (localSlug) {
 
-      if (
-        !slug &&
+        saveSlug(localSlug);
+
+      } else if (
         siteData &&
         siteData.public_slug
       ) {
 
-        slug =
-          siteData.public_slug;
-
-      }
-
-
-      /*
-       لو وجدنا slug نحفظه فورًا
-      */
-
-      if (slug) {
-
-        saveSlug(slug);
+        saveSlug(
+          siteData.public_slug
+        );
 
       }
 
@@ -735,7 +719,75 @@
 
 
     /* =========================
-       LOAD DATABASE
+       SAVE SLUG TO DATABASE
+       ========================= */
+
+    async function saveSlugToDatabase(
+      menuId,
+      slug,
+      menuData
+    ) {
+
+      if (!menuId || !slug) {
+        return false;
+      }
+
+
+      try {
+
+        const newMenuData = {
+          ...(menuData || {}),
+          public_slug: slug,
+          public_menu_url:
+            buildPublicMenuUrl(slug)
+        };
+
+
+        const result =
+          await supabaseClient
+            .from("restaurant_menus")
+            .update({
+              public_slug: slug,
+              menu_data: newMenuData,
+              updated_at:
+                new Date().toISOString()
+            })
+            .eq(
+              "id",
+              menuId
+            );
+
+
+        if (result.error) {
+
+          console.error(
+            "SAVE SLUG DATABASE ERROR:",
+            result.error
+          );
+
+          return false;
+
+        }
+
+
+        return true;
+
+      } catch (error) {
+
+        console.error(
+          "SAVE SLUG EXCEPTION:",
+          error
+        );
+
+        return false;
+
+      }
+
+    }
+
+
+    /* =========================
+       DATABASE
     ========================= */
 
     async function refreshFromDatabase() {
@@ -775,9 +827,7 @@
         let menu = null;
 
 
-        /* =========================
-           1 — البحث بالـID
-        ========================= */
+        /* 1 — ID */
 
         if (savedId) {
 
@@ -785,7 +835,7 @@
             await supabaseClient
               .from("restaurant_menus")
               .select(
-                "id, menu_name, business_type, menu_data, public_slug"
+                "id, menu_name, business_type, menu_data, public_slug, updated_at"
               )
               .eq(
                 "id",
@@ -806,21 +856,12 @@
             menu =
               result.data;
 
-          } else if (result.error) {
-
-            console.error(
-              "DATABASE ID ERROR:",
-              result.error
-            );
-
           }
 
         }
 
 
-        /* =========================
-           2 — البحث بالـSLUG
-        ========================= */
+        /* 2 — SLUG */
 
         if (
           !menu &&
@@ -831,7 +872,7 @@
             await supabaseClient
               .from("restaurant_menus")
               .select(
-                "id, menu_name, business_type, menu_data, public_slug"
+                "id, menu_name, business_type, menu_data, public_slug, updated_at"
               )
               .eq(
                 "public_slug",
@@ -852,21 +893,12 @@
             menu =
               result.data;
 
-          } else if (result.error) {
-
-            console.error(
-              "DATABASE SLUG ERROR:",
-              result.error
-            );
-
           }
 
         }
 
 
-        /* =========================
-           3 — البحث عن آخر منيو
-        ========================= */
+        /* 3 — آخر منيو للمستخدم */
 
         if (!menu) {
 
@@ -895,45 +927,8 @@
             result.data
           ) {
 
-            const candidate =
+            menu =
               result.data;
-
-
-            /*
-             نستخدم السجل لو كان
-             نفس المطعم الحالي،
-             أو لو لم تكن هناك بيانات محلية.
-            */
-
-            const candidateData =
-              candidate.menu_data;
-
-
-            const sameBusiness =
-              siteData &&
-              candidateData &&
-              candidateData.businessName &&
-              siteData.businessName &&
-              candidateData.businessName ===
-              siteData.businessName;
-
-
-            if (
-              sameBusiness ||
-              !siteData
-            ) {
-
-              menu =
-                candidate;
-
-            }
-
-          } else if (result.error) {
-
-            console.error(
-              "DATABASE LAST MENU ERROR:",
-              result.error
-            );
 
           }
 
@@ -951,22 +946,23 @@
         }
 
 
-        /* =========================
-           حفظ ID
-        ========================= */
+        currentMenuId =
+          String(menu.id);
+
 
         localStorage.setItem(
           "warsha_restaurant_menu_id",
-          String(menu.id)
+          currentMenuId
         );
 
 
         /* =========================
-           حفظ SLUG
+           استخراج الـSLUG
         ========================= */
 
         let dbSlug =
-          menu.public_slug || "";
+          menu.public_slug ||
+          "";
 
 
         if (
@@ -981,11 +977,46 @@
         }
 
 
-        if (dbSlug) {
+        /*
+         لو مفيش slug نهائيًا:
+         ننشئ واحد مرة واحدة
+        */
 
-          saveSlug(dbSlug);
+        if (!dbSlug) {
+
+          dbSlug =
+            createSlug(
+              menu.menu_name ||
+              (
+                menu.menu_data &&
+                menu.menu_data.businessName
+              ) ||
+              "menu"
+            );
+
+
+          const saved =
+            await saveSlugToDatabase(
+              menu.id,
+              dbSlug,
+              menu.menu_data
+            );
+
+
+          if (!saved) {
+
+            console.warn(
+              "Slug generated locally but could not be saved to database."
+            );
+
+          }
 
         }
+
+
+        saveSlug(
+          dbSlug
+        );
 
 
         /* =========================
@@ -998,30 +1029,14 @@
         ) {
 
           siteData = {
-            ...menu.menu_data
+            ...menu.menu_data,
+            public_slug:
+              dbSlug,
+            public_menu_url:
+              buildPublicMenuUrl(
+                dbSlug
+              )
           };
-
-
-          siteData.public_slug =
-            dbSlug ||
-            siteData.public_slug ||
-            currentSlug ||
-            "";
-
-
-          if (
-            siteData.public_slug
-          ) {
-
-            saveSlug(
-              siteData.public_slug
-            );
-
-          }
-
-
-          siteData.public_menu_url =
-            publicMenuUrl;
 
 
           localStorage.setItem(
@@ -1044,7 +1059,7 @@
 
 
     /* =========================
-       QR IMAGE URL
+       QR
     ========================= */
 
     function getQRImageUrl(url) {
@@ -1089,24 +1104,16 @@
       }
 
 
-      /*
-       محاولة أخيرة للحصول على الـslug
-       قبل الرسم
-      */
-
-      if (!currentSlug) {
-
-        const slug =
-          getLocalSlug() ||
-          siteData.public_slug ||
-          "";
+      const slug =
+        currentSlug ||
+        getLocalSlug() ||
+        siteData.public_slug ||
+        "";
 
 
-        if (slug) {
+      if (slug) {
 
-          saveSlug(slug);
-
-        }
+        saveSlug(slug);
 
       }
 
@@ -1177,10 +1184,6 @@
       );
 
 
-      /* =========================
-         QR SECTION
-      ========================= */
-
       let qrSection = "";
 
 
@@ -1204,7 +1207,6 @@
               امسح الباركود بالموبايل لفتح المنيو مباشرة
             </p>
 
-
             <div class="qr-box">
 
               <img
@@ -1216,13 +1218,11 @@
 
             </div>
 
-
             <div class="public-url-box">
 
               <div class="public-url-label">
                 🔗 رابط المنيو العام
               </div>
-
 
               <a
                 class="public-url"
@@ -1233,7 +1233,6 @@
                 ${escapeHtml(publicMenuUrl)}
               </a>
 
-
               <div class="qr-actions">
 
                 <button
@@ -1243,7 +1242,6 @@
                   📋 نسخ الرابط
                 </button>
 
-
                 <a
                   class="btn open-btn"
                   href="${escapeHtml(publicMenuUrl)}"
@@ -1252,7 +1250,6 @@
                 >
                   🔗 فتح المنيو
                 </a>
-
 
                 <a
                   class="btn download-btn"
@@ -1264,7 +1261,6 @@
                 </a>
 
               </div>
-
 
               <div class="stable-note">
                 🔒 هذا الرابط والباركود ثابتان حتى بعد تعديل المنيو.
@@ -1290,7 +1286,7 @@
               color:#b91c1c;
               font-weight:700;
             ">
-              لم يتم العثور على رابط المنيو.
+              لم يتم إنشاء رابط المنيو حتى الآن.
             </p>
 
             <div style="
@@ -1298,10 +1294,7 @@
               color:#6b7280;
               line-height:1.9;
             ">
-              سيتم إنشاء الرابط تلقائيًا عند حفظ الموقع.
-              <br>
-              إذا كنت قد حفظت الموقع بالفعل، اضغط "تعديل الموقع"
-              ثم "حفظ الموقع" مرة واحدة.
+              جاري محاولة إنشاء الرابط تلقائيًا.
             </div>
 
           </section>
@@ -1310,10 +1303,6 @@
 
       }
 
-
-      /* =========================
-         SITE
-      ========================= */
 
       container.innerHTML = `
 
@@ -1359,7 +1348,6 @@
               )}
             </div>
 
-
             ${
               siteData.workingHours
               ? `
@@ -1395,7 +1383,6 @@
             <h3>
               📍 تواصل معنا
             </h3>
-
 
             <div class="contact-grid">
 
@@ -1552,7 +1539,7 @@
 
 
     /* =========================
-       COPY URL
+       COPY
     ========================= */
 
     async function copyPublicUrl() {
@@ -1562,23 +1549,9 @@
 
       try {
 
-        if (
-          navigator.clipboard &&
-          navigator.clipboard.writeText
-        ) {
-
-          await navigator.clipboard.writeText(
-            publicMenuUrl
-          );
-
-        } else {
-
-          throw new Error(
-            "Clipboard unavailable"
-          );
-
-        }
-
+        await navigator.clipboard.writeText(
+          publicMenuUrl
+        );
 
         alert(
           "✅ تم نسخ رابط المنيو"
@@ -1591,31 +1564,21 @@
             "input"
           );
 
-
         input.value =
           publicMenuUrl;
-
 
         document.body.appendChild(
           input
         );
 
-
         input.focus();
         input.select();
 
-
-        try {
-
-          document.execCommand(
-            "copy"
-          );
-
-        } catch (e) {}
-
+        document.execCommand(
+          "copy"
+        );
 
         input.remove();
-
 
         alert(
           "✅ تم نسخ رابط المنيو"
@@ -1656,41 +1619,8 @@
 
     async function init() {
 
-      /*
-       1 — تحميل البيانات المحلية
-      */
-
       loadLocalData();
 
-
-      /*
-       2 — لو عندنا slug محلي
-       نجهز الرابط فورًا
-      */
-
-      if (!currentSlug) {
-
-        const slug =
-          getLocalSlug() ||
-          (
-            siteData &&
-            siteData.public_slug
-          ) ||
-          "";
-
-
-        if (slug) {
-
-          saveSlug(slug);
-
-        }
-
-      }
-
-
-      /*
-       3 — عرض الصفحة فورًا
-      */
 
       if (siteData) {
 
@@ -1707,16 +1637,8 @@
           : "block";
 
 
-      /*
-       4 — تحديث من Supabase
-      */
-
       await refreshFromDatabase();
 
-
-      /*
-       5 — إعادة الرسم بعد التحديث
-      */
 
       renderSite();
 
