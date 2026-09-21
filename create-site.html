@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -139,6 +140,12 @@
       line-height: 1.7;
     }
 
+    .loading {
+      text-align: center;
+      padding: 50px 20px;
+      color: #697386;
+    }
+
     @media (max-width: 750px) {
       .sites-grid {
         grid-template-columns: 1fr;
@@ -153,93 +160,98 @@
       }
     }
   </style>
+
 </head>
 
 <body>
 
   <header class="topbar">
 
-    <div class="logo">
-      ورشة <span>ويب</span>
-    </div>
+```
+<div class="logo">
+  ورشة <span>ويب</span>
+</div>
 
-    <a href="dashboard.html" class="back">
-      ← لوحة التحكم
-    </a>
+<a href="dashboard.html" class="back">
+  ← لوحة التحكم
+</a>
+```
 
   </header>
 
   <main class="container">
 
-    <section class="header">
+```
+<section class="header">
 
-      <div class="icon">🌐</div>
+  <div class="icon">🌐</div>
 
-      <h1>عايز تعمل موقع إيه؟</h1>
+  <h1>عايز تعمل موقع إيه؟</h1>
 
-      <p>
-        اختار نوع الموقع اللي يناسب فكرتك، وبعدها هنبدأ معاك
-        خطوة بخطوة في تجهيز الموقع.
-      </p>
+  <p>
+    اختار نوع الموقع اللي يناسب فكرتك، وبعدها هنبدأ معاك
+    خطوة بخطوة في تجهيز الموقع.
+  </p>
 
-    </section>
+</section>
 
-    <section class="sites-grid">
+<section class="sites-grid">
 
-      <div class="site-card" onclick="chooseSite('restaurant')">
+  <div class="site-card" onclick="chooseSite('restaurant')">
 
-        <div class="emoji">🍽️</div>
+    <div class="emoji">🍽️</div>
 
-        <h2>مطعم / كافيه</h2>
+    <h2>مطعم / كافيه</h2>
 
-        <p>
-          موقع للمطاعم والكافيهات مع قائمة طعام قابلة للتعديل.
-        </p>
+    <p>
+      موقع للمطاعم والكافيهات مع قائمة طعام قابلة للتعديل.
+    </p>
 
-        <button class="choose-btn">
-          اختيار النوع
-        </button>
+    <button class="choose-btn">
+      اختيار النوع
+    </button>
 
-      </div>
+  </div>
 
-      <div class="site-card" onclick="chooseSite('store')">
+  <div class="site-card" onclick="chooseSite('store')">
 
-        <div class="emoji">🛍️</div>
+    <div class="emoji">🛍️</div>
 
-        <h2>متجر إلكتروني</h2>
+    <h2>متجر إلكتروني</h2>
 
-        <p>
-          اعرض منتجاتك وخلي العملاء يشوفوا التفاصيل والأسعار.
-        </p>
+    <p>
+      اعرض منتجاتك وخلي العملاء يشوفوا التفاصيل والأسعار.
+    </p>
 
-        <button class="choose-btn">
-          اختيار النوع
-        </button>
+    <button class="choose-btn">
+      اختيار النوع
+    </button>
 
-      </div>
+  </div>
 
-      <div class="site-card" onclick="chooseSite('personal')">
+  <div class="site-card" onclick="chooseSite('personal')">
 
-        <div class="emoji">👤</div>
+    <div class="emoji">👤</div>
 
-        <h2>موقع شخصي</h2>
+    <h2>موقع شخصي</h2>
 
-        <p>
-          موقع شخصي لعرض أعمالك وخدماتك ومعلومات التواصل.
-        </p>
+    <p>
+      موقع شخصي لعرض أعمالك وخدماتك ومعلومات التواصل.
+    </p>
 
-        <button class="choose-btn">
-          اختيار النوع
-        </button>
+    <button class="choose-btn">
+      اختيار النوع
+    </button>
 
-      </div>
+  </div>
 
-    </section>
+</section>
 
-    <div class="note">
-      💡 تقدر بعدين تضيف أنواع مواقع جديدة، وهنخلي النظام قابل
-      للتطوير وإضافة قوالب وتصميمات مختلفة.
-    </div>
+<div class="note">
+  💡 تقدر بعدين تضيف أنواع مواقع جديدة، وهنخلي النظام قابل
+  للتطوير وإضافة قوالب وتصميمات مختلفة.
+</div>
+```
 
   </main>
 
@@ -260,13 +272,41 @@
 
     async function checkLogin() {
 
-      const {
-        data: { user }
-      } = await supabaseClient.auth.getUser();
+      try {
 
-      if (!user) {
-        window.location.href = "login.html";
-        return;
+        const {
+          data: { session },
+          error
+        } = await supabaseClient.auth.getSession();
+
+        if (error) {
+
+          console.error("Session error:", error);
+
+          alert("حصل خطأ في التحقق من تسجيل الدخول.");
+
+          return;
+        }
+
+        if (!session) {
+
+          window.location.href = "login.html";
+
+          return;
+        }
+
+        console.log(
+          "المستخدم مسجل دخول:",
+          session.user.email
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Login check error:",
+          error
+        );
+
       }
 
     }
@@ -275,21 +315,31 @@
 
       if (type === "restaurant") {
 
-        window.location.href = "restaurant-setup.html";
-        return;
+        window.location.href =
+          "restaurant-setup.html";
 
+        return;
       }
 
-      const siteNames = {
-        store: "متجر إلكتروني",
-        personal: "موقع شخصي"
-      };
+      if (type === "store") {
 
-      alert(
-        "اختارت: " +
-        siteNames[type] +
-        "\n\nالخطوة القادمة هنبدأ إعداد موقعك."
-      );
+        alert(
+          "اختارت: متجر إلكتروني\n\n" +
+          "هنبدأ إعداده في الخطوة القادمة."
+        );
+
+        return;
+      }
+
+      if (type === "personal") {
+
+        alert(
+          "اختارت: موقع شخصي\n\n" +
+          "هنبدأ إعداده في الخطوة القادمة."
+        );
+
+        return;
+      }
 
     }
 
