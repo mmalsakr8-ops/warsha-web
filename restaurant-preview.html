@@ -19,29 +19,29 @@
     body {
       margin: 0;
       font-family: "Cairo", sans-serif;
-      background: #f4f5f7;
-      color: #1f2937;
+      background: #f5f5f5;
+      color: #222;
     }
 
     .topbar {
       background: #111827;
       color: white;
-      padding: 12px 20px;
+      padding: 12px 18px;
       text-align: center;
       font-size: 14px;
     }
 
     .preview-bar {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 12px 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 50;
+      background: white;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
     }
 
     .preview-title {
@@ -58,32 +58,34 @@
       cursor: pointer;
     }
 
-    .edit-btn {
-      border: 0;
-      background: #f97316;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 9px;
-      font-weight: 700;
-    }
-
     .back-btn {
       border: 0;
       background: #f3f4f6;
       color: #374151;
-      padding: 10px 16px;
+      padding: 9px 15px;
       border-radius: 9px;
       font-weight: 600;
+    }
+
+    .edit-btn {
+      border: 0;
+      background: #f97316;
+      color: white;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font-weight: 700;
     }
 
     .site {
       min-height: calc(100vh - 100px);
     }
 
+    /* الهيدر */
+
     .hero {
-      padding: 70px 20px;
-      text-align: center;
       color: white;
+      text-align: center;
+      padding: 75px 20px;
     }
 
     .hero.modern {
@@ -99,39 +101,43 @@
     }
 
     .hero h1 {
+      margin: 0 0 12px;
       font-size: 42px;
-      margin: 0 0 10px;
       font-weight: 800;
     }
 
     .hero p {
-      max-width: 650px;
+      max-width: 700px;
       margin: auto;
+      line-height: 2;
       color: #e5e7eb;
-      line-height: 1.9;
     }
 
-    .info {
+    .hero-info {
+      margin-top: 25px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 25px;
     }
 
-    .info span {
+    .hero-info span {
       background: rgba(255,255,255,.12);
-      padding: 8px 14px;
+      padding: 8px 15px;
       border-radius: 30px;
       font-size: 14px;
     }
+
+    /* المحتوى */
 
     .content {
       width: min(950px, 92%);
       margin: 35px auto 60px;
     }
 
-    .section {
+    /* قسم المنيو */
+
+    .menu-category {
       background: white;
       border-radius: 18px;
       padding: 25px;
@@ -139,20 +145,23 @@
       box-shadow: 0 7px 25px rgba(0,0,0,.05);
     }
 
-    .section h2 {
-      margin: 0 0 20px;
-      font-size: 23px;
+    .category-title {
+      margin: 0 0 12px;
+      padding-bottom: 12px;
       border-bottom: 2px solid #f97316;
-      padding-bottom: 10px;
+      font-size: 24px;
+      font-weight: 800;
     }
+
+    /* الصنف */
 
     .menu-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding: 17px 0;
-      border-bottom: 1px solid #eee;
+      padding: 17px 3px;
+      border-bottom: 1px solid #eeeeee;
     }
 
     .menu-item:last-child {
@@ -160,14 +169,28 @@
     }
 
     .item-name {
-      font-weight: 700;
       font-size: 17px;
+      font-weight: 700;
     }
 
     .item-price {
-      font-weight: 800;
       color: #f97316;
+      font-weight: 800;
       white-space: nowrap;
+    }
+
+    /* التواصل */
+
+    .contact-section {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 7px 25px rgba(0,0,0,.05);
+    }
+
+    .contact-section h2 {
+      margin-top: 0;
+      font-size: 23px;
     }
 
     .contact-grid {
@@ -178,14 +201,14 @@
 
     .contact-box {
       background: #f9fafb;
-      border-radius: 12px;
+      border-radius: 13px;
       padding: 18px;
       text-align: center;
     }
 
     .contact-icon {
       font-size: 28px;
-      margin-bottom: 5px;
+      margin-bottom: 7px;
     }
 
     .contact-box strong {
@@ -199,36 +222,37 @@
       word-break: break-word;
     }
 
+    /* أزرار التواصل */
+
     .actions {
       text-align: center;
       margin: 30px 0;
     }
 
-    .main-action {
+    .call-btn,
+    .whatsapp-btn {
       border: 0;
-      background: #f97316;
       color: white;
-      padding: 14px 28px;
+      padding: 13px 27px;
       border-radius: 11px;
       font-size: 16px;
       font-weight: 800;
       margin: 5px;
     }
 
-    .secondary-action {
-      border: 0;
+    .call-btn {
       background: #111827;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 11px;
-      font-size: 16px;
-      font-weight: 700;
-      margin: 5px;
     }
+
+    .whatsapp-btn {
+      background: #16a34a;
+    }
+
+    /* لو مفيش بيانات */
 
     .empty {
       text-align: center;
-      padding: 60px 20px;
+      padding: 80px 20px;
     }
 
     .empty h2 {
@@ -236,12 +260,11 @@
     }
 
     .empty button {
-      border: 0;
       background: #f97316;
+      border: 0;
       color: white;
       padding: 13px 25px;
       border-radius: 10px;
-      font-family: inherit;
       font-weight: 700;
     }
 
@@ -258,6 +281,7 @@
     }
 
     @media (max-width: 700px) {
+
       .preview-bar {
         flex-direction: column;
       }
@@ -271,7 +295,7 @@
       }
 
       .hero {
-        padding: 50px 18px;
+        padding: 55px 18px;
       }
 
       .hero h1 {
@@ -282,8 +306,13 @@
         grid-template-columns: 1fr;
       }
 
-      .section {
+      .menu-category,
+      .contact-section {
         padding: 19px;
+      }
+
+      .menu-item {
+        padding: 15px 0;
       }
     }
   </style>
@@ -292,23 +321,31 @@
 <body>
 
   <div class="topbar">
-    👀 أنت الآن تشاهد معاينة موقعك
+    👀 معاينة موقع المطعم — ورشة ويب
   </div>
 
   <div class="preview-bar">
 
     <div class="preview-title">
-      🛠️ ورشة ويب — معاينة الموقع
+      🛠️ معاينة موقعك
     </div>
 
     <div class="preview-actions">
-      <button class="back-btn" onclick="goBack()">
+
+      <button
+        class="back-btn"
+        onclick="goBack()"
+      >
         ← رجوع
       </button>
 
-      <button class="edit-btn" onclick="editSite()">
+      <button
+        class="edit-btn"
+        onclick="editSite()"
+      >
         ✏️ تعديل الموقع
       </button>
+
     </div>
 
   </div>
@@ -319,14 +356,20 @@
     تم إنشاء الموقع بواسطة <strong>ورشة ويب</strong>
   </footer>
 
+
   <script>
 
     let siteData = null;
 
+
+    /* تحميل البيانات */
+
     function loadSite() {
 
       const saved =
-        localStorage.getItem("warsha_restaurant_site");
+        localStorage.getItem(
+          "warsha_restaurant_site"
+        );
 
       if (!saved) {
         showEmpty();
@@ -334,23 +377,32 @@
       }
 
       try {
-        siteData = JSON.parse(saved);
+
+        siteData =
+          JSON.parse(saved);
+
         renderSite();
+
       } catch (error) {
+
         showEmpty();
+
       }
     }
+
+
+    /* بناء الموقع */
 
     function renderSite() {
 
       const site =
         document.getElementById("site");
 
-      const design =
-        siteData.design || "modern";
-
       const businessName =
-        escapeHTML(siteData.business_name || "مطعمي");
+        escapeHTML(
+          siteData.business_name ||
+          "مطعمي"
+        );
 
       const description =
         escapeHTML(
@@ -359,10 +411,16 @@
         );
 
       const phone =
-        escapeHTML(siteData.phone || "غير مضاف");
+        escapeHTML(
+          siteData.phone ||
+          "غير مضاف"
+        );
 
       const address =
-        escapeHTML(siteData.address || "غير مضاف");
+        escapeHTML(
+          siteData.address ||
+          "غير مضاف"
+        );
 
       const hours =
         escapeHTML(
@@ -370,41 +428,103 @@
           "غير مضافة"
         );
 
-      const category =
-        escapeHTML(
-          siteData.menu_category ||
-          "المنيو"
-        );
+      const design =
+        siteData.design ||
+        "modern";
 
-      const items =
-        Array.isArray(siteData.menu_items)
-          ? siteData.menu_items
-          : [];
 
-      let menuHTML = "";
+      /*
+        بناء جميع أقسام المنيو
+      */
 
-      items.forEach(item => {
+      let categoriesHTML = "";
 
-        const name =
-          escapeHTML(item.name || "صنف");
 
-        const price =
-          escapeHTML(item.price || "");
+      if (
+        Array.isArray(siteData.categories) &&
+        siteData.categories.length
+      ) {
 
-        menuHTML += `
-          <div class="menu-item">
+        siteData.categories.forEach(category => {
 
-            <div class="item-name">
-              ${name}
-            </div>
+          const categoryName =
+            escapeHTML(
+              category.name ||
+              "قسم المنيو"
+            );
 
-            <div class="item-price">
-              ${price ? price + " جنيه" : ""}
-            </div>
+          let itemsHTML = "";
 
-          </div>
-        `;
-      });
+
+          if (
+            Array.isArray(category.items)
+          ) {
+
+            category.items.forEach(item => {
+
+              const itemName =
+                escapeHTML(
+                  item.name ||
+                  "صنف"
+                );
+
+              const itemPrice =
+                escapeHTML(
+                  item.price ||
+                  ""
+                );
+
+
+              itemsHTML += `
+
+                <div class="menu-item">
+
+                  <div class="item-name">
+                    ${itemName}
+                  </div>
+
+                  <div class="item-price">
+                    ${
+                      itemPrice
+                        ? itemPrice + " جنيه"
+                        : ""
+                    }
+                  </div>
+
+                </div>
+
+              `;
+
+            });
+
+          }
+
+
+          categoriesHTML += `
+
+            <section class="menu-category">
+
+              <h2 class="category-title">
+                ${categoryName}
+              </h2>
+
+              ${
+                itemsHTML ||
+                `
+                  <p>
+                    لا توجد أصناف مضافة لهذا القسم.
+                  </p>
+                `
+              }
+
+            </section>
+
+          `;
+
+        });
+
+      }
+
 
       site.innerHTML = `
 
@@ -418,10 +538,12 @@
             ${description}
           </p>
 
-          <div class="info">
+          <div class="hero-info">
 
             <span>
-              🍽️ ${getBusinessType(siteData.business_type)}
+              🍽️ ${getBusinessType(
+                siteData.business_type
+              )}
             </span>
 
             <span>
@@ -432,25 +554,20 @@
 
         </section>
 
+
         <div class="content">
 
-          <section class="section">
+          ${categoriesHTML}
 
-            <h2>
-              📋 ${category}
-            </h2>
 
-            ${menuHTML}
-
-          </section>
-
-          <section class="section">
+          <section class="contact-section">
 
             <h2>
               📍 تواصل معنا
             </h2>
 
             <div class="contact-grid">
+
 
               <div class="contact-box">
 
@@ -468,6 +585,7 @@
 
               </div>
 
+
               <div class="contact-box">
 
                 <div class="contact-icon">
@@ -483,6 +601,7 @@
                 </div>
 
               </div>
+
 
               <div class="contact-box">
 
@@ -500,70 +619,127 @@
 
               </div>
 
+
             </div>
 
           </section>
+
 
           <div class="actions">
 
             ${
               siteData.phone
-              ? `
-                <button
-                  class="main-action"
-                  onclick="callBusiness()"
-                >
-                  📞 اتصل بنا
-                </button>
-              `
-              : ""
+                ? `
+                  <button
+                    class="call-btn"
+                    onclick="callBusiness()"
+                  >
+                    📞 اتصل بنا
+                  </button>
+                `
+                : ""
             }
+
 
             ${
               siteData.whatsapp
-              ? `
-                <button
-                  class="secondary-action"
-                  onclick="openWhatsApp()"
-                >
-                  💬 واتساب
-                </button>
-              `
-              : ""
+                ? `
+                  <button
+                    class="whatsapp-btn"
+                    onclick="openWhatsApp()"
+                  >
+                    💬 تواصل واتساب
+                  </button>
+                `
+                : ""
             }
 
           </div>
 
+
         </div>
+
       `;
     }
+
+
+    /* نوع النشاط */
 
     function getBusinessType(type) {
 
       const types = {
+
         restaurant: "مطعم",
+
         cafe: "كافيه",
-        "restaurant-cafe": "مطعم وكافيه",
-        bakery: "مخبوزات وحلويات",
-        other: "نشاط تجاري"
+
+        "restaurant-cafe":
+          "مطعم وكافيه",
+
+        bakery:
+          "مخبوزات وحلويات",
+
+        other:
+          "نشاط تجاري"
+
       };
 
-      return types[type] || "مطعم";
+      return (
+        types[type] ||
+        "مطعم"
+      );
     }
+
+
+    /* تعديل الموقع */
+
+    function editSite() {
+
+      /*
+        مهم جدًا:
+        لا نحذف localStorage هنا.
+        البيانات ستظل موجودة.
+      */
+
+      window.location.href =
+        "restaurant-setup.html";
+    }
+
+
+    /* الرجوع */
+
+    function goBack() {
+
+      window.location.href =
+        "create-site.html";
+    }
+
+
+    /* اتصال */
 
     function callBusiness() {
 
-      if (!siteData || !siteData.phone) {
+      if (
+        !siteData ||
+        !siteData.phone
+      ) {
         return;
       }
 
       window.location.href =
-        "tel:" + siteData.phone;
+        "tel:" +
+        siteData.phone;
     }
+
+
+    /* واتساب */
 
     function openWhatsApp() {
 
-      if (!siteData || !siteData.whatsapp) {
+      if (
+        !siteData ||
+        !siteData.whatsapp
+      ) {
         return;
       }
 
@@ -571,34 +747,44 @@
         siteData.whatsapp
           .replace(/\D/g, "");
 
-      if (number.startsWith("0")) {
+
+      if (
+        number.startsWith("0")
+      ) {
+
         number =
-          "20" + number.substring(1);
+          "20" +
+          number.substring(1);
+
       }
 
-      if (!number.startsWith("20")) {
-        number = "20" + number;
+
+      if (
+        !number.startsWith("20")
+      ) {
+
+        number =
+          "20" +
+          number;
+
       }
+
 
       window.open(
-        "https://wa.me/" + number,
+        "https://wa.me/" +
+        number,
         "_blank"
       );
     }
 
-    function editSite() {
-      window.location.href =
-        "restaurant-setup.html";
-    }
 
-    function goBack() {
-      window.location.href =
-        "create-site.html";
-    }
+    /* لا يوجد موقع */
 
     function showEmpty() {
 
-      document.getElementById("site").innerHTML = `
+      document.getElementById(
+        "site"
+      ).innerHTML = `
 
         <div class="empty">
 
@@ -607,11 +793,13 @@
           </h2>
 
           <p>
-            ابدأ بإدخال بيانات المطعم والمنيو.
+            ابدأ بإنشاء موقع المطعم والمنيو.
           </p>
 
-          <button onclick="editSite()">
-            🍽️ ابدأ إنشاء الموقع
+          <button
+            onclick="editSite()"
+          >
+            🍽️ إنشاء الموقع
           </button>
 
         </div>
@@ -619,15 +807,39 @@
       `;
     }
 
+
+    /* حماية البيانات */
+
     function escapeHTML(value) {
 
       return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
     }
+
 
     loadSite();
 
