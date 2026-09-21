@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -539,34 +540,54 @@
         SUPABASE_KEY
       );
 
+
     let selectedDesign = "modern";
     let categories = [];
+
+
+    /* =========================
+       تسجيل الدخول
+    ========================= */
 
     async function checkLogin() {
 
       const {
         data: { session },
         error
-      } = await supabaseClient.auth.getSession();
+      } =
+        await supabaseClient.auth.getSession();
 
       if (error || !session) {
-        window.location.href = "login.html";
+
+        window.location.href =
+          "login.html";
+
         return false;
       }
 
       return true;
     }
 
+
+    /* =========================
+       نوع النشاط
+    ========================= */
+
     function updateActivityText() {
 
       const type =
-        document.getElementById("businessType").value;
+        document
+          .getElementById("businessType")
+          .value;
 
       const pageTitle =
         document.getElementById("pageTitle");
 
       const dataTitle =
-        document.getElementById("businessDataTitle");
+        document.getElementById(
+          "businessDataTitle"
+        );
+
 
       if (type === "cafe") {
 
@@ -576,7 +597,9 @@
         dataTitle.textContent =
           "☕ بيانات الكافيه";
 
-      } else if (type === "restaurant") {
+      }
+
+      else if (type === "restaurant") {
 
         pageTitle.textContent =
           "🍽️ إنشاء موقع مطعم";
@@ -584,7 +607,9 @@
         dataTitle.textContent =
           "🍽️ بيانات المطعم";
 
-      } else if (type === "restaurant-cafe") {
+      }
+
+      else if (type === "restaurant-cafe") {
 
         pageTitle.textContent =
           "🍽️☕ إنشاء موقع مطعم وكافيه";
@@ -592,7 +617,9 @@
         dataTitle.textContent =
           "🍽️☕ بيانات المطعم والكافيه";
 
-      } else if (type === "bakery") {
+      }
+
+      else if (type === "bakery") {
 
         pageTitle.textContent =
           "🥐 إنشاء موقع مخبوزات وحلويات";
@@ -600,15 +627,24 @@
         dataTitle.textContent =
           "🥐 بيانات النشاط";
 
-      } else {
+      }
+
+      else {
 
         pageTitle.textContent =
           "🏪 إنشاء موقع نشاطك";
 
         dataTitle.textContent =
           "🏪 بيانات النشاط";
+
       }
+
     }
+
+
+    /* =========================
+       التصميم
+    ========================= */
 
     function selectDesign(element) {
 
@@ -624,38 +660,68 @@
         element.dataset.design;
     }
 
+
+    /* =========================
+       الأقسام
+    ========================= */
+
     function createCategoryId() {
+
       return (
         Date.now().toString(36) +
-        Math.random().toString(36).slice(2)
+        Math.random()
+          .toString(36)
+          .slice(2)
       );
+
     }
 
-    function addCategory(categoryData = null) {
+
+    function addCategory(
+      categoryData = null
+    ) {
 
       const category = {
 
-        id: createCategoryId(),
+        id:
+          createCategoryId(),
 
         name:
           categoryData?.name || "",
 
         items:
-          Array.isArray(categoryData?.items)
-            ? categoryData.items.map(item => ({
-                name: item?.name || "",
-                price: item?.price || ""
-              }))
+          Array.isArray(
+            categoryData?.items
+          )
+            ? categoryData.items.map(
+                item => ({
+
+                  name:
+                    item?.name || "",
+
+                  price:
+                    item?.price || ""
+
+                })
+              )
             : []
 
       };
 
-      categories.push(category);
+
+      categories.push(
+        category
+      );
+
 
       renderCategories();
+
     }
 
-    function removeCategory(categoryId) {
+
+    function removeCategory(
+      categoryId
+    ) {
 
       if (categories.length <= 1) {
 
@@ -667,16 +733,22 @@
         return;
       }
 
+
       categories =
         categories.filter(
           category =>
             category.id !== categoryId
         );
 
+
       renderCategories();
+
     }
 
-    function addItem(categoryId) {
+
+    function addItem(
+      categoryId
+    ) {
 
       const category =
         categories.find(
@@ -685,16 +757,26 @@
         );
 
       if (!category) return;
+
 
       category.items.push({
+
         name: "",
+
         price: ""
+
       });
 
+
       renderCategories();
+
     }
 
-    function removeItem(categoryId, itemIndex) {
+
+    function removeItem(
+      categoryId,
+      itemIndex
+    ) {
 
       const category =
         categories.find(
@@ -703,6 +785,7 @@
         );
 
       if (!category) return;
+
 
       if (category.items.length <= 1) {
 
@@ -714,13 +797,17 @@
         return;
       }
 
+
       category.items.splice(
         itemIndex,
         1
       );
 
+
       renderCategories();
+
     }
+
 
     function renderCategories() {
 
@@ -729,32 +816,48 @@
           "categoriesContainer"
         );
 
+
       container.innerHTML = "";
+
 
       if (categories.length === 0) {
 
         container.innerHTML = `
+
           <div class="empty-message">
             لسه مفيش أقسام. اضغط «إضافة قسم جديد» وابدأ المنيو.
           </div>
+
         `;
 
         return;
       }
 
+
       categories.forEach(
-        (category, categoryIndex) => {
+        (
+          category,
+          categoryIndex
+        ) => {
 
           const box =
-            document.createElement("div");
+            document.createElement(
+              "div"
+            );
+
 
           box.className =
             "category-box";
 
+
           let itemsHTML = "";
 
+
           category.items.forEach(
-            (item, itemIndex) => {
+            (
+              item,
+              itemIndex
+            ) => {
 
               itemsHTML += `
 
@@ -808,6 +911,7 @@
 
                   </div>
 
+
                   <button
                     class="remove-btn"
                     onclick="
@@ -821,9 +925,12 @@
                   </button>
 
                 </div>
+
               `;
+
             }
           );
+
 
           box.innerHTML = `
 
@@ -841,6 +948,7 @@
                 "
               >
 
+
               <button
                 class="remove-category-btn"
                 onclick="
@@ -854,9 +962,11 @@
 
             </div>
 
+
             <div class="category-title">
               📂 أصناف القسم
             </div>
+
 
             <div class="items-container">
 
@@ -871,6 +981,7 @@
 
             </div>
 
+
             <button
               class="add-btn"
               onclick="
@@ -884,22 +995,35 @@
 
           `;
 
-          container.appendChild(box);
+
+          container.appendChild(
+            box
+          );
+
         }
       );
+
     }
+
 
     function updateCategoryName(
       categoryIndex,
       value
     ) {
 
-      if (!categories[categoryIndex])
+      if (
+        !categories[categoryIndex]
+      ) {
         return;
+      }
 
-      categories[categoryIndex].name =
-        value;
+
+      categories[
+        categoryIndex
+      ].name = value;
+
     }
+
 
     function updateItemName(
       categoryIndex,
@@ -909,15 +1033,22 @@
 
       if (
         !categories[categoryIndex] ||
-        !categories[categoryIndex].items[itemIndex]
+        !categories[
+          categoryIndex
+        ].items[itemIndex]
       ) {
         return;
       }
 
-      categories[categoryIndex]
-        .items[itemIndex]
-        .name = value;
+
+      categories[
+        categoryIndex
+      ].items[
+        itemIndex
+      ].name = value;
+
     }
+
 
     function updateItemPrice(
       categoryIndex,
@@ -927,48 +1058,71 @@
 
       if (
         !categories[categoryIndex] ||
-        !categories[categoryIndex].items[itemIndex]
+        !categories[
+          categoryIndex
+        ].items[itemIndex]
       ) {
         return;
       }
 
-      categories[categoryIndex]
-        .items[itemIndex]
-        .price = value;
+
+      categories[
+        categoryIndex
+      ].items[
+        itemIndex
+      ].price = value;
+
     }
 
-    function escapeHtml(value) {
 
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
+    /* =========================
+       Slug
+    ========================= */
 
-    function createMenuSlug(businessName) {
+    function createMenuSlug(
+      businessName
+    ) {
 
       let randomPart;
 
+
       if (
         window.crypto &&
-        typeof window.crypto.randomUUID === "function"
+        typeof window.crypto.randomUUID ===
+          "function"
       ) {
+
         randomPart =
           window.crypto
             .randomUUID()
-            .replace(/-/g, "")
-            .slice(0, 12);
-      } else {
+            .replace(
+              /-/g,
+              ""
+            )
+            .slice(
+              0,
+              12
+            );
+
+      }
+
+      else {
+
         randomPart =
           Math.random()
             .toString(36)
-            .slice(2, 14);
+            .slice(
+              2,
+              14
+            );
+
       }
 
+
       let slug =
-        String(businessName || "")
+        String(
+          businessName || ""
+        )
           .toLowerCase()
           .replace(
             /[^a-z0-9\u0600-\u06FF]+/g,
@@ -978,14 +1132,29 @@
             /^-+|-+$/g,
             ""
           )
-          .slice(0, 30);
+          .slice(
+            0,
+            30
+          );
+
 
       if (!slug) {
         slug = "menu";
       }
 
-      return slug + "-" + randomPart;
+
+      return (
+        slug +
+        "-" +
+        randomPart
+      );
+
     }
+
+
+    /* =========================
+       حفظ المنيو
+    ========================= */
 
     async function createRestaurantSite() {
 
@@ -994,13 +1163,18 @@
 
       if (!loggedIn) return;
 
+
       const {
         data: { user },
         error: userError
       } =
         await supabaseClient.auth.getUser();
 
-      if (userError || !user) {
+
+      if (
+        userError ||
+        !user
+      ) {
 
         showMessage(
           "لازم تسجل الدخول أولًا.",
@@ -1010,16 +1184,23 @@
         return;
       }
 
+
       const businessName =
         document
-          .getElementById("businessName")
+          .getElementById(
+            "businessName"
+          )
           .value
           .trim();
 
+
       const businessType =
         document
-          .getElementById("businessType")
+          .getElementById(
+            "businessType"
+          )
           .value;
+
 
       if (!businessName) {
 
@@ -1031,7 +1212,10 @@
         return;
       }
 
-      if (categories.length === 0) {
+
+      if (
+        categories.length === 0
+      ) {
 
         showMessage(
           "أضف قسمًا واحدًا على الأقل للمنيو.",
@@ -1041,14 +1225,21 @@
         return;
       }
 
-      const finalCategories = [];
 
-      for (const category of categories) {
+      const finalCategories =
+        [];
+
+
+      for (
+        const category
+        of categories
+      ) {
 
         const categoryName =
           String(
             category.name || ""
           ).trim();
+
 
         if (!categoryName) {
 
@@ -1060,27 +1251,33 @@
           return;
         }
 
+
         const finalItems =
           category.items
-            .map(item => ({
+            .map(
+              item => ({
 
-              name:
-                String(
-                  item.name || ""
-                ).trim(),
+                name:
+                  String(
+                    item.name || ""
+                  ).trim(),
 
-              price:
-                String(
-                  item.price || ""
-                ).trim()
+                price:
+                  String(
+                    item.price || ""
+                  ).trim()
 
-            }))
+              })
+            )
             .filter(
               item =>
                 item.name !== ""
             );
 
-        if (finalItems.length === 0) {
+
+        if (
+          finalItems.length === 0
+        ) {
 
           showMessage(
             `أضف صنفًا واحدًا على الأقل داخل قسم «${categoryName}».`,
@@ -1089,6 +1286,7 @@
 
           return;
         }
+
 
         finalCategories.push({
 
@@ -1099,23 +1297,30 @@
             finalItems
 
         });
+
       }
+
 
       const saveButton =
         document.getElementById(
           "saveButton"
         );
 
-      saveButton.disabled = true;
+
+      saveButton.disabled =
+        true;
+
 
       showMessage(
-        "جاري حفظ المنيو وإنشاء الرابط... ⏳",
+        "جاري حفظ المنيو وإنشاء الرابط والـ QR... ⏳",
         "success"
       );
 
+
       /*
-        نحاول استخدام الرابط القديم لو موجود.
-        ولو مش موجود ننشئ رابط جديد.
+      ==========================================
+      نبحث عن المنيو القديمة
+      ==========================================
       */
 
       let savedMenuId =
@@ -1123,90 +1328,31 @@
           "warsha_restaurant_menu_id"
         );
 
+
       let savedSlug =
         localStorage.getItem(
           "warsha_restaurant_menu_slug"
         );
 
-      /*
-        لو مفيش slug ننشئ واحد جديد.
-      */
 
-      if (!savedSlug) {
+      let existingMenu =
+        null;
 
-        savedSlug =
-          createMenuSlug(
-            businessName
-          );
-      }
-
-      const siteData = {
-
-        type: "restaurant",
-
-        business_name:
-          businessName,
-
-        business_type:
-          businessType,
-
-        phone:
-          document
-            .getElementById("businessPhone")
-            .value
-            .trim(),
-
-        address:
-          document
-            .getElementById("businessAddress")
-            .value
-            .trim(),
-
-        description:
-          document
-            .getElementById("businessDescription")
-            .value
-            .trim(),
-
-        design:
-          selectedDesign,
-
-        categories:
-          finalCategories,
-
-        working_hours:
-          document
-            .getElementById("workingHours")
-            .value
-            .trim(),
-
-        whatsapp:
-          document
-            .getElementById("whatsapp")
-            .value
-            .trim(),
-
-        public_slug:
-          savedSlug
-      };
-
-      let databaseSuccess = false;
 
       /*
-        =====================================
-        لو فيه ID محفوظ:
-        نتأكد الأول إن المنيو موجودة فعلًا.
-        =====================================
+      البحث بالـ ID
       */
 
       if (savedMenuId) {
 
         const {
-          data: existingMenu,
-          error: findError
+          data,
+          error
         } =
           await supabaseClient
-            .from("restaurant_menus")
+            .from(
+              "restaurant_menus"
+            )
             .select(
               "id, public_slug"
             )
@@ -1220,99 +1366,304 @@
             )
             .maybeSingle();
 
-        /*
-          لو المنيو موجودة:
-          نعمل تحديث.
-        */
 
         if (
-          !findError &&
-          existingMenu
+          !error &&
+          data
         ) {
 
-          savedSlug =
-            existingMenu.public_slug;
+          existingMenu =
+            data;
 
-          siteData.public_slug =
-            savedSlug;
-
-          const {
-            error: updateError
-          } =
-            await supabaseClient
-              .from("restaurant_menus")
-              .update({
-
-                menu_name:
-                  businessName,
-
-                business_type:
-                  businessType,
-
-                menu_data:
-                  siteData,
-
-                updated_at:
-                  new Date().toISOString()
-
-              })
-              .eq(
-                "id",
-                existingMenu.id
-              )
-              .eq(
-                "user_id",
-                user.id
-              );
-
-          if (!updateError) {
-
-            databaseSuccess = true;
-
-          } else {
-
-            console.error(
-              "Update error:",
-              updateError
-            );
-          }
         }
 
-        /*
-          لو الـ ID القديم مش موجود:
-          هننشئ منيو جديدة بدل ما الموقع يتعطل.
-        */
-
-        if (!databaseSuccess) {
-
-          savedMenuId = null;
-        }
       }
 
+
       /*
-        =====================================
-        إنشاء منيو جديدة
-        =====================================
+      لو مفيش ID
+      نبحث عن آخر منيو للمستخدم
       */
 
-      if (!databaseSuccess) {
+      if (!existingMenu) {
 
-        let insertSuccess = false;
-        let attempts = 0;
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from(
+              "restaurant_menus"
+            )
+            .select(
+              "id, public_slug, menu_name, updated_at, created_at"
+            )
+            .eq(
+              "user_id",
+              user.id
+            )
+            .order(
+              "updated_at",
+              {
+                ascending: false
+              }
+            )
+            .limit(1)
+            .maybeSingle();
+
+
+        if (
+          !error &&
+          data
+        ) {
+
+          existingMenu =
+            data;
+
+        }
+
+      }
+
+
+      /*
+      ==========================================
+      تحديد ID و Slug
+      ==========================================
+      */
+
+      if (
+        existingMenu &&
+        existingMenu.public_slug
+      ) {
+
+        savedMenuId =
+          existingMenu.id;
+
+        savedSlug =
+          existingMenu.public_slug;
+
+      }
+
+      else if (
+        existingMenu
+      ) {
+
+        savedMenuId =
+          existingMenu.id;
+
+        savedSlug =
+          createMenuSlug(
+            businessName
+          );
+
+      }
+
+      else {
+
+        savedSlug =
+          createMenuSlug(
+            businessName
+          );
+
+      }
+
+
+      /*
+      ==========================================
+      بيانات المنيو
+      ==========================================
+      */
+
+      const siteData = {
+
+        type:
+          "restaurant",
+
+        business_name:
+          businessName,
+
+        business_type:
+          businessType,
+
+        phone:
+          document
+            .getElementById(
+              "businessPhone"
+            )
+            .value
+            .trim(),
+
+        address:
+          document
+            .getElementById(
+              "businessAddress"
+            )
+            .value
+            .trim(),
+
+        description:
+          document
+            .getElementById(
+              "businessDescription"
+            )
+            .value
+            .trim(),
+
+        design:
+          selectedDesign,
+
+        categories:
+          finalCategories,
+
+        working_hours:
+          document
+            .getElementById(
+              "workingHours"
+            )
+            .value
+            .trim(),
+
+        whatsapp:
+          document
+            .getElementById(
+              "whatsapp"
+            )
+            .value
+            .trim(),
+
+        public_slug:
+          savedSlug
+
+      };
+
+
+      let databaseSuccess =
+        false;
+
+
+      /*
+      ==========================================
+      تحديث المنيو الموجودة
+      ==========================================
+      */
+
+      if (savedMenuId) {
+
+        const {
+          data: updatedData,
+          error: updateError
+        } =
+          await supabaseClient
+            .from(
+              "restaurant_menus"
+            )
+            .update({
+
+              menu_name:
+                businessName,
+
+              business_type:
+                businessType,
+
+              menu_data:
+                siteData,
+
+              public_slug:
+                savedSlug,
+
+              updated_at:
+                new Date()
+                  .toISOString()
+
+            })
+            .eq(
+              "id",
+              savedMenuId
+            )
+            .eq(
+              "user_id",
+              user.id
+            )
+            .select(
+              "id, public_slug"
+            )
+            .maybeSingle();
+
+
+        if (
+          !updateError &&
+          updatedData
+        ) {
+
+          databaseSuccess =
+            true;
+
+          savedMenuId =
+            updatedData.id;
+
+          savedSlug =
+            updatedData.public_slug ||
+            savedSlug;
+
+        }
+
+        else {
+
+          console.error(
+            "Update error:",
+            updateError
+          );
+
+        }
+
+      }
+
+
+      /*
+      ==========================================
+      إنشاء منيو جديدة
+      ==========================================
+      */
+
+      if (
+        !databaseSuccess
+      ) {
+
+        let attempts =
+          0;
+
 
         while (
-          !insertSuccess &&
-          attempts < 3
+          !databaseSuccess &&
+          attempts < 5
         ) {
 
           attempts++;
+
+
+          if (
+            attempts > 1
+          ) {
+
+            savedSlug =
+              createMenuSlug(
+                businessName
+              );
+
+            siteData.public_slug =
+              savedSlug;
+
+          }
+
 
           const {
             data,
             error: insertError
           } =
             await supabaseClient
-              .from("restaurant_menus")
+              .from(
+                "restaurant_menus"
+              )
               .insert({
 
                 user_id:
@@ -1336,38 +1687,45 @@
               )
               .single();
 
-          if (!insertError && data) {
+
+          if (
+            !insertError &&
+            data
+          ) {
+
+            databaseSuccess =
+              true;
 
             savedMenuId =
               data.id;
 
             savedSlug =
-              data.public_slug;
+              data.public_slug ||
+              savedSlug;
 
-            insertSuccess = true;
-            databaseSuccess = true;
+          }
 
-          } else {
+          else {
 
             console.error(
               "Insert error:",
               insertError
             );
 
-            /*
-              لو الرابط موجود بالفعل،
-              ننشئ رابط جديد ونحاول مرة أخرى.
-            */
 
             if (
               insertError &&
               (
-                insertError.code === "23505" ||
+                insertError.code ===
+                  "23505" ||
                 String(
-                  insertError.message || ""
+                  insertError.message ||
+                  ""
                 )
                   .toLowerCase()
-                  .includes("duplicate")
+                  .includes(
+                    "duplicate"
+                  )
               )
             ) {
 
@@ -1379,58 +1737,47 @@
               siteData.public_slug =
                 savedSlug;
 
-            } else {
+            }
+
+            else {
 
               break;
+
             }
+
           }
+
         }
+
       }
 
+
       /*
-        =====================================
-        التأكد إن قاعدة البيانات حفظت فعلاً
-        =====================================
+      ==========================================
+      التأكد من نجاح الحفظ
+      ==========================================
       */
 
-      if (!databaseSuccess) {
+      if (
+        !databaseSuccess
+      ) {
 
-        saveButton.disabled = false;
+        saveButton.disabled =
+          false;
 
         showMessage(
-          "حصل خطأ أثناء حفظ المنيو. تأكد من الاتصال وحاول مرة تانية.",
+          "حصل خطأ أثناء حفظ المنيو. حاول مرة تانية.",
           "error"
         );
 
         return;
       }
 
-      /*
-        =====================================
-        نحفظ البيانات المحلية
-        فقط بعد نجاح Supabase
-        =====================================
-      */
-
-      localStorage.setItem(
-        "warsha_restaurant_site",
-        JSON.stringify(siteData)
-      );
-
-      localStorage.setItem(
-        "warsha_restaurant_menu_id",
-        savedMenuId
-      );
-
-      localStorage.setItem(
-        "warsha_restaurant_menu_slug",
-        savedSlug
-      );
 
       /*
-        =====================================
-        إنشاء الرابط العام
-        =====================================
+      ==========================================
+      الرابط العام
+      ==========================================
       */
 
       const publicMenuUrl =
@@ -1439,49 +1786,87 @@
           window.location.href
         );
 
+
       publicMenuUrl.searchParams.set(
         "slug",
         savedSlug
       );
 
+
       const finalPublicMenuUrl =
         publicMenuUrl.href;
+
+
+      siteData.public_slug =
+        savedSlug;
+
+
+      siteData.public_menu_url =
+        finalPublicMenuUrl;
+
+
+      /*
+      ==========================================
+      حفظ البيانات محليًا
+      ==========================================
+      */
+
+      localStorage.setItem(
+        "warsha_restaurant_site",
+        JSON.stringify(
+          siteData
+        )
+      );
+
+
+      localStorage.setItem(
+        "warsha_restaurant_menu_id",
+        String(
+          savedMenuId
+        )
+      );
+
+
+      localStorage.setItem(
+        "warsha_restaurant_menu_slug",
+        savedSlug
+      );
+
 
       localStorage.setItem(
         "warsha_restaurant_menu_url",
         finalPublicMenuUrl
       );
 
-      /*
-        نحفظ الرابط أيضًا داخل بيانات الموقع
-      */
-
-      siteData.public_menu_url =
-        finalPublicMenuUrl;
-
-      localStorage.setItem(
-        "warsha_restaurant_site",
-        JSON.stringify(siteData)
-      );
 
       /*
-        =====================================
-        نجاح
-        =====================================
+      ==========================================
+      نجاح
+      ==========================================
       */
 
       showMessage(
-        "تم حفظ المنيو بنجاح 🎉 جاري فتح المعاينة...",
+        "تم حفظ المنيو بنجاح 🎉 وتم تجهيز رابط الـ QR Code.",
         "success"
       );
 
-      setTimeout(() => {
 
-        window.location.href =
-          "restaurant-preview.html";
+      setTimeout(
+        () => {
 
-      }, 900);
+          window.location.href =
+            "restaurant-preview.html";
+
+        },
+        900
+      );
+
     }
+
+
+    /* =========================
+       تحميل البيانات القديمة
+    ========================= */
 
     function loadSavedData() {
 
@@ -1490,6 +1875,7 @@
           "warsha_restaurant_site"
         );
 
+
       if (!saved) {
 
         addCategory();
@@ -1497,78 +1883,135 @@
         return;
       }
 
+
       try {
 
         const data =
-          JSON.parse(saved);
+          JSON.parse(
+            saved
+          );
+
 
         document
-          .getElementById("businessName")
+          .getElementById(
+            "businessName"
+          )
           .value =
-          data.business_name || "";
+          data.business_name ||
+          "";
+
 
         document
-          .getElementById("businessType")
+          .getElementById(
+            "businessType"
+          )
           .value =
           data.business_type ||
           "restaurant";
 
-        document
-          .getElementById("businessPhone")
-          .value =
-          data.phone || "";
 
         document
-          .getElementById("businessAddress")
+          .getElementById(
+            "businessPhone"
+          )
           .value =
-          data.address || "";
+          data.phone ||
+          "";
+
 
         document
-          .getElementById("businessDescription")
+          .getElementById(
+            "businessAddress"
+          )
           .value =
-          data.description || "";
+          data.address ||
+          "";
+
 
         document
-          .getElementById("workingHours")
+          .getElementById(
+            "businessDescription"
+          )
           .value =
-          data.working_hours || "";
+          data.description ||
+          "";
+
 
         document
-          .getElementById("whatsapp")
+          .getElementById(
+            "workingHours"
+          )
           .value =
-          data.whatsapp || "";
+          data.working_hours ||
+          "";
+
+
+        document
+          .getElementById(
+            "whatsapp"
+          )
+          .value =
+          data.whatsapp ||
+          "";
+
 
         selectedDesign =
           data.design ||
           "modern";
 
+
         document
-          .querySelectorAll(".design")
-          .forEach(design => {
+          .querySelectorAll(
+            ".design"
+          )
+          .forEach(
+            design => {
 
-            design.classList.toggle(
-              "selected",
-              design.dataset.design ===
-              selectedDesign
-            );
+              design.classList.toggle(
+                "selected",
+                design.dataset.design ===
+                  selectedDesign
+              );
 
-          });
+            }
+          );
 
-        if (data.public_slug) {
+
+        /*
+        استرجاع الـ slug القديم
+        */
+
+        if (
+          data.public_slug
+        ) {
 
           localStorage.setItem(
             "warsha_restaurant_menu_slug",
             data.public_slug
           );
+
         }
 
-        if (data.public_menu_url) {
+
+        /*
+        استرجاع رابط المنيو
+        */
+
+        if (
+          data.public_menu_url
+        ) {
 
           localStorage.setItem(
             "warsha_restaurant_menu_url",
             data.public_menu_url
           );
+
         }
+
+
+        /*
+        استرجاع الأقسام
+        */
 
         if (
           Array.isArray(
@@ -1584,7 +2027,8 @@
                   createCategoryId(),
 
                 name:
-                  category.name || "",
+                  category.name ||
+                  "",
 
                 items:
                   Array.isArray(
@@ -1594,10 +2038,12 @@
                         item => ({
 
                           name:
-                            item?.name || "",
+                            item?.name ||
+                            "",
 
                           price:
-                            item?.price || ""
+                            item?.price ||
+                            ""
 
                         })
                       )
@@ -1637,6 +2083,7 @@
 
         }
 
+
         updateActivityText();
 
         renderCategories();
@@ -1653,8 +2100,15 @@
         categories = [];
 
         addCategory();
+
       }
+
     }
+
+
+    /* =========================
+       الرسائل
+    ========================= */
 
     function showMessage(
       text,
@@ -1666,27 +2120,45 @@
           "message"
         );
 
+
       message.textContent =
         text;
 
+
       message.className =
-        "message " + type;
+        "message " +
+        type;
+
 
       message.style.display =
         "block";
+
     }
+
+
+    /* =========================
+       رجوع
+    ========================= */
 
     function goBack() {
 
       window.location.href =
         "create-site.html";
+
     }
+
+
+    /*
+    تشغيل الصفحة
+    */
 
     checkLogin().then(
       loggedIn => {
 
         if (loggedIn) {
+
           loadSavedData();
+
         }
 
       }
@@ -1696,3 +2168,4 @@
 
 </body>
 </html>
+```
