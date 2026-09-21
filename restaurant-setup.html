@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إعداد موقع المطعم | ورشة ويب</title>
+  <title>إعداد موقعك | ورشة ويب</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,12 +130,46 @@
       gap: 15px;
     }
 
+    /* الأقسام */
+
+    .category-box {
+      border: 2px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 18px;
+      background: #fafafa;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .category-header input {
+      flex: 1;
+      font-weight: 700;
+      background: white;
+    }
+
+    .category-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .items-container {
+      margin-top: 10px;
+    }
+
     .menu-item {
       border: 1px solid #e5e7eb;
       border-radius: 14px;
       padding: 15px;
       margin-top: 12px;
-      background: #fafafa;
+      background: white;
     }
 
     .menu-item-grid {
@@ -156,6 +189,18 @@
       font-family: inherit;
     }
 
+    .remove-category-btn {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 0;
+      padding: 9px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
     .add-btn {
       margin-top: 15px;
       background: #fff7ed;
@@ -167,6 +212,32 @@
       font-family: inherit;
       font-weight: 700;
     }
+
+    .add-category-btn {
+      width: 100%;
+      background: #111827;
+      color: white;
+      border: 0;
+      padding: 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 800;
+      margin-top: 20px;
+    }
+
+    .empty-message {
+      background: #f9fafb;
+      border: 1px dashed #d1d5db;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      color: #6b7280;
+      margin-top: 15px;
+    }
+
+    /* التصاميم */
 
     .designs {
       display: grid;
@@ -239,6 +310,11 @@
         grid-template-columns: 1fr;
       }
 
+      .category-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
       .hero h1 {
         font-size: 23px;
       }
@@ -269,26 +345,31 @@
   <main class="container">
 
     <section class="hero">
-      <h1>🍽️ إنشاء موقع مطعم أو كافيه</h1>
+      <h1 id="pageTitle">🍽️ إنشاء موقعك</h1>
       <p>
-        جهّز بيانات موقعك، وعدّل المنيو والأسعار بنفسك، وبعدها ننتقل لمعاينة الموقع.
+        جهّز بيانات موقعك، وأنشئ أقسام المنيو والأصناف والأسعار بالطريقة التي تريدها.
       </p>
     </section>
 
-    <section class="card">
-      <h2>🏪 بيانات المطعم أو الكافيه</h2>
+    <!-- بيانات النشاط -->
 
-      <label>اسم المطعم / الكافيه</label>
+    <section class="card">
+      <h2 id="businessDataTitle">🏪 بيانات النشاط</h2>
+
+      <label>اسم المكان</label>
+
       <input
         id="businessName"
         type="text"
-        placeholder="مثال: مطعم ورشة"
+        placeholder="مثال: كافيه ورشة"
       >
 
       <div class="grid">
+
         <div>
           <label>نوع النشاط</label>
-          <select id="businessType">
+
+          <select id="businessType" onchange="updateActivityText()">
             <option value="restaurant">مطعم</option>
             <option value="cafe">كافيه</option>
             <option value="restaurant-cafe">مطعم وكافيه</option>
@@ -299,15 +380,18 @@
 
         <div>
           <label>رقم الهاتف</label>
+
           <input
             id="businessPhone"
             type="tel"
             placeholder="مثال: 011xxxxxxxx"
           >
         </div>
+
       </div>
 
       <label>العنوان</label>
+
       <input
         id="businessAddress"
         type="text"
@@ -315,30 +399,46 @@
       >
 
       <label>وصف قصير</label>
+
       <textarea
         id="businessDescription"
-        placeholder="اكتب وصفًا بسيطًا عن المطعم أو الكافيه..."
+        placeholder="اكتب وصفًا بسيطًا عن المكان..."
       ></textarea>
+
     </section>
+
+    <!-- التصميم -->
 
     <section class="card">
       <h2>🎨 اختر شكل الموقع</h2>
 
       <div class="designs">
 
-        <div class="design selected" data-design="modern" onclick="selectDesign(this)">
+        <div
+          class="design selected"
+          data-design="modern"
+          onclick="selectDesign(this)"
+        >
           <div class="design-icon">✨</div>
           <strong>مودرن</strong>
           <p>شكل عصري وبسيط</p>
         </div>
 
-        <div class="design" data-design="luxury" onclick="selectDesign(this)">
+        <div
+          class="design"
+          data-design="luxury"
+          onclick="selectDesign(this)"
+        >
           <div class="design-icon">👑</div>
           <strong>فاخر</strong>
-          <p>مناسب للمطاعم الراقية</p>
+          <p>شكل راقي ومميز</p>
         </div>
 
-        <div class="design" data-design="simple" onclick="selectDesign(this)">
+        <div
+          class="design"
+          data-design="simple"
+          onclick="selectDesign(this)"
+        >
           <div class="design-icon">🍽️</div>
           <strong>بسيط</strong>
           <p>شكل واضح وسريع</p>
@@ -347,90 +447,76 @@
       </div>
     </section>
 
+    <!-- المنيو -->
+
     <section class="card">
+
       <h2>📋 المنيو</h2>
 
       <p>
-        أضف أقسام المنيو والأصناف والأسعار. ويمكن تعديلها لاحقًا من لوحة التحكم.
+        اعمل أي عدد من الأقسام، وكل قسم تقدر تضيف بداخله عدد كبير من الأصناف والأسعار.
       </p>
 
-      <label>اسم قسم المنيو</label>
-      <input
-        id="categoryName"
-        type="text"
-        placeholder="مثال: الوجبات الرئيسية"
+      <div id="categoriesContainer"></div>
+
+      <button
+        class="add-category-btn"
+        onclick="addCategory()"
       >
-
-      <div id="menuItems">
-
-        <div class="menu-item">
-          <div class="menu-item-grid">
-
-            <div>
-              <label>اسم الصنف</label>
-              <input
-                type="text"
-                class="item-name"
-                placeholder="مثال: برجر لحم"
-              >
-            </div>
-
-            <div>
-              <label>السعر</label>
-              <input
-                type="number"
-                class="item-price"
-                placeholder="150"
-              >
-            </div>
-
-          </div>
-
-          <button class="remove-btn" onclick="removeItem(this)">
-            حذف الصنف
-          </button>
-        </div>
-
-      </div>
-
-      <button class="add-btn" onclick="addItem()">
-        ＋ إضافة صنف جديد
+        ➕ إضافة قسم جديد
       </button>
+
     </section>
 
+    <!-- معلومات إضافية -->
+
     <section class="card">
+
       <h2>📍 معلومات إضافية</h2>
 
       <div class="grid">
 
         <div>
+
           <label>مواعيد العمل</label>
+
           <input
             id="workingHours"
             type="text"
             placeholder="مثال: يوميًا من 10 صباحًا إلى 12 مساءً"
           >
+
         </div>
 
         <div>
+
           <label>رابط واتساب</label>
+
           <input
             id="whatsapp"
             type="text"
             placeholder="اختياري"
           >
+
         </div>
 
       </div>
+
     </section>
 
     <div class="save-area">
 
-      <button class="start-btn" onclick="createRestaurantSite()">
+      <button
+        class="start-btn"
+        onclick="createRestaurantSite()"
+      >
         🚀 ابدأ بناء موقعي
       </button>
 
-      <div id="message" class="message"></div>
+      <div
+        id="message"
+        class="message"
+      ></div>
 
     </div>
 
@@ -439,6 +525,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
+
     const SUPABASE_URL =
       "https://qupoxgclybgbetqxzzwf.supabase.co";
 
@@ -453,23 +540,96 @@
 
     let selectedDesign = "modern";
 
+    let categories = [];
+
+    /* =========================
+       تسجيل الدخول
+    ========================= */
+
     async function checkLogin() {
+
       const {
         data: { session }
       } = await supabaseClient.auth.getSession();
 
       if (!session) {
+
         window.location.href = "login.html";
+
         return false;
       }
 
       return true;
     }
 
+    /* =========================
+       نوع النشاط
+    ========================= */
+
+    function updateActivityText() {
+
+      const type =
+        document.getElementById("businessType").value;
+
+      const pageTitle =
+        document.getElementById("pageTitle");
+
+      const dataTitle =
+        document.getElementById("businessDataTitle");
+
+      if (type === "cafe") {
+
+        pageTitle.textContent =
+          "☕ إنشاء موقع كافيه";
+
+        dataTitle.textContent =
+          "☕ بيانات الكافيه";
+
+      } else if (type === "restaurant") {
+
+        pageTitle.textContent =
+          "🍽️ إنشاء موقع مطعم";
+
+        dataTitle.textContent =
+          "🍽️ بيانات المطعم";
+
+      } else if (type === "restaurant-cafe") {
+
+        pageTitle.textContent =
+          "🍽️☕ إنشاء موقع مطعم وكافيه";
+
+        dataTitle.textContent =
+          "🍽️☕ بيانات المطعم والكافيه";
+
+      } else if (type === "bakery") {
+
+        pageTitle.textContent =
+          "🥐 إنشاء موقع مخبوزات وحلويات";
+
+        dataTitle.textContent =
+          "🥐 بيانات النشاط";
+
+      } else {
+
+        pageTitle.textContent =
+          "🏪 إنشاء موقع نشاطك";
+
+        dataTitle.textContent =
+          "🏪 بيانات النشاط";
+      }
+    }
+
+    /* =========================
+       التصميم
+    ========================= */
+
     function selectDesign(element) {
+
       document
         .querySelectorAll(".design")
-        .forEach(item => item.classList.remove("selected"));
+        .forEach(item =>
+          item.classList.remove("selected")
+        );
 
       element.classList.add("selected");
 
@@ -477,160 +637,482 @@
         element.dataset.design;
     }
 
-    function addItem() {
-      const container =
-        document.getElementById("menuItems");
+    /* =========================
+       إضافة قسم
+    ========================= */
 
-      const item =
-        document.createElement("div");
+    function addCategory(categoryData = null) {
 
-      item.className = "menu-item";
+      const category = {
 
-      item.innerHTML = `
-        <div class="menu-item-grid">
+        id:
+          Date.now() +
+          Math.random(),
 
-          <div>
-            <label>اسم الصنف</label>
-            <input
-              type="text"
-              class="item-name"
-              placeholder="مثال: بيتزا"
-            >
-          </div>
+        name:
+          categoryData?.name || "",
 
-          <div>
-            <label>السعر</label>
-            <input
-              type="number"
-              class="item-price"
-              placeholder="200"
-            >
-          </div>
+        items:
+          Array.isArray(categoryData?.items)
+            ? categoryData.items
+            : []
 
-        </div>
+      };
 
-        <button
-          class="remove-btn"
-          onclick="removeItem(this)"
-        >
-          حذف الصنف
-        </button>
-      `;
+      categories.push(category);
 
-      container.appendChild(item);
+      renderCategories();
     }
 
-    function removeItem(button) {
-      const items =
-        document.querySelectorAll(".menu-item");
+    /* =========================
+       حذف قسم
+    ========================= */
 
-      if (items.length <= 1) {
+    function removeCategory(categoryId) {
+
+      if (categories.length <= 1) {
+
         showMessage(
-          "لازم يكون عندك صنف واحد على الأقل.",
+          "لازم يكون عندك قسم واحد على الأقل.",
           "error"
         );
+
         return;
       }
 
-      button.parentElement.remove();
+      categories =
+        categories.filter(
+          category =>
+            category.id !== categoryId
+        );
+
+      renderCategories();
     }
+
+    /* =========================
+       إضافة صنف
+    ========================= */
+
+    function addItem(categoryId) {
+
+      const category =
+        categories.find(
+          item =>
+            item.id === categoryId
+        );
+
+      if (!category) return;
+
+      category.items.push({
+
+        name: "",
+
+        price: ""
+
+      });
+
+      renderCategories();
+    }
+
+    /* =========================
+       حذف صنف
+    ========================= */
+
+    function removeItem(categoryId, itemIndex) {
+
+      const category =
+        categories.find(
+          item =>
+            item.id === categoryId
+        );
+
+      if (!category) return;
+
+      if (category.items.length <= 1) {
+
+        showMessage(
+          "لازم يكون عندك صنف واحد على الأقل داخل كل قسم.",
+          "error"
+        );
+
+        return;
+      }
+
+      category.items.splice(
+        itemIndex,
+        1
+      );
+
+      renderCategories();
+    }
+
+    /* =========================
+       رسم الأقسام والأصناف
+    ========================= */
+
+    function renderCategories() {
+
+      const container =
+        document.getElementById(
+          "categoriesContainer"
+        );
+
+      container.innerHTML = "";
+
+      if (categories.length === 0) {
+
+        container.innerHTML = `
+          <div class="empty-message">
+            لسه مفيش أقسام. اضغط «إضافة قسم جديد» وابدأ المنيو.
+          </div>
+        `;
+
+        return;
+      }
+
+      categories.forEach(
+        (category, categoryIndex) => {
+
+          const box =
+            document.createElement("div");
+
+          box.className =
+            "category-box";
+
+          const itemsHTML =
+            category.items
+              .map(
+                (item, itemIndex) => `
+                  <div class="menu-item">
+
+                    <div class="menu-item-grid">
+
+                      <div>
+                        <label>اسم الصنف</label>
+
+                        <input
+                          type="text"
+                          value="${escapeHtml(item.name)}"
+                          placeholder="مثال: كابتشينو"
+                          oninput="
+                            updateItemName(
+                              ${categoryIndex},
+                              ${itemIndex},
+                              this.value
+                            )
+                          "
+                        >
+                      </div>
+
+                      <div>
+                        <label>السعر</label>
+
+                        <input
+                          type="number"
+                          value="${escapeHtml(item.price)}"
+                          placeholder="100"
+                          oninput="
+                            updateItemPrice(
+                              ${categoryIndex},
+                              ${itemIndex},
+                              this.value
+                            )
+                          "
+                        >
+                      </div>
+
+                    </div>
+
+                    <button
+                      class="remove-btn"
+                      onclick="
+                        removeItem(
+                          ${category.id},
+                          ${itemIndex}
+                        )
+                      "
+                    >
+                      🗑️ حذف الصنف
+                    </button>
+
+                  </div>
+                `
+              )
+              .join("");
+
+          box.innerHTML = `
+
+            <div class="category-header">
+
+              <input
+                type="text"
+                value="${escapeHtml(category.name)}"
+                placeholder="اكتب اسم القسم، مثال: المشروبات الساخنة"
+                oninput="
+                  updateCategoryName(
+                    ${categoryIndex},
+                    this.value
+                  )
+                "
+              >
+
+              <button
+                class="remove-category-btn"
+                onclick="
+                  removeCategory(
+                    ${category.id}
+                  )
+                "
+              >
+                🗑️ حذف القسم
+              </button>
+
+            </div>
+
+            <div class="category-title">
+              📂 أصناف القسم
+            </div>
+
+            <div class="items-container">
+
+              ${
+                itemsHTML ||
+                `
+                <div class="empty-message">
+                  أضف أول صنف لهذا القسم.
+                </div>
+                `
+              }
+
+            </div>
+
+            <button
+              class="add-btn"
+              onclick="
+                addItem(
+                  ${category.id}
+                )
+              "
+            >
+              ➕ إضافة صنف لهذا القسم
+            </button>
+
+          `;
+
+          container.appendChild(box);
+
+        }
+      );
+    }
+
+    /* =========================
+       تعديل اسم القسم
+    ========================= */
+
+    function updateCategoryName(
+      categoryIndex,
+      value
+    ) {
+
+      if (!categories[categoryIndex]) return;
+
+      categories[categoryIndex].name =
+        value;
+    }
+
+    /* =========================
+       تعديل اسم الصنف
+    ========================= */
+
+    function updateItemName(
+      categoryIndex,
+      itemIndex,
+      value
+    ) {
+
+      if (
+        !categories[categoryIndex] ||
+        !categories[categoryIndex].items[itemIndex]
+      ) return;
+
+      categories[categoryIndex]
+        .items[itemIndex]
+        .name = value;
+    }
+
+    /* =========================
+       تعديل سعر الصنف
+    ========================= */
+
+    function updateItemPrice(
+      categoryIndex,
+      itemIndex,
+      value
+    ) {
+
+      if (
+        !categories[categoryIndex] ||
+        !categories[categoryIndex].items[itemIndex]
+      ) return;
+
+      categories[categoryIndex]
+        .items[itemIndex]
+        .price = value;
+    }
+
+    /* =========================
+       حماية النص
+    ========================= */
+
+    function escapeHtml(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    /* =========================
+       حفظ الموقع
+    ========================= */
 
     async function createRestaurantSite() {
 
-      const loggedIn = await checkLogin();
+      const loggedIn =
+        await checkLogin();
 
       if (!loggedIn) return;
 
       const businessName =
         document
           .getElementById("businessName")
-          .value.trim();
+          .value
+          .trim();
 
       if (!businessName) {
+
         showMessage(
-          "اكتب اسم المطعم أو الكافيه أولًا.",
+          "اكتب اسم المكان أولًا.",
           "error"
         );
+
         return;
       }
 
-      const categoryName =
-        document
-          .getElementById("categoryName")
-          .value.trim();
+      if (categories.length === 0) {
 
-      if (!categoryName) {
         showMessage(
-          "اكتب اسم قسم المنيو.",
+          "أضف قسمًا واحدًا على الأقل للمنيو.",
           "error"
         );
+
         return;
       }
 
-      const itemElements =
-        document.querySelectorAll(".menu-item");
+      const finalCategories = [];
 
-      const menuItems = [];
+      for (const category of categories) {
 
-      itemElements.forEach(item => {
+        const categoryName =
+          String(category.name || "")
+            .trim();
 
-        const name =
-          item
-            .querySelector(".item-name")
-            .value.trim();
+        if (!categoryName) {
 
-        const price =
-          item
-            .querySelector(".item-price")
-            .value.trim();
+          showMessage(
+            "اكتب اسم كل قسم قبل الحفظ.",
+            "error"
+          );
 
-        if (name) {
-          menuItems.push({
-            name: name,
-            price: price
-          });
+          return;
         }
 
-      });
+        const finalItems =
+          category.items
+            .map(item => ({
+              name:
+                String(item.name || "")
+                  .trim(),
 
-      if (menuItems.length === 0) {
-        showMessage(
-          "أضف صنفًا واحدًا على الأقل للمنيو.",
-          "error"
-        );
-        return;
+              price:
+                String(item.price || "")
+                  .trim()
+            }))
+            .filter(
+              item =>
+                item.name !== ""
+            );
+
+        if (finalItems.length === 0) {
+
+          showMessage(
+            `أضف صنفًا واحدًا على الأقل داخل قسم «${categoryName}».`,
+            "error"
+          );
+
+          return;
+        }
+
+        finalCategories.push({
+
+          name:
+            categoryName,
+
+          items:
+            finalItems
+
+        });
       }
 
       const siteData = {
+
         type: "restaurant",
-        business_name: businessName,
+
+        business_name:
+          businessName,
 
         business_type:
-          document.getElementById("businessType").value,
+          document
+            .getElementById("businessType")
+            .value,
 
         phone:
-          document.getElementById("businessPhone").value.trim(),
+          document
+            .getElementById("businessPhone")
+            .value
+            .trim(),
 
         address:
-          document.getElementById("businessAddress").value.trim(),
+          document
+            .getElementById("businessAddress")
+            .value
+            .trim(),
 
         description:
-          document.getElementById("businessDescription").value.trim(),
+          document
+            .getElementById("businessDescription")
+            .value
+            .trim(),
 
         design:
           selectedDesign,
 
-        menu_category:
-          categoryName,
-
-        menu_items:
-          menuItems,
+        categories:
+          finalCategories,
 
         working_hours:
-          document.getElementById("workingHours").value.trim(),
+          document
+            .getElementById("workingHours")
+            .value
+            .trim(),
 
         whatsapp:
-          document.getElementById("whatsapp").value.trim()
+          document
+            .getElementById("whatsapp")
+            .value
+            .trim()
       };
 
       localStorage.setItem(
@@ -639,36 +1121,225 @@
       );
 
       showMessage(
-        "تم حفظ بيانات موقعك بنجاح 🎉 جاري الانتقال للمعاينة...",
+        "تم حفظ الموقع والمنيو بنجاح 🎉 جاري الانتقال للمعاينة...",
         "success"
       );
 
       setTimeout(() => {
+
         window.location.href =
           "restaurant-preview.html";
+
       }, 900);
     }
 
-    function showMessage(text, type) {
+    /* =========================
+       استرجاع البيانات
+    ========================= */
+
+    function loadSavedData() {
+
+      const saved =
+        localStorage.getItem(
+          "warsha_restaurant_site"
+        );
+
+      if (!saved) {
+
+        addCategory();
+
+        return;
+      }
+
+      try {
+
+        const data =
+          JSON.parse(saved);
+
+        document
+          .getElementById("businessName")
+          .value =
+          data.business_name || "";
+
+        document
+          .getElementById("businessType")
+          .value =
+          data.business_type || "restaurant";
+
+        document
+          .getElementById("businessPhone")
+          .value =
+          data.phone || "";
+
+        document
+          .getElementById("businessAddress")
+          .value =
+          data.address || "";
+
+        document
+          .getElementById("businessDescription")
+          .value =
+          data.description || "";
+
+        document
+          .getElementById("workingHours")
+          .value =
+          data.working_hours || "";
+
+        document
+          .getElementById("whatsapp")
+          .value =
+          data.whatsapp || "";
+
+        selectedDesign =
+          data.design || "modern";
+
+        document
+          .querySelectorAll(".design")
+          .forEach(design => {
+
+            design.classList.toggle(
+              "selected",
+              design.dataset.design ===
+              selectedDesign
+            );
+
+          });
+
+        /*
+          البيانات الجديدة
+        */
+
+        if (
+          Array.isArray(data.categories)
+        ) {
+
+          categories =
+            data.categories.map(
+              category => ({
+
+                id:
+                  Date.now() +
+                  Math.random(),
+
+                name:
+                  category.name || "",
+
+                items:
+                  Array.isArray(category.items)
+                    ? category.items.map(
+                        item => ({
+                          name:
+                            item.name || "",
+                          price:
+                            item.price || ""
+                        })
+                      )
+                    : []
+
+              })
+            );
+
+        }
+
+        /*
+          تحويل البيانات القديمة
+          لقسم جديد تلقائيًا
+        */
+
+        else if (
+          data.menu_category
+        ) {
+
+          categories = [{
+
+            id:
+              Date.now() +
+              Math.random(),
+
+            name:
+              data.menu_category,
+
+            items:
+              Array.isArray(data.menu_items)
+                ? data.menu_items
+                : []
+
+          }];
+
+        }
+
+        else {
+
+          categories = [];
+
+        }
+
+        updateActivityText();
+
+        renderCategories();
+
+      } catch (error) {
+
+        console.error(error);
+
+        categories = [];
+
+        addCategory();
+      }
+    }
+
+    /* =========================
+       الرسائل
+    ========================= */
+
+    function showMessage(
+      text,
+      type
+    ) {
 
       const message =
-        document.getElementById("message");
+        document.getElementById(
+          "message"
+        );
 
-      message.textContent = text;
+      message.textContent =
+        text;
 
       message.className =
         "message " + type;
 
-      message.style.display = "block";
+      message.style.display =
+        "block";
     }
+
+    /* =========================
+       رجوع
+    ========================= */
 
     function goBack() {
-      window.location.href = "index.html";
+
+      window.location.href =
+        "create-site.html";
     }
 
-    checkLogin();
+    /* =========================
+       البداية
+    ========================= */
+
+    checkLogin().then(
+      loggedIn => {
+
+        if (loggedIn) {
+
+          loadSavedData();
+
+        }
+
+      }
+    );
+
   </script>
 
 </body>
 </html>
-```
