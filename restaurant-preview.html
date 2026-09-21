@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -10,6 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- QR Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     * {
@@ -248,6 +250,106 @@
       background: #16a34a;
     }
 
+    /* صندوق الرابط والـ QR */
+
+    .public-menu-box {
+      background: white;
+      border-radius: 20px;
+      padding: 28px 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 7px 25px rgba(0,0,0,.06);
+      text-align: center;
+    }
+
+    .public-menu-box h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .public-menu-box .subtitle {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .qr-wrapper {
+      width: 220px;
+      min-height: 220px;
+      margin: 0 auto 22px;
+      padding: 15px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #qrcode {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #qrcode img,
+    #qrcode canvas {
+      max-width: 190px;
+      height: auto;
+    }
+
+    .public-url {
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto 15px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 12px 14px;
+      direction: ltr;
+      text-align: center;
+      word-break: break-all;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .public-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .public-actions button {
+      border: 0;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .open-menu-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .copy-menu-btn {
+      background: #111827;
+      color: white;
+    }
+
+    .share-menu-btn {
+      background: #16a34a;
+      color: white;
+    }
+
+    .qr-note {
+      margin: 18px 0 0;
+      color: #6b7280;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
     /* لو مفيش بيانات */
 
     .empty {
@@ -314,6 +416,18 @@
       .menu-item {
         padding: 15px 0;
       }
+
+      .public-menu-box {
+        padding: 24px 15px;
+      }
+
+      .public-actions {
+        flex-direction: column;
+      }
+
+      .public-actions button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -357,14 +471,31 @@
   </footer>
 
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
 
+    const SUPABASE_URL =
+      "https://qupoxgclybgbetqxzzwf.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
     let siteData = null;
+    let publicMenuUrl = "";
 
 
     /* تحميل البيانات */
 
-    function loadSite() {
+    async function loadSite() {
 
       const saved =
         localStorage.getItem(
@@ -381,13 +512,144 @@
         siteData =
           JSON.parse(saved);
 
+        await loadPublicMenu();
+
         renderSite();
 
       } catch (error) {
 
+        console.error(error);
+
         showEmpty();
 
       }
+    }
+
+
+    /* تحميل رابط المنيو من Supabase */
+
+    async function loadPublicMenu() {
+
+      try {
+
+        const savedMenuId =
+          localStorage.getItem(
+            "warsha_restaurant_menu_id"
+          );
+
+        const savedSlug =
+          localStorage.getItem(
+            "warsha_restaurant_menu_slug"
+          );
+
+
+        let data = null;
+        let error = null;
+
+
+        /* أولاً نحاول بالـ ID */
+
+        if (savedMenuId) {
+
+          const result =
+            await supabaseClient
+              .from("restaurant_menus")
+              .select(
+                "id, public_slug"
+              )
+              .eq("id", savedMenuId)
+              .maybeSingle();
+
+          data = result.data;
+          error = result.error;
+
+        }
+
+
+        /* لو الـ ID مش موجود نستخدم الـ slug */
+
+        if (
+          !data &&
+          savedSlug
+        ) {
+
+          const result =
+            await supabaseClient
+              .from("restaurant_menus")
+              .select(
+                "id, public_slug"
+              )
+              .eq(
+                "public_slug",
+                savedSlug
+              )
+              .maybeSingle();
+
+          data = result.data;
+          error = result.error;
+
+        }
+
+
+        if (error) {
+
+          console.error(
+            "Supabase menu error:",
+            error
+          );
+
+          return;
+
+        }
+
+
+        if (data && data.public_slug) {
+
+          publicMenuUrl =
+            window.location.origin +
+            "/menu.html?slug=" +
+            encodeURIComponent(
+              data.public_slug
+            );
+
+
+          localStorage.setItem(
+            "warsha_restaurant_menu_url",
+            publicMenuUrl
+          );
+
+          localStorage.setItem(
+            "warsha_restaurant_menu_id",
+            data.id
+          );
+
+          localStorage.setItem(
+            "warsha_restaurant_menu_slug",
+            data.public_slug
+          );
+
+        } else {
+
+          const oldUrl =
+            localStorage.getItem(
+              "warsha_restaurant_menu_url"
+            );
+
+          if (oldUrl) {
+            publicMenuUrl = oldUrl;
+          }
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Public menu loading error:",
+          error
+        );
+
+      }
+
     }
 
 
@@ -432,10 +694,6 @@
         siteData.design ||
         "modern";
 
-
-      /*
-        بناء جميع أقسام المنيو
-      */
 
       let categoriesHTML = "";
 
@@ -557,6 +815,73 @@
 
         <div class="content">
 
+
+          <!-- رابط المنيو والـ QR -->
+
+          ${
+            publicMenuUrl
+              ? `
+
+                <section class="public-menu-box">
+
+                  <h2>
+                    📱 منيو العملاء
+                  </h2>
+
+                  <div class="subtitle">
+                    أي شخص يقدر يفتح الرابط أو يمسح الـ QR Code ويشوف المنيو
+                  </div>
+
+
+                  <div class="qr-wrapper">
+
+                    <div id="qrcode"></div>
+
+                  </div>
+
+
+                  <div class="public-url">
+                    ${escapeHTML(publicMenuUrl)}
+                  </div>
+
+
+                  <div class="public-actions">
+
+                    <button
+                      class="open-menu-btn"
+                      onclick="openPublicMenu()"
+                    >
+                      🌐 فتح المنيو
+                    </button>
+
+                    <button
+                      class="copy-menu-btn"
+                      onclick="copyMenuUrl()"
+                    >
+                      📋 نسخ الرابط
+                    </button>
+
+                    <button
+                      class="share-menu-btn"
+                      onclick="shareMenu()"
+                    >
+                      📤 مشاركة
+                    </button>
+
+                  </div>
+
+
+                  <p class="qr-note">
+                    💡 تقدر تحفظ صورة الـ QR Code وتحطها على الترابيزة أو باب المحل أو الفاتورة.
+                  </p>
+
+                </section>
+
+              `
+              : ""
+          }
+
+
           ${categoriesHTML}
 
 
@@ -660,6 +985,140 @@
         </div>
 
       `;
+
+
+      /* إنشاء QR بعد ظهور العنصر */
+
+      if (publicMenuUrl) {
+
+        setTimeout(
+          createQRCode,
+          100
+        );
+
+      }
+
+    }
+
+
+    /* إنشاء QR Code */
+
+    function createQRCode() {
+
+      const qrElement =
+        document.getElementById(
+          "qrcode"
+        );
+
+      if (
+        !qrElement ||
+        !publicMenuUrl
+      ) {
+        return;
+      }
+
+
+      qrElement.innerHTML = "";
+
+
+      new QRCode(
+        qrElement,
+        {
+          text: publicMenuUrl,
+          width: 190,
+          height: 190,
+          correctLevel:
+            QRCode.CorrectLevel.H
+        }
+      );
+
+    }
+
+
+    /* فتح المنيو العامة */
+
+    function openPublicMenu() {
+
+      if (!publicMenuUrl) {
+        return;
+      }
+
+      window.open(
+        publicMenuUrl,
+        "_blank"
+      );
+
+    }
+
+
+    /* نسخ الرابط */
+
+    async function copyMenuUrl() {
+
+      if (!publicMenuUrl) {
+        return;
+      }
+
+
+      try {
+
+        await navigator.clipboard.writeText(
+          publicMenuUrl
+        );
+
+        alert(
+          "✅ تم نسخ رابط المنيو"
+        );
+
+      } catch (error) {
+
+        prompt(
+          "انسخ رابط المنيو:",
+          publicMenuUrl
+        );
+
+      }
+
+    }
+
+
+    /* مشاركة الرابط */
+
+    async function shareMenu() {
+
+      if (!publicMenuUrl) {
+        return;
+      }
+
+
+      if (
+        navigator.share
+      ) {
+
+        try {
+
+          await navigator.share({
+            title:
+              siteData.business_name ||
+              "المنيو",
+            text:
+              "شوف المنيو الخاصة بنا",
+            url:
+              publicMenuUrl
+          });
+
+        } catch (error) {
+
+          /* المستخدم ممكن يكون قفل المشاركة */
+
+        }
+
+      } else {
+
+        await copyMenuUrl();
+
+      }
+
     }
 
 
@@ -669,9 +1128,11 @@
 
       const types = {
 
-        restaurant: "مطعم",
+        restaurant:
+          "مطعم",
 
-        cafe: "كافيه",
+        cafe:
+          "كافيه",
 
         "restaurant-cafe":
           "مطعم وكافيه",
@@ -688,6 +1149,7 @@
         types[type] ||
         "مطعم"
       );
+
     }
 
 
@@ -696,13 +1158,13 @@
     function editSite() {
 
       /*
-        مهم جدًا:
-        لا نحذف localStorage هنا.
-        البيانات ستظل موجودة.
+        لا نحذف localStorage
+        عشان الرابط والبيانات يفضلوا موجودين.
       */
 
       window.location.href =
         "restaurant-setup.html";
+
     }
 
 
@@ -712,6 +1174,7 @@
 
       window.location.href =
         "create-site.html";
+
     }
 
 
@@ -729,6 +1192,7 @@
       window.location.href =
         "tel:" +
         siteData.phone;
+
     }
 
 
@@ -742,6 +1206,7 @@
       ) {
         return;
       }
+
 
       let number =
         siteData.whatsapp
@@ -775,6 +1240,7 @@
         number,
         "_blank"
       );
+
     }
 
 
@@ -805,6 +1271,7 @@
         </div>
 
       `;
+
     }
 
 
@@ -838,6 +1305,7 @@
           /'/g,
           "&#039;"
         );
+
     }
 
 
@@ -847,4 +1315,3 @@
 
 </body>
 </html>
-```
