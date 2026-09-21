@@ -1,0 +1,674 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إعداد موقع المطعم | ورشة ويب</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Cairo", sans-serif;
+      background: #f6f8fb;
+      color: #172033;
+    }
+
+    .topbar {
+      background: #111827;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 18px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .logo span {
+      color: #f97316;
+    }
+
+    .back {
+      border: 0;
+      background: #f3f4f6;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+
+    .container {
+      width: min(1000px, 92%);
+      margin: 35px auto 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: white;
+      border-radius: 22px;
+      padding: 30px;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #d1d5db;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.05);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 7px;
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #f97316;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .menu-item {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 15px;
+      margin-top: 12px;
+      background: #fafafa;
+    }
+
+    .menu-item-grid {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 12px;
+    }
+
+    .remove-btn {
+      margin-top: 10px;
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .add-btn {
+      margin-top: 15px;
+      background: #fff7ed;
+      color: #ea580c;
+      border: 1px dashed #fb923c;
+      padding: 11px 17px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+    }
+
+    .designs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .design {
+      border: 2px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .design:hover {
+      border-color: #f97316;
+    }
+
+    .design.selected {
+      border-color: #f97316;
+      background: #fff7ed;
+    }
+
+    .design-icon {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .save-area {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .start-btn {
+      background: #f97316;
+      color: white;
+      border: 0;
+      padding: 15px 35px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(249,115,22,.25);
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    @media (max-width: 700px) {
+      .grid,
+      .designs,
+      .menu-item-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 23px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    🚀 ورشة ويب — ابدأ ببناء موقعك الآن
+  </div>
+
+  <header>
+    <div class="logo">
+      ورشة <span>ويب</span>
+    </div>
+
+    <button class="back" onclick="goBack()">
+      ← رجوع
+    </button>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <h1>🍽️ إنشاء موقع مطعم أو كافيه</h1>
+      <p>
+        جهّز بيانات موقعك، وعدّل المنيو والأسعار بنفسك، وبعدها ننتقل لمعاينة الموقع.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>🏪 بيانات المطعم أو الكافيه</h2>
+
+      <label>اسم المطعم / الكافيه</label>
+      <input
+        id="businessName"
+        type="text"
+        placeholder="مثال: مطعم ورشة"
+      >
+
+      <div class="grid">
+        <div>
+          <label>نوع النشاط</label>
+          <select id="businessType">
+            <option value="restaurant">مطعم</option>
+            <option value="cafe">كافيه</option>
+            <option value="restaurant-cafe">مطعم وكافيه</option>
+            <option value="bakery">مخبوزات وحلويات</option>
+            <option value="other">نشاط آخر</option>
+          </select>
+        </div>
+
+        <div>
+          <label>رقم الهاتف</label>
+          <input
+            id="businessPhone"
+            type="tel"
+            placeholder="مثال: 011xxxxxxxx"
+          >
+        </div>
+      </div>
+
+      <label>العنوان</label>
+      <input
+        id="businessAddress"
+        type="text"
+        placeholder="اكتب عنوان المكان"
+      >
+
+      <label>وصف قصير</label>
+      <textarea
+        id="businessDescription"
+        placeholder="اكتب وصفًا بسيطًا عن المطعم أو الكافيه..."
+      ></textarea>
+    </section>
+
+    <section class="card">
+      <h2>🎨 اختر شكل الموقع</h2>
+
+      <div class="designs">
+
+        <div class="design selected" data-design="modern" onclick="selectDesign(this)">
+          <div class="design-icon">✨</div>
+          <strong>مودرن</strong>
+          <p>شكل عصري وبسيط</p>
+        </div>
+
+        <div class="design" data-design="luxury" onclick="selectDesign(this)">
+          <div class="design-icon">👑</div>
+          <strong>فاخر</strong>
+          <p>مناسب للمطاعم الراقية</p>
+        </div>
+
+        <div class="design" data-design="simple" onclick="selectDesign(this)">
+          <div class="design-icon">🍽️</div>
+          <strong>بسيط</strong>
+          <p>شكل واضح وسريع</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📋 المنيو</h2>
+
+      <p>
+        أضف أقسام المنيو والأصناف والأسعار. ويمكن تعديلها لاحقًا من لوحة التحكم.
+      </p>
+
+      <label>اسم قسم المنيو</label>
+      <input
+        id="categoryName"
+        type="text"
+        placeholder="مثال: الوجبات الرئيسية"
+      >
+
+      <div id="menuItems">
+
+        <div class="menu-item">
+          <div class="menu-item-grid">
+
+            <div>
+              <label>اسم الصنف</label>
+              <input
+                type="text"
+                class="item-name"
+                placeholder="مثال: برجر لحم"
+              >
+            </div>
+
+            <div>
+              <label>السعر</label>
+              <input
+                type="number"
+                class="item-price"
+                placeholder="150"
+              >
+            </div>
+
+          </div>
+
+          <button class="remove-btn" onclick="removeItem(this)">
+            حذف الصنف
+          </button>
+        </div>
+
+      </div>
+
+      <button class="add-btn" onclick="addItem()">
+        ＋ إضافة صنف جديد
+      </button>
+    </section>
+
+    <section class="card">
+      <h2>📍 معلومات إضافية</h2>
+
+      <div class="grid">
+
+        <div>
+          <label>مواعيد العمل</label>
+          <input
+            id="workingHours"
+            type="text"
+            placeholder="مثال: يوميًا من 10 صباحًا إلى 12 مساءً"
+          >
+        </div>
+
+        <div>
+          <label>رابط واتساب</label>
+          <input
+            id="whatsapp"
+            type="text"
+            placeholder="اختياري"
+          >
+        </div>
+
+      </div>
+    </section>
+
+    <div class="save-area">
+
+      <button class="start-btn" onclick="createRestaurantSite()">
+        🚀 ابدأ بناء موقعي
+      </button>
+
+      <div id="message" class="message"></div>
+
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL =
+      "https://qupoxgclybgbetqxzzwf.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+    let selectedDesign = "modern";
+
+    async function checkLogin() {
+      const {
+        data: { session }
+      } = await supabaseClient.auth.getSession();
+
+      if (!session) {
+        window.location.href = "login.html";
+        return false;
+      }
+
+      return true;
+    }
+
+    function selectDesign(element) {
+      document
+        .querySelectorAll(".design")
+        .forEach(item => item.classList.remove("selected"));
+
+      element.classList.add("selected");
+
+      selectedDesign =
+        element.dataset.design;
+    }
+
+    function addItem() {
+      const container =
+        document.getElementById("menuItems");
+
+      const item =
+        document.createElement("div");
+
+      item.className = "menu-item";
+
+      item.innerHTML = `
+        <div class="menu-item-grid">
+
+          <div>
+            <label>اسم الصنف</label>
+            <input
+              type="text"
+              class="item-name"
+              placeholder="مثال: بيتزا"
+            >
+          </div>
+
+          <div>
+            <label>السعر</label>
+            <input
+              type="number"
+              class="item-price"
+              placeholder="200"
+            >
+          </div>
+
+        </div>
+
+        <button
+          class="remove-btn"
+          onclick="removeItem(this)"
+        >
+          حذف الصنف
+        </button>
+      `;
+
+      container.appendChild(item);
+    }
+
+    function removeItem(button) {
+      const items =
+        document.querySelectorAll(".menu-item");
+
+      if (items.length <= 1) {
+        showMessage(
+          "لازم يكون عندك صنف واحد على الأقل.",
+          "error"
+        );
+        return;
+      }
+
+      button.parentElement.remove();
+    }
+
+    async function createRestaurantSite() {
+
+      const loggedIn = await checkLogin();
+
+      if (!loggedIn) return;
+
+      const businessName =
+        document
+          .getElementById("businessName")
+          .value.trim();
+
+      if (!businessName) {
+        showMessage(
+          "اكتب اسم المطعم أو الكافيه أولًا.",
+          "error"
+        );
+        return;
+      }
+
+      const categoryName =
+        document
+          .getElementById("categoryName")
+          .value.trim();
+
+      if (!categoryName) {
+        showMessage(
+          "اكتب اسم قسم المنيو.",
+          "error"
+        );
+        return;
+      }
+
+      const itemElements =
+        document.querySelectorAll(".menu-item");
+
+      const menuItems = [];
+
+      itemElements.forEach(item => {
+
+        const name =
+          item
+            .querySelector(".item-name")
+            .value.trim();
+
+        const price =
+          item
+            .querySelector(".item-price")
+            .value.trim();
+
+        if (name) {
+          menuItems.push({
+            name: name,
+            price: price
+          });
+        }
+
+      });
+
+      if (menuItems.length === 0) {
+        showMessage(
+          "أضف صنفًا واحدًا على الأقل للمنيو.",
+          "error"
+        );
+        return;
+      }
+
+      const siteData = {
+        type: "restaurant",
+        business_name: businessName,
+
+        business_type:
+          document.getElementById("businessType").value,
+
+        phone:
+          document.getElementById("businessPhone").value.trim(),
+
+        address:
+          document.getElementById("businessAddress").value.trim(),
+
+        description:
+          document.getElementById("businessDescription").value.trim(),
+
+        design:
+          selectedDesign,
+
+        menu_category:
+          categoryName,
+
+        menu_items:
+          menuItems,
+
+        working_hours:
+          document.getElementById("workingHours").value.trim(),
+
+        whatsapp:
+          document.getElementById("whatsapp").value.trim()
+      };
+
+      localStorage.setItem(
+        "warsha_restaurant_site",
+        JSON.stringify(siteData)
+      );
+
+      showMessage(
+        "تم حفظ بيانات موقعك بنجاح 🎉 جاري الانتقال للمعاينة...",
+        "success"
+      );
+
+      setTimeout(() => {
+        window.location.href =
+          "restaurant-preview.html";
+      }, 900);
+    }
+
+    function showMessage(text, type) {
+
+      const message =
+        document.getElementById("message");
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+      message.style.display = "block";
+    }
+
+    function goBack() {
+      window.location.href = "index.html";
+    }
+
+    checkLogin();
+  </script>
+
+</body>
+</html>
+```
