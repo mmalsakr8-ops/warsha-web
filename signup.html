@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -81,6 +82,17 @@
       outline: none;
       font-size: 15px;
       transition: 0.2s;
+      direction: rtl;
+    }
+
+    input[type="email"] {
+      direction: ltr;
+      text-align: left;
+    }
+
+    input[type="tel"] {
+      direction: ltr;
+      text-align: left;
     }
 
     input:focus {
@@ -160,96 +172,107 @@
       }
     }
   </style>
+
 </head>
 
 <body>
 
   <div class="signup-container">
 
-    <div class="logo">
-      ورشة <span>ويب</span>
+```
+<div class="logo">
+  ورشة <span>ويب</span>
+</div>
+
+<div class="card">
+
+  <h1>إنشاء حساب جديد</h1>
+
+  <p class="subtitle">
+    أنشئ حسابك وابدأ في بناء موقعك من ورشة ويب
+  </p>
+
+  <form id="signupForm">
+
+    <div class="field">
+      <label for="fullName">الاسم بالكامل</label>
+      <input
+        type="text"
+        id="fullName"
+        placeholder="اكتب اسمك بالكامل"
+        autocomplete="name"
+        required
+      >
     </div>
 
-    <div class="card">
-
-      <h1>إنشاء حساب جديد</h1>
-
-      <p class="subtitle">
-        أنشئ حسابك وابدأ في بناء موقعك من ورشة ويب
-      </p>
-
-      <form id="signupForm">
-
-        <div class="field">
-          <label for="fullName">الاسم بالكامل</label>
-          <input
-            type="text"
-            id="fullName"
-            placeholder="اكتب اسمك بالكامل"
-            required
-          >
-        </div>
-
-        <div class="field">
-          <label for="phone">رقم الهاتف</label>
-          <input
-            type="tel"
-            id="phone"
-            placeholder="مثال: 01012345678"
-            required
-          >
-        </div>
-
-        <div class="field">
-          <label for="email">البريد الإلكتروني</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="example@email.com"
-            required
-          >
-        </div>
-
-        <div class="field">
-          <label for="password">كلمة المرور</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="اكتب كلمة المرور"
-            minlength="6"
-            required
-          >
-        </div>
-
-        <div class="field">
-          <label for="confirmPassword">تأكيد كلمة المرور</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            placeholder="أعد كتابة كلمة المرور"
-            minlength="6"
-            required
-          >
-        </div>
-
-        <button type="submit" class="signup-btn" id="signupBtn">
-          إنشاء الحساب
-        </button>
-
-        <div id="message" class="message"></div>
-
-      </form>
-
-      <div class="login-link">
-        لديك حساب بالفعل؟
-        <a href="login.html">تسجيل الدخول</a>
-      </div>
-
-      <a href="index.html" class="back">
-        ← العودة إلى الصفحة الرئيسية
-      </a>
-
+    <div class="field">
+      <label for="phone">رقم الهاتف المصري</label>
+      <input
+        type="tel"
+        id="phone"
+        placeholder="مثال: 01012345678"
+        inputmode="numeric"
+        autocomplete="tel"
+        maxlength="11"
+        required
+      >
     </div>
+
+    <div class="field">
+      <label for="email">البريد الإلكتروني</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="example@email.com"
+        autocomplete="email"
+        required
+      >
+    </div>
+
+    <div class="field">
+      <label for="password">كلمة المرور</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="اكتب كلمة المرور"
+        minlength="6"
+        autocomplete="new-password"
+        required
+      >
+    </div>
+
+    <div class="field">
+      <label for="confirmPassword">تأكيد كلمة المرور</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="أعد كتابة كلمة المرور"
+        minlength="6"
+        autocomplete="new-password"
+        required
+      >
+    </div>
+
+    <button type="submit" class="signup-btn" id="signupBtn">
+      إنشاء الحساب
+    </button>
+
+    <div id="message" class="message"></div>
+
+  </form>
+
+  <div class="login-link">
+    لديك حساب بالفعل؟
+    <a href="login.html">تسجيل الدخول</a>
+  </div>
+
+  <a href="index.html" class="back">
+    ← العودة إلى الصفحة الرئيسية
+  </a>
+
+</div>
+```
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -258,7 +281,8 @@
 
     const SUPABASE_URL = "https://qupoxgclybgbetqxzzwf.supabase.co";
 
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
 
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
@@ -274,54 +298,189 @@
       message.className = "message " + type;
     }
 
+    // توحيد رقم الهاتف المصري
+    function normalizeEgyptianPhone(phone) {
+      let value = phone.trim();
+
+      // تحويل الأرقام العربية إلى إنجليزية
+      value = value.replace(/[٠-٩]/g, function(digit) {
+        return "٠١٢٣٤٥٦٧٨٩".indexOf(digit);
+      });
+
+      // إزالة المسافات والرموز
+      value = value.replace(/\s+/g, "");
+      value = value.replace(/-/g, "");
+
+      // تحويل +20XXXXXXXXXX إلى 01XXXXXXXXX
+      if (value.startsWith("+20")) {
+        value = "0" + value.substring(3);
+      }
+
+      // تحويل 20XXXXXXXXXX إلى 01XXXXXXXXX
+      if (value.startsWith("20") && value.length === 12) {
+        value = "0" + value.substring(2);
+      }
+
+      return value;
+    }
+
+    // التحقق من رقم الهاتف المصري
+    function isValidEgyptianPhone(phone) {
+      return /^01[0125][0-9]{8}$/.test(phone);
+    }
+
     form.addEventListener("submit", async function(event) {
 
       event.preventDefault();
 
-      const fullName = document.getElementById("fullName").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
+      message.className = "message";
 
+      const fullName = document.getElementById("fullName").value.trim();
+
+      let phone = document.getElementById("phone").value.trim();
+
+      const email = document.getElementById("email").value.trim().toLowerCase();
+
+      const password = document.getElementById("password").value;
+
+      const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+      // توحيد الرقم
+      phone = normalizeEgyptianPhone(phone);
+
+      // التحقق من الاسم
+      if (fullName.length < 2) {
+        showMessage("من فضلك اكتب اسمك بالكامل.", "error");
+        return;
+      }
+
+      // التحقق من رقم الهاتف
+      if (!isValidEgyptianPhone(phone)) {
+        showMessage(
+          "رقم الهاتف غير صحيح. من فضلك أدخل رقم موبايل مصري صحيح مثل 01012345678.",
+          "error"
+        );
+        return;
+      }
+
+      // التحقق من كلمة المرور
       if (password !== confirmPassword) {
         showMessage("كلمتا المرور غير متطابقتين.", "error");
         return;
       }
 
       if (password.length < 6) {
-        showMessage("كلمة المرور يجب أن تكون 6 أحرف على الأقل.", "error");
+        showMessage(
+          "كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
+          "error"
+        );
         return;
       }
 
       signupBtn.disabled = true;
-      signupBtn.textContent = "جاري إنشاء الحساب...";
+      signupBtn.textContent = "جاري التحقق...";
 
-      const { data, error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-          data: {
-            full_name: fullName,
-            phone: phone
-          }
+      try {
+
+        // فحص رقم الهاتف قبل إنشاء الحساب
+        const { data: existingProfile, error: phoneCheckError } =
+          await supabaseClient
+            .from("profiles")
+            .select("id")
+            .eq("phone", phone)
+            .maybeSingle();
+
+        if (phoneCheckError) {
+          console.error(phoneCheckError);
+
+          showMessage(
+            "حدث خطأ أثناء التحقق من رقم الهاتف. حاول مرة أخرى.",
+            "error"
+          );
+
+          return;
         }
-      });
 
-      signupBtn.disabled = false;
-      signupBtn.textContent = "إنشاء الحساب";
+        if (existingProfile) {
+          showMessage(
+            "رقم الهاتف ده مستخدم بالفعل في حساب آخر. استخدم رقمًا مختلفًا.",
+            "error"
+          );
 
-      if (error) {
-        showMessage(error.message, "error");
-        return;
+          return;
+        }
+
+        signupBtn.textContent = "جاري إنشاء الحساب...";
+
+        const { data, error } =
+          await supabaseClient.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+              data: {
+                full_name: fullName,
+                phone: phone
+              }
+            }
+          });
+
+        if (error) {
+
+          console.error(error);
+
+          const errorMessage = error.message.toLowerCase();
+
+          if (
+            errorMessage.includes("user already registered") ||
+            errorMessage.includes("already registered")
+          ) {
+            showMessage(
+              "البريد الإلكتروني ده مستخدم بالفعل. جرّب تسجيل الدخول.",
+              "error"
+            );
+
+          } else if (
+            errorMessage.includes("rate limit") ||
+            errorMessage.includes("email rate limit")
+          ) {
+            showMessage(
+              "تم تجاوز حد إرسال رسائل التأكيد مؤقتًا. حاول مرة أخرى لاحقًا.",
+              "error"
+            );
+
+          } else {
+            showMessage(
+              "تعذر إنشاء الحساب حاليًا. حاول مرة أخرى.",
+              "error"
+            );
+          }
+
+          return;
+        }
+
+        showMessage(
+          "تم إنشاء الحساب بنجاح. من فضلك راجع بريدك الإلكتروني لتأكيد الحساب.",
+          "success"
+        );
+
+        form.reset();
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          "حدث خطأ غير متوقع. حاول مرة أخرى.",
+          "error"
+        );
+
+      } finally {
+
+        signupBtn.disabled = false;
+        signupBtn.textContent = "إنشاء الحساب";
+
       }
-
-      showMessage(
-        "تم إنشاء الحساب بنجاح. من فضلك راجع بريدك الإلكتروني لتأكيد الحساب.",
-        "success"
-      );
-
-      form.reset();
 
     });
 
