@@ -1,0 +1,296 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>إنشاء موقع جديد | ورشة ويب</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7ff, #eef2ff);
+      color: #172033;
+    }
+
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid #e7eaf2;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      color: #5b4bdb;
+    }
+
+    .logo span {
+      color: #172033;
+    }
+
+    .back {
+      color: #5b4bdb;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1050px;
+      margin: auto;
+      padding: 35px 20px 50px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header .icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      font-size: 29px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #697386;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .sites-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .site-card {
+      background: #fff;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      padding: 25px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .site-card:hover {
+      transform: translateY(-4px);
+      border-color: #5b4bdb;
+      box-shadow: 0 14px 30px rgba(91, 75, 219, 0.12);
+    }
+
+    .site-card .emoji {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .site-card h2 {
+      font-size: 19px;
+      margin-bottom: 9px;
+    }
+
+    .site-card p {
+      color: #697386;
+      font-size: 13px;
+      line-height: 1.7;
+      min-height: 44px;
+    }
+
+    .choose-btn {
+      display: inline-block;
+      margin-top: 18px;
+      background: #5b4bdb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .note {
+      margin-top: 25px;
+      background: #fff;
+      border: 1px solid #e8ebf3;
+      border-radius: 15px;
+      padding: 15px;
+      text-align: center;
+      color: #697386;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 750px) {
+      .sites-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 25px;
+      }
+
+      .site-card p {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">
+      ورشة <span>ويب</span>
+    </div>
+
+    <a href="dashboard.html" class="back">
+      ← لوحة التحكم
+    </a>
+
+  </header>
+
+  <main class="container">
+
+    <section class="header">
+
+      <div class="icon">🌐</div>
+
+      <h1>عايز تعمل موقع إيه؟</h1>
+
+      <p>
+        اختار نوع الموقع اللي يناسب فكرتك، وبعدها هنبدأ معاك
+        خطوة بخطوة في تجهيز الموقع.
+      </p>
+
+    </section>
+
+    <section class="sites-grid">
+
+      <div class="site-card" onclick="chooseSite('restaurant')">
+
+        <div class="emoji">🍽️</div>
+
+        <h2>مطعم / كافيه</h2>
+
+        <p>
+          موقع للمطاعم والكافيهات مع قائمة طعام قابلة للتعديل.
+        </p>
+
+        <button class="choose-btn">
+          اختيار النوع
+        </button>
+
+      </div>
+
+      <div class="site-card" onclick="chooseSite('store')">
+
+        <div class="emoji">🛍️</div>
+
+        <h2>متجر إلكتروني</h2>
+
+        <p>
+          اعرض منتجاتك وخلي العملاء يشوفوا التفاصيل والأسعار.
+        </p>
+
+        <button class="choose-btn">
+          اختيار النوع
+        </button>
+
+      </div>
+
+      <div class="site-card" onclick="chooseSite('personal')">
+
+        <div class="emoji">👤</div>
+
+        <h2>موقع شخصي</h2>
+
+        <p>
+          موقع شخصي لعرض أعمالك وخدماتك ومعلومات التواصل.
+        </p>
+
+        <button class="choose-btn">
+          اختيار النوع
+        </button>
+
+      </div>
+
+    </section>
+
+    <div class="note">
+      💡 تقدر بعدين تضيف أنواع مواقع جديدة، وهنخلي النظام قابل
+      للتطوير وإضافة قوالب وتصميمات مختلفة.
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://qupoxgclybgbetqxzzwf.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    async function checkLogin() {
+
+      const {
+        data: { user }
+      } = await supabaseClient.auth.getUser();
+
+      if (!user) {
+        window.location.href = "login.html";
+      }
+
+    }
+
+    function chooseSite(type) {
+
+      const siteNames = {
+        restaurant: "مطعم / كافيه",
+        store: "متجر إلكتروني",
+        personal: "موقع شخصي"
+      };
+
+      alert(
+        "اختارت: " +
+        siteNames[type] +
+        "\n\nالخطوة القادمة هنبدأ إعداد موقعك."
+      );
+
+    }
+
+    checkLogin();
+
+  </script>
+
+</body>
+</html>
+```
