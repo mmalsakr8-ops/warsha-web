@@ -5,16 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>معاينة الموقع | ورشة ويب</title>
+  <title>معاينة موقع المطعم — ورشة ويب</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- QR Code -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -22,264 +28,311 @@
     body {
       margin: 0;
       font-family: "Cairo", sans-serif;
-      background: #f5f5f5;
-      color: #222;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    button,
+    input {
+      font-family: inherit;
     }
 
     .topbar {
       background: #111827;
-      color: white;
-      padding: 12px 18px;
+      color: #fff;
+      padding: 11px 15px;
       text-align: center;
       font-size: 14px;
     }
 
-    .preview-bar {
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 14px 18px;
       position: sticky;
       top: 0;
-      z-index: 50;
-      background: white;
-      border-bottom: 1px solid #ddd;
-      padding: 12px 5%;
+      z-index: 20;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
     }
 
-    .preview-title {
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      color: #111827;
       font-weight: 800;
+      font-size: 19px;
     }
 
-    .preview-actions {
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #111827;
+      color: #fff;
+      font-weight: 800;
+      font-size: 21px;
+    }
+
+    .header-actions {
       display: flex;
       gap: 8px;
     }
 
-    button {
-      font-family: inherit;
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
       cursor: pointer;
-    }
-
-    .back-btn {
-      border: 0;
-      background: #f3f4f6;
-      color: #374151;
-      padding: 9px 15px;
-      border-radius: 9px;
-      font-weight: 600;
-    }
-
-    .edit-btn {
-      border: 0;
-      background: #f97316;
-      color: white;
-      padding: 9px 15px;
-      border-radius: 9px;
       font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: #111827;
+      color: #fff;
+    }
+
+    .btn-light {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 25px auto;
+      padding: 0 15px 60px;
+    }
+
+    .preview-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .preview-title h1 {
+      margin: 0 0 6px;
+      font-size: 27px;
+    }
+
+    .preview-title p {
+      margin: 0;
+      color: #6b7280;
     }
 
     .site {
-      min-height: calc(100vh - 100px);
+      background: #fff;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 10px 35px rgba(0,0,0,.06);
     }
 
     .hero {
-      color: white;
+      padding: 45px 20px;
       text-align: center;
-      padding: 75px 20px;
+      background: linear-gradient(
+        135deg,
+        #111827,
+        #374151
+      );
+      color: #fff;
     }
 
-    .hero.modern {
-      background: linear-gradient(135deg, #111827, #374151);
-    }
-
-    .hero.luxury {
-      background: linear-gradient(135deg, #18181b, #3f3f46);
-    }
-
-    .hero.simple {
-      background: #374151;
-    }
-
-    .hero h1 {
-      margin: 0 0 12px;
-      font-size: 42px;
-      font-weight: 800;
+    .hero h2 {
+      margin: 0 0 8px;
+      font-size: 34px;
     }
 
     .hero p {
-      max-width: 700px;
-      margin: auto;
-      line-height: 2;
-      color: #e5e7eb;
+      margin: 5px 0;
+      opacity: .92;
     }
 
-    .hero-info {
-      margin-top: 25px;
+    .hero-phone {
+      display: inline-block;
+      margin-top: 13px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      direction: ltr;
+    }
+
+    .info-row {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px;
+      padding: 18px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
     }
 
-    .hero-info span {
-      background: rgba(255,255,255,.12);
-      padding: 8px 15px;
-      border-radius: 30px;
+    .info-pill {
+      padding: 9px 14px;
+      background: #f3f4f6;
+      border-radius: 50px;
       font-size: 14px;
+      font-weight: 700;
     }
 
-    .content {
-      width: min(950px, 92%);
-      margin: 35px auto 60px;
+    .menu-area {
+      padding: 25px 18px;
     }
 
-    .menu-category {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 22px;
-      box-shadow: 0 7px 25px rgba(0,0,0,.05);
+    .menu-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .menu-title h3 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .category {
+      margin-bottom: 25px;
     }
 
     .category-title {
       margin: 0 0 12px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid #f97316;
-      font-size: 24px;
-      font-weight: 800;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #111827;
+      font-size: 20px;
     }
 
-    .menu-item {
+    .item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      padding: 17px 3px;
-      border-bottom: 1px solid #eeeeee;
-    }
-
-    .menu-item:last-child {
-      border-bottom: 0;
+      gap: 15px;
+      padding: 14px 4px;
+      border-bottom: 1px solid #edf0f3;
     }
 
     .item-name {
-      font-size: 17px;
       font-weight: 700;
     }
 
     .item-price {
-      color: #f97316;
-      font-weight: 800;
       white-space: nowrap;
+      font-weight: 800;
     }
 
-    .contact-section {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      box-shadow: 0 7px 25px rgba(0,0,0,.05);
+    .contact {
+      background: #f9fafb;
+      padding: 28px 18px;
     }
 
-    .contact-section h2 {
-      margin-top: 0;
-      font-size: 23px;
+    .contact h3 {
+      text-align: center;
+      margin: 0 0 20px;
     }
 
     .contact-grid {
+      max-width: 750px;
+      margin: auto;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
+      gap: 12px;
     }
 
-    .contact-box {
-      background: #f9fafb;
-      border-radius: 13px;
-      padding: 18px;
+    .contact-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
       text-align: center;
     }
 
     .contact-icon {
-      font-size: 28px;
-      margin-bottom: 7px;
+      font-size: 25px;
+      margin-bottom: 5px;
     }
 
-    .contact-box strong {
+    .contact-card strong {
       display: block;
       margin-bottom: 5px;
     }
 
-    .contact-box div {
-      color: #6b7280;
-      font-size: 14px;
+    .contact-card a {
+      color: #111827;
+      text-decoration: none;
       word-break: break-word;
     }
 
-    .actions {
-      text-align: center;
-      margin: 30px 0;
-    }
-
-    .call-btn,
-    .whatsapp-btn {
-      border: 0;
-      color: white;
-      padding: 13px 27px;
-      border-radius: 11px;
-      font-size: 16px;
-      font-weight: 800;
-      margin: 5px;
-    }
-
-    .call-btn {
-      background: #111827;
-    }
-
-    .whatsapp-btn {
-      background: #16a34a;
-    }
-
-    /* QR */
-
-    .public-menu-box {
-      background: white;
-      border-radius: 20px;
-      padding: 28px 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 7px 25px rgba(0,0,0,.06);
-      text-align: center;
-      border: 2px solid #e5e7eb;
-    }
-
-    .public-menu-box h2 {
-      margin: 0 0 8px;
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .subtitle {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 22px;
-      line-height: 1.8;
-    }
-
-    .qr-wrapper {
-      width: 220px;
-      min-height: 220px;
-      margin: 0 auto 22px;
-      padding: 15px;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
+    .buttons {
       display: flex;
-      align-items: center;
       justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .action-call {
+      background: #111827;
+      color: #fff;
+    }
+
+    .action-whatsapp {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    /* =========================
+       QR SECTION
+    ========================= */
+
+    .qr-section {
+      margin: 0;
+      padding: 35px 18px;
+      text-align: center;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .qr-section h3 {
+      margin: 0 0 8px;
+      font-size: 23px;
+    }
+
+    .qr-description {
+      color: #6b7280;
+      margin: 0 0 20px;
+    }
+
+    .qr-box {
+      width: 230px;
+      min-height: 230px;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 18px;
     }
 
     #qrcode {
       width: 190px;
-      height: 190px;
+      min-height: 190px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -287,199 +340,178 @@
 
     #qrcode img,
     #qrcode canvas {
-      width: 190px !important;
-      height: 190px !important;
-      display: block;
+      max-width: 190px;
+      height: auto;
     }
 
-    .qr-loading {
-      color: #6b7280;
-      font-size: 13px;
+    .public-url-box {
+      max-width: 700px;
+      margin: auto;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px;
     }
 
-    .public-url-title {
+    .public-url-label {
       font-weight: 800;
       margin-bottom: 8px;
     }
 
     .public-url {
-      width: 100%;
-      max-width: 650px;
-      margin: 0 auto 15px;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 12px 14px;
-      direction: ltr;
-      text-align: center;
+      display: block;
+      color: #2563eb;
       word-break: break-all;
+      text-decoration: none;
+      direction: ltr;
       font-size: 14px;
-      color: #374151;
-    }
-
-    .public-actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .public-actions button {
-      border: 0;
-      padding: 11px 18px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .open-menu-btn {
-      background: #2563eb;
-      color: white;
-    }
-
-    .copy-menu-btn {
-      background: #111827;
-      color: white;
-    }
-
-    .share-menu-btn {
-      background: #16a34a;
-      color: white;
-    }
-
-    .qr-note {
-      margin: 18px 0 0;
-      color: #6b7280;
-      font-size: 13px;
       line-height: 1.8;
     }
 
-    .error-box {
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      color: #9a3412;
-      padding: 15px;
-      border-radius: 12px;
+    .qr-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .copy-btn {
+      background: #111827;
+      color: #fff;
+    }
+
+    .open-btn {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .stable-note {
       margin-top: 15px;
       font-size: 13px;
+      color: #166534;
+      font-weight: 700;
     }
 
-    .empty {
+    .loading {
       text-align: center;
-      padding: 80px 20px;
+      padding: 50px 15px;
+      color: #6b7280;
     }
 
-    .empty h2 {
-      margin-bottom: 10px;
-    }
-
-    .empty button {
-      background: #f97316;
-      border: 0;
-      color: white;
-      padding: 13px 25px;
-      border-radius: 10px;
+    .error {
+      max-width: 700px;
+      margin: 30px auto;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 18px;
+      border-radius: 14px;
+      text-align: center;
       font-weight: 700;
     }
 
     footer {
-      background: #111827;
-      color: #9ca3af;
       text-align: center;
       padding: 25px;
+      color: #6b7280;
       font-size: 13px;
-    }
-
-    footer strong {
-      color: white;
     }
 
     @media (max-width: 700px) {
 
-      .preview-bar {
+      .header-inner {
+        align-items: stretch;
+      }
+
+      .header-actions {
         flex-direction: column;
       }
 
-      .preview-actions {
-        width: 100%;
-      }
-
-      .preview-actions button {
-        flex: 1;
-      }
-
       .hero {
-        padding: 55px 18px;
+        padding: 35px 15px;
       }
 
-      .hero h1 {
-        font-size: 30px;
+      .hero h2 {
+        font-size: 28px;
       }
 
       .contact-grid {
         grid-template-columns: 1fr;
       }
 
-      .menu-category,
-      .contact-section {
-        padding: 19px;
+      .preview-title h1 {
+        font-size: 23px;
       }
 
-      .menu-item {
-        padding: 15px 0;
-      }
-
-      .public-menu-box {
-        padding: 24px 15px;
-      }
-
-      .public-actions {
-        flex-direction: column;
-      }
-
-      .public-actions button {
-        width: 100%;
-      }
     }
+
   </style>
 </head>
 
 <body>
 
   <div class="topbar">
-    👀 معاينة موقع المطعم — ورشة ويب
+    🚀 معاينة موقعك — ورشة ويب
   </div>
 
-  <div class="preview-bar">
+  <header>
+    <div class="header-inner">
+
+      <a class="brand" href="index.html">
+        <span class="logo">W</span>
+        ورشة ويب
+      </a>
+
+      <div class="header-actions">
+
+        <button
+          class="btn btn-light"
+          onclick="goBack()"
+        >
+          ← رجوع
+        </button>
+
+        <button
+          class="btn btn-primary"
+          onclick="editSite()"
+        >
+          ✏️ تعديل الموقع
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <main class="container">
 
     <div class="preview-title">
-      🛠️ معاينة موقعك
+      <h1>🛠️ معاينة موقعك</h1>
+      <p>راجع شكل الموقع والرابط العام للمنيو.</p>
     </div>
 
-    <div class="preview-actions">
 
-      <button class="back-btn" onclick="goBack()">
-        ← رجوع
-      </button>
-
-      <button class="edit-btn" onclick="editSite()">
-        ✏️ تعديل الموقع
-      </button>
-
+    <div id="loading" class="loading">
+      ⏳ جاري تحميل الموقع...
     </div>
 
-  </div>
 
-  <main id="site" class="site"></main>
+    <div id="siteContainer"></div>
+
+  </main>
+
 
   <footer>
     تم إنشاء الموقع بواسطة <strong>ورشة ويب</strong>
   </footer>
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
+
+    /* =========================
+       SUPABASE
+    ========================= */
 
     const SUPABASE_URL =
       "https://qupoxgclybgbetqxzzwf.supabase.co";
@@ -493,245 +525,23 @@
         SUPABASE_KEY
       );
 
+
     let siteData = null;
     let publicMenuUrl = "";
-    let publicSlug = "";
-    let publicMenuId = "";
 
 
-    /* =========================================
-       تحميل الموقع
-    ========================================= */
+    /* =========================
+       PUBLIC URL
+    ========================= */
 
-    async function loadSite() {
+    function buildPublicMenuUrl(slug) {
 
-      const saved =
-        localStorage.getItem(
-          "warsha_restaurant_site"
-        );
-
-      if (!saved) {
-        showEmpty();
-        return;
-      }
-
-      try {
-
-        siteData = JSON.parse(saved);
-
-        /*
-          نحاول أخذ الـ slug من كل الأماكن الممكنة
-        */
-
-        publicSlug =
-          localStorage.getItem(
-            "warsha_restaurant_menu_slug"
-          ) ||
-          siteData.public_slug ||
-          getSlugFromSavedUrl(
-            localStorage.getItem(
-              "warsha_restaurant_menu_url"
-            )
-          ) ||
-          "";
-
-        publicMenuId =
-          localStorage.getItem(
-            "warsha_restaurant_menu_id"
-          ) ||
-          "";
-
-        /*
-          أول محاولة:
-          البحث في Supabase
-        */
-
-        await loadPublicMenu();
-
-        /*
-          لو لم نجد الرابط من Supabase
-          نستخدم الـ slug المحفوظ
-        */
-
-        if (!publicMenuUrl && publicSlug) {
-
-          buildPublicUrl(publicSlug);
-
-        }
-
-        /*
-          لو مفيش slug لكن فيه رابط قديم
-        */
-
-        if (!publicMenuUrl) {
-
-          const oldUrl =
-            localStorage.getItem(
-              "warsha_restaurant_menu_url"
-            );
-
-          if (oldUrl) {
-            publicMenuUrl = oldUrl;
-          }
-
-        }
-
-        renderSite();
-
-      } catch (error) {
-
-        console.error(
-          "Load site error:",
-          error
-        );
-
-        showEmpty();
-
-      }
-
-    }
-
-
-    /* =========================================
-       تحميل المنيو من Supabase
-    ========================================= */
-
-    async function loadPublicMenu() {
-
-      try {
-
-        let data = null;
-
-
-        /*
-          1 — البحث بالـ ID
-        */
-
-        if (publicMenuId) {
-
-          const result =
-            await supabaseClient
-              .from("restaurant_menus")
-              .select("id, public_slug")
-              .eq("id", publicMenuId)
-              .maybeSingle();
-
-          if (result.error) {
-            console.error(
-              "ID search error:",
-              result.error
-            );
-          }
-
-          if (result.data) {
-            data = result.data;
-          }
-
-        }
-
-
-        /*
-          2 — لو لم نجد ID نبحث بالـ slug
-        */
-
-        if (!data && publicSlug) {
-
-          const result =
-            await supabaseClient
-              .from("restaurant_menus")
-              .select("id, public_slug")
-              .eq("public_slug", publicSlug)
-              .maybeSingle();
-
-          if (result.error) {
-            console.error(
-              "Slug search error:",
-              result.error
-            );
-          }
-
-          if (result.data) {
-            data = result.data;
-          }
-
-        }
-
-
-        /*
-          3 — لو وجدنا السجل
-        */
-
-        if (data && data.public_slug) {
-
-          publicMenuId =
-            data.id;
-
-          publicSlug =
-            data.public_slug;
-
-          buildPublicUrl(
-            publicSlug
-          );
-
-          localStorage.setItem(
-            "warsha_restaurant_menu_id",
-            String(publicMenuId)
-          );
-
-          localStorage.setItem(
-            "warsha_restaurant_menu_slug",
-            publicSlug
-          );
-
-          return;
-
-        }
-
-
-        /*
-          4 — لو مفيش سجل في Supabase
-             لكن عندنا slug محفوظ
-        */
-
-        if (publicSlug) {
-
-          buildPublicUrl(
-            publicSlug
-          );
-
-        }
-
-      } catch (error) {
-
-        console.error(
-          "Public menu error:",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* =========================================
-       بناء رابط المنيو
-    ========================================= */
-
-    function buildPublicUrl(slug) {
-
-      if (!slug) {
-        return;
-      }
-
-      /*
-        استخدام نفس الدومين الحالي
-        والرابط ثابت طالما الـ slug ثابت
-      */
+      if (!slug) return "";
 
       const url =
         new URL(
           "menu.html",
-          window.location.href
+          window.location.origin + "/"
         );
 
       url.searchParams.set(
@@ -739,414 +549,711 @@
         slug
       );
 
-      publicMenuUrl =
-        url.href;
-
-      /*
-        إزالة أي / زائد قبل menu.html
-        بشكل آمن
-      */
-
-      localStorage.setItem(
-        "warsha_restaurant_menu_url",
-        publicMenuUrl
-      );
-
+      return url.href;
     }
 
 
-    /* =========================================
-       استخراج slug من رابط قديم
-    ========================================= */
+    /* =========================
+       ESCAPE
+    ========================= */
 
-    function getSlugFromSavedUrl(url) {
+    function escapeHtml(value) {
 
-      if (!url) {
-        return "";
-      }
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================
+       LOAD LOCAL DATA FIRST
+    ========================= */
+
+    function loadLocalData() {
 
       try {
 
-        const parsed =
-          new URL(url);
+        const raw =
+          localStorage.getItem(
+            "warsha_restaurant_site"
+          );
 
-        return (
-          parsed.searchParams.get(
-            "slug"
-          ) || ""
-        );
+        if (raw) {
+
+          siteData =
+            JSON.parse(raw);
+
+        }
 
       } catch (error) {
 
-        return "";
+        console.error(error);
+
+      }
+
+
+      /*
+        أهم جزء:
+
+        ناخد الـslug من localStorage
+        قبل ما نستنى Supabase.
+      */
+
+      let slug =
+        localStorage.getItem(
+          "warsha_restaurant_menu_slug"
+        ) || "";
+
+
+      /*
+        لو مفيش slug نحاول نطلعه
+        من الرابط القديم.
+      */
+
+      if (!slug) {
+
+        const savedUrl =
+          localStorage.getItem(
+            "warsha_restaurant_menu_url"
+          );
+
+        if (savedUrl) {
+
+          try {
+
+            const url =
+              new URL(savedUrl);
+
+            slug =
+              url.searchParams.get(
+                "slug"
+              ) || "";
+
+          } catch (e) {}
+
+        }
+
+      }
+
+
+      /*
+        لو siteData فيه slug
+      */
+
+      if (!slug &&
+          siteData &&
+          siteData.public_slug) {
+
+        slug =
+          siteData.public_slug;
+
+      }
+
+
+      if (slug) {
+
+        publicMenuUrl =
+          buildPublicMenuUrl(slug);
+
+        /*
+          حفظه مرة أخرى للتأكد
+        */
+
+        localStorage.setItem(
+          "warsha_restaurant_menu_slug",
+          slug
+        );
+
+        localStorage.setItem(
+          "warsha_restaurant_menu_url",
+          publicMenuUrl
+        );
+
+      }
+
+
+      return !!siteData;
+
+    }
+
+
+    /* =========================
+       LOAD FROM SUPABASE
+    ========================= */
+
+    async function refreshFromDatabase() {
+
+      try {
+
+        const {
+          data: {
+            user
+          }
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        if (!user) return;
+
+
+        const savedId =
+          localStorage.getItem(
+            "warsha_restaurant_menu_id"
+          );
+
+
+        const savedSlug =
+          localStorage.getItem(
+            "warsha_restaurant_menu_slug"
+          );
+
+
+        let menu = null;
+
+
+        /*
+          البحث بالـID أولاً
+        */
+
+        if (savedId) {
+
+          const result =
+            await supabaseClient
+              .from("restaurant_menus")
+              .select(
+                "id, menu_name, business_type, menu_data, public_slug"
+              )
+              .eq(
+                "id",
+                savedId
+              )
+              .eq(
+                "user_id",
+                user.id
+              )
+              .maybeSingle();
+
+
+          if (!result.error &&
+              result.data) {
+
+            menu =
+              result.data;
+
+          }
+
+        }
+
+
+        /*
+          البحث بالـslug ثانيًا
+        */
+
+        if (!menu && savedSlug) {
+
+          const result =
+            await supabaseClient
+              .from("restaurant_menus")
+              .select(
+                "id, menu_name, business_type, menu_data, public_slug"
+              )
+              .eq(
+                "public_slug",
+                savedSlug
+              )
+              .eq(
+                "user_id",
+                user.id
+              )
+              .maybeSingle();
+
+
+          if (!result.error &&
+              result.data) {
+
+            menu =
+              result.data;
+
+          }
+
+        }
+
+
+        if (!menu) return;
+
+
+        /*
+          تحديث ID
+        */
+
+        localStorage.setItem(
+          "warsha_restaurant_menu_id",
+          String(menu.id)
+        );
+
+
+        /*
+          الحفاظ على الـslug
+        */
+
+        if (menu.public_slug) {
+
+          publicMenuUrl =
+            buildPublicMenuUrl(
+              menu.public_slug
+            );
+
+          localStorage.setItem(
+            "warsha_restaurant_menu_slug",
+            menu.public_slug
+          );
+
+          localStorage.setItem(
+            "warsha_restaurant_menu_url",
+            publicMenuUrl
+          );
+
+        }
+
+
+        /*
+          لو menu_data موجود،
+          نستخدمه لتحديث الموقع.
+        */
+
+        if (
+          menu.menu_data &&
+          typeof menu.menu_data === "object"
+        ) {
+
+          siteData =
+            menu.menu_data;
+
+          siteData.public_slug =
+            menu.public_slug ||
+            siteData.public_slug ||
+            "";
+
+          siteData.public_menu_url =
+            publicMenuUrl;
+
+          localStorage.setItem(
+            "warsha_restaurant_site",
+            JSON.stringify(siteData)
+          );
+
+        }
+
+
+      } catch (error) {
+
+        /*
+          لا نوقف الصفحة.
+
+          لو Supabase فشل،
+          نستخدم البيانات المحلية.
+        */
+
+        console.error(
+          "DATABASE REFRESH ERROR:",
+          error
+        );
 
       }
 
     }
 
 
-    /* =========================================
-       بناء الموقع
-    ========================================= */
+    /* =========================
+       RENDER
+    ========================= */
 
     function renderSite() {
 
-      const site =
-        document.getElementById("site");
-
-      const businessName =
-        escapeHTML(
-          siteData.business_name ||
-          "مطعمي"
+      const container =
+        document.getElementById(
+          "siteContainer"
         );
 
-      const description =
-        escapeHTML(
-          siteData.description ||
-          "أهلاً بكم، نتمنى لكم تجربة رائعة."
-        );
+      if (!siteData) {
 
-      const phone =
-        escapeHTML(
-          siteData.phone ||
-          "غير مضاف"
-        );
+        container.innerHTML = `
+          <div class="error">
+            لم يتم العثور على بيانات الموقع.
+            <br><br>
+            ارجع إلى صفحة الإعداد وأنشئ الموقع مرة أخرى.
+          </div>
+        `;
 
-      const address =
-        escapeHTML(
-          siteData.address ||
-          "غير مضاف"
-        );
-
-      const hours =
-        escapeHTML(
-          siteData.working_hours ||
-          "غير مضافة"
-        );
-
-      const design =
-        siteData.design ||
-        "modern";
-
-
-      let categoriesHTML = "";
-
-
-      if (
-        Array.isArray(siteData.categories) &&
-        siteData.categories.length
-      ) {
-
-        siteData.categories.forEach(
-          category => {
-
-            const categoryName =
-              escapeHTML(
-                category.name ||
-                "قسم المنيو"
-              );
-
-            let itemsHTML = "";
-
-
-            if (
-              Array.isArray(category.items)
-            ) {
-
-              category.items.forEach(
-                item => {
-
-                  const itemName =
-                    escapeHTML(
-                      item.name ||
-                      "صنف"
-                    );
-
-                  const itemPrice =
-                    escapeHTML(
-                      item.price ||
-                      ""
-                    );
-
-
-                  itemsHTML += `
-
-                    <div class="menu-item">
-
-                      <div class="item-name">
-                        ${itemName}
-                      </div>
-
-                      <div class="item-price">
-                        ${
-                          itemPrice
-                            ? itemPrice + " جنيه"
-                            : ""
-                        }
-                      </div>
-
-                    </div>
-
-                  `;
-
-                }
-              );
-
-            }
-
-
-            categoriesHTML += `
-
-              <section class="menu-category">
-
-                <h2 class="category-title">
-                  ${categoryName}
-                </h2>
-
-                ${
-                  itemsHTML ||
-                  `
-                    <p>
-                      لا توجد أصناف مضافة لهذا القسم.
-                    </p>
-                  `
-                }
-
-              </section>
-
-            `;
-
-          }
-        );
+        return;
 
       }
 
 
+      const categories =
+        siteData.categories || [];
+
+
+      const phone =
+        siteData.phone || "";
+
+
+      const phoneHref =
+        phone
+          ? "tel:" +
+            phone.replace(/\s/g, "")
+          : "#";
+
+
+      let categoriesHtml = "";
+
+
+      categories.forEach(category => {
+
+        const items =
+          category.items || [];
+
+
+        let itemsHtml = "";
+
+
+        items.forEach(item => {
+
+          itemsHtml += `
+
+            <div class="item">
+
+              <div class="item-name">
+                ${escapeHtml(item.name)}
+              </div>
+
+              <div class="item-price">
+                ${escapeHtml(item.price)}
+                جنيه
+              </div>
+
+            </div>
+
+          `;
+
+        });
+
+
+        categoriesHtml += `
+
+          <section class="category">
+
+            <h4 class="category-title">
+              ${escapeHtml(category.name)}
+            </h4>
+
+            ${itemsHtml}
+
+          </section>
+
+        `;
+
+      });
+
+
+      let qrSection = "";
+
+
       /*
-        صندوق الرابط والـQR
-        سيظهر بمجرد وجود slug
+        لو الرابط موجود:
+        نظهر QR والرابط دائمًا.
       */
 
-      const publicMenuHTML =
-        publicMenuUrl
-          ? `
+      if (publicMenuUrl) {
 
-            <section class="public-menu-box">
+        qrSection = `
 
-              <h2>
-                📱 منيو العملاء
-              </h2>
+          <section class="qr-section">
 
-              <div class="subtitle">
-                ده رابط المنيو العامة الخاصة بعملائك.
-                تقدر تبعته لهم أو تستخدم الـ QR Code.
+            <h3>
+              📱 باركود المنيو
+            </h3>
+
+            <p class="qr-description">
+              امسح الباركود بالموبايل لفتح المنيو مباشرة
+            </p>
+
+            <div class="qr-box">
+
+              <div id="qrcode"></div>
+
+            </div>
+
+            <div class="public-url-box">
+
+              <div class="public-url-label">
+                🔗 رابط المنيو العام
               </div>
 
-              <div class="qr-wrapper">
+              <a
+                id="publicUrl"
+                class="public-url"
+                href="${escapeHtml(publicMenuUrl)}"
+                target="_blank"
+              >
+                ${escapeHtml(publicMenuUrl)}
+              </a>
 
-                <div id="qrcode">
-
-                  <div class="qr-loading">
-                    جاري إنشاء الباركود...
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="public-url-title">
-                🔗 رابط المنيو
-              </div>
-
-              <div class="public-url">
-                ${escapeHTML(publicMenuUrl)}
-              </div>
-
-              <div class="public-actions">
+              <div class="qr-actions">
 
                 <button
-                  class="open-menu-btn"
-                  onclick="openPublicMenu()"
-                >
-                  🌐 فتح المنيو
-                </button>
-
-                <button
-                  class="copy-menu-btn"
-                  onclick="copyMenuUrl()"
+                  class="btn copy-btn"
+                  onclick="copyPublicUrl()"
                 >
                   📋 نسخ الرابط
                 </button>
 
-                <button
-                  class="share-menu-btn"
-                  onclick="shareMenu()"
+                <a
+                  class="btn open-btn"
+                  href="${escapeHtml(publicMenuUrl)}"
+                  target="_blank"
                 >
-                  📤 مشاركة
-                </button>
+                  🔗 فتح المنيو
+                </a>
 
               </div>
 
-              <p class="qr-note">
-                💡 الـ QR ده مرتبط برابط المنيو.
-                تعديل الأسعار أو الأصناف لن يغيّر الباركود طالما المنيو نفسها محفوظة.
-              </p>
-
-            </section>
-
-          `
-          : `
-
-            <section class="public-menu-box">
-
-              <h2>
-                ⚠️ رابط المنيو
-              </h2>
-
-              <div class="subtitle">
-                لم يتم العثور على رابط المنيو المحفوظ.
-              </div>
-
-              <div class="error-box">
-                اضغط "تعديل الموقع" ثم احفظ المنيو مرة أخرى.
-                سيتم إنشاء رابط ثابت للمنيو، وبعدها سيظهر الـ QR هنا.
-              </div>
-
-            </section>
-
-          `;
-
-
-      site.innerHTML = `
-
-        <section class="hero ${design}">
-
-          <h1>
-            ${businessName}
-          </h1>
-
-          <p>
-            ${description}
-          </p>
-
-          <div class="hero-info">
-
-            <span>
-              🍽️ ${getBusinessType(
-                siteData.business_type
-              )}
-            </span>
-
-            <span>
-              🕐 ${hours}
-            </span>
-
-          </div>
-
-        </section>
-
-
-        <div class="content">
-
-          ${publicMenuHTML}
-
-
-          ${categoriesHTML}
-
-
-          <section class="contact-section">
-
-            <h2>
-              📍 تواصل معنا
-            </h2>
-
-            <div class="contact-grid">
-
-              <div class="contact-box">
-
-                <div class="contact-icon">
-                  📞
-                </div>
-
-                <strong>
-                  الهاتف
-                </strong>
-
-                <div>
-                  ${phone}
-                </div>
-
-              </div>
-
-
-              <div class="contact-box">
-
-                <div class="contact-icon">
-                  📍
-                </div>
-
-                <strong>
-                  العنوان
-                </strong>
-
-                <div>
-                  ${address}
-                </div>
-
-              </div>
-
-
-              <div class="contact-box">
-
-                <div class="contact-icon">
-                  🕐
-                </div>
-
-                <strong>
-                  مواعيد العمل
-                </strong>
-
-                <div>
-                  ${hours}
-                </div>
-
+              <div class="stable-note">
+                🔒 هذا الرابط والباركود ثابتان حتى بعد تعديل المنيو.
               </div>
 
             </div>
 
           </section>
 
+        `;
 
-          <div class="actions">
+      } else {
+
+        /*
+          في حالة عدم وجود slug،
+          نظهر رسالة واضحة بدل اختفاء القسم.
+        */
+
+        qrSection = `
+
+          <section class="qr-section">
+
+            <h3>
+              📱 باركود المنيو
+            </h3>
+
+            <p style="color:#b91c1c;font-weight:700;">
+              لم يتم إنشاء رابط المنيو العام حتى الآن.
+            </p>
+
+            <div style="margin-top:15px;">
+              اضغط "تعديل الموقع" ثم اضغط "حفظ الموقع" مرة أخرى.
+            </div>
+
+          </section>
+
+        `;
+
+      }
+
+
+      container.innerHTML = `
+
+        <div class="site">
+
+          <section class="hero">
+
+            <h2>
+              ${escapeHtml(
+                siteData.businessName ||
+                "اسم المطعم"
+              )}
+            </h2>
+
+            <p>
+              ${escapeHtml(
+                siteData.description ||
+                ""
+              )}
+            </p>
 
             ${
-              siteData.phone
-                ? `
-                  <button
-                    class="call-btn"
-                    onclick="callBusiness()"
-                  >
-                    📞 اتصل بنا
-                  </button>
-                `
-                : ""
+              phone
+              ? `
+                <a
+                  class="hero-phone"
+                  href="${escapeHtml(phoneHref)}"
+                >
+                  📞 ${escapeHtml(phone)}
+                </a>
+              `
+              : ""
             }
 
+          </section>
+
+
+          <div class="info-row">
+
+            <div class="info-pill">
+              🍽️ ${escapeHtml(
+                siteData.businessType || ""
+              )}
+            </div>
 
             ${
-              siteData.whatsapp
-                ? `
-                  <button
-                    class="whatsapp-btn"
-                    onclick="openWhatsApp()"
-                  >
-                    💬 تواصل واتساب
-                  </button>
-                `
-                : ""
+              siteData.workingHours
+              ? `
+                <div class="info-pill">
+                  🕐 ${escapeHtml(
+                    siteData.workingHours
+                  )}
+                </div>
+              `
+              : ""
             }
 
           </div>
+
+
+          <section class="menu-area">
+
+            <div class="menu-title">
+
+              <h3>
+                🍽️ المنيو
+              </h3>
+
+            </div>
+
+            ${categoriesHtml}
+
+          </section>
+
+
+          <section class="contact">
+
+            <h3>
+              📍 تواصل معنا
+            </h3>
+
+            <div class="contact-grid">
+
+              ${
+                phone
+                ? `
+                  <div class="contact-card">
+
+                    <div class="contact-icon">
+                      📞
+                    </div>
+
+                    <strong>
+                      الهاتف
+                    </strong>
+
+                    <a href="${escapeHtml(phoneHref)}">
+                      ${escapeHtml(phone)}
+                    </a>
+
+                  </div>
+                `
+                : ""
+              }
+
+
+              ${
+                siteData.address
+                ? `
+                  <div class="contact-card">
+
+                    <div class="contact-icon">
+                      📍
+                    </div>
+
+                    <strong>
+                      العنوان
+                    </strong>
+
+                    <div>
+                      ${escapeHtml(
+                        siteData.address
+                      )}
+                    </div>
+
+                  </div>
+                `
+                : ""
+              }
+
+
+              ${
+                siteData.workingHours
+                ? `
+                  <div class="contact-card">
+
+                    <div class="contact-icon">
+                      🕐
+                    </div>
+
+                    <strong>
+                      مواعيد العمل
+                    </strong>
+
+                    <div>
+                      ${escapeHtml(
+                        siteData.workingHours
+                      )}
+                    </div>
+
+                  </div>
+                `
+                : ""
+              }
+
+            </div>
+
+
+            <div class="buttons">
+
+              ${
+                phone
+                ? `
+                  <a
+                    class="btn action-call"
+                    href="${escapeHtml(phoneHref)}"
+                  >
+                    📞 اتصل بنا
+                  </a>
+                `
+                : ""
+              }
+
+
+              ${
+                phone
+                ? `
+                  <a
+                    class="btn action-whatsapp"
+                    href="https://wa.me/${phone.replace(/\D/g, "")}"
+                    target="_blank"
+                  >
+                    💬 واتساب
+                  </a>
+                `
+                : ""
+              }
+
+            </div>
+
+          </section>
+
+
+          ${qrSection}
 
         </div>
 
@@ -1154,24 +1261,17 @@
 
 
       /*
-        إنشاء QR بعد رسم الصفحة
+        إنشاء QR بعد وضع HTML
       */
 
-      if (publicMenuUrl) {
-
-        setTimeout(
-          createQRCode,
-          150
-        );
-
-      }
+      createQRCode();
 
     }
 
 
-    /* =========================================
-       إنشاء QR
-    ========================================= */
+    /* =========================
+       CREATE QR
+    ========================= */
 
     function createQRCode() {
 
@@ -1180,31 +1280,36 @@
           "qrcode"
         );
 
-      if (
-        !qrElement ||
-        !publicMenuUrl
-      ) {
-        return;
-      }
+
+      if (!qrElement) return;
 
 
       qrElement.innerHTML = "";
 
 
+      if (!publicMenuUrl) return;
+
+
       /*
-        التأكد أن مكتبة QR موجودة
+        نتأكد أن مكتبة QRCode موجودة
       */
 
       if (
-        typeof QRCode === "undefined"
+        typeof QRCode ===
+        "undefined"
       ) {
 
         qrElement.innerHTML = `
 
-          <div class="qr-loading">
-            ⚠️ تعذر تحميل مكتبة الباركود.
+          <div style="
+            color:#b91c1c;
+            font-size:13px;
+            font-weight:700;
+            text-align:center;
+          ">
+            تعذر تحميل الباركود.
             <br>
-            أعد تحميل الصفحة.
+            استخدم رابط المنيو الموجود أسفل الباركود.
           </div>
 
         `;
@@ -1230,16 +1335,18 @@
       } catch (error) {
 
         console.error(
-          "QR Error:",
+          "QR ERROR:",
           error
         );
 
         qrElement.innerHTML = `
-
-          <div class="qr-loading">
-            ⚠️ حصل خطأ أثناء إنشاء الـ QR.
+          <div style="
+            color:#b91c1c;
+            font-weight:700;
+            font-size:13px;
+          ">
+            حدث خطأ في إنشاء الباركود.
           </div>
-
         `;
 
       }
@@ -1247,182 +1354,70 @@
     }
 
 
-    /* =========================================
-       فتح المنيو
-    ========================================= */
+    /* =========================
+       COPY URL
+    ========================= */
 
-    function openPublicMenu() {
+    async function copyPublicUrl() {
 
-      if (!publicMenuUrl) {
-
-        alert(
-          "⚠️ رابط المنيو غير موجود."
-        );
-
-        return;
-
-      }
-
-      window.open(
-        publicMenuUrl,
-        "_blank"
-      );
-
-    }
-
-
-    /* =========================================
-       نسخ الرابط
-    ========================================= */
-
-    async function copyMenuUrl() {
-
-      if (!publicMenuUrl) {
-
-        alert(
-          "⚠️ رابط المنيو غير موجود."
-        );
-
-        return;
-
-      }
+      if (!publicMenuUrl) return;
 
 
       try {
 
-        if (
-          navigator.clipboard &&
-          window.isSecureContext
-        ) {
+        await navigator.clipboard.writeText(
+          publicMenuUrl
+        );
 
-          await navigator.clipboard.writeText(
-            publicMenuUrl
-          );
-
-          alert(
-            "✅ تم نسخ رابط المنيو"
-          );
-
-          return;
-
-        }
-
-
-        throw new Error(
-          "Clipboard unavailable"
+        alert(
+          "✅ تم نسخ رابط المنيو"
         );
 
       } catch (error) {
 
-        prompt(
-          "انسخ رابط المنيو:",
-          publicMenuUrl
+        /*
+          طريقة بديلة للآيفون
+        */
+
+        const input =
+          document.createElement(
+            "input"
+          );
+
+        input.value =
+          publicMenuUrl;
+
+        document.body.appendChild(
+          input
         );
 
-      }
+        input.select();
 
-    }
+        document.execCommand(
+          "copy"
+        );
 
-
-    /* =========================================
-       مشاركة
-    ========================================= */
-
-    async function shareMenu() {
-
-      if (!publicMenuUrl) {
+        input.remove();
 
         alert(
-          "⚠️ رابط المنيو غير موجود."
+          "✅ تم نسخ رابط المنيو"
         );
 
-        return;
-
-      }
-
-
-      if (
-        navigator.share
-      ) {
-
-        try {
-
-          await navigator.share({
-
-            title:
-              siteData.business_name ||
-              "المنيو",
-
-            text:
-              "شوف المنيو الخاصة بنا",
-
-            url:
-              publicMenuUrl
-
-          });
-
-        } catch (error) {
-
-          /*
-            المستخدم ممكن يلغي المشاركة
-          */
-
-        }
-
-      } else {
-
-        await copyMenuUrl();
-
       }
 
     }
 
 
-    /* =========================================
-       نوع النشاط
-    ========================================= */
-
-    function getBusinessType(type) {
-
-      const types = {
-
-        restaurant:
-          "مطعم",
-
-        cafe:
-          "كافيه",
-
-        "restaurant-cafe":
-          "مطعم وكافيه",
-
-        bakery:
-          "مخبوزات وحلويات",
-
-        other:
-          "نشاط تجاري"
-
-      };
-
-      return (
-        types[type] ||
-        "مطعم"
-      );
-
-    }
-
-
-    /* =========================================
-       تعديل الموقع
-    ========================================= */
+    /* =========================
+       EDIT
+    ========================= */
 
     function editSite() {
 
       /*
-        مهم جداً:
-        لا نمسح أي بيانات هنا.
+        لا نمسح أي بيانات.
 
-        الـ slug والـ ID يفضلوا موجودين
-        عشان نفس QR يفضل شغال.
+        ID + slug يظلوا محفوظين.
       */
 
       window.location.href =
@@ -1431,164 +1426,78 @@
     }
 
 
-    /* =========================================
-       رجوع
-    ========================================= */
+    /* =========================
+       BACK
+    ========================= */
 
     function goBack() {
 
       window.location.href =
-        "create-site.html";
+        "index.html";
 
     }
 
 
-    /* =========================================
-       اتصال
-    ========================================= */
+    /* =========================
+       INIT
+    ========================= */
 
-    function callBusiness() {
+    async function init() {
 
-      if (
-        !siteData ||
-        !siteData.phone
-      ) {
-        return;
-      }
+      /*
+        أولًا نقرأ localStorage
+        ونظهر الموقع والرابط فورًا.
+      */
 
-      window.location.href =
-        "tel:" +
-        siteData.phone;
-
-    }
+      const hasLocal =
+        loadLocalData();
 
 
-    /* =========================================
-       واتساب
-    ========================================= */
+      if (hasLocal) {
 
-    function openWhatsApp() {
+        renderSite();
 
-      if (
-        !siteData ||
-        !siteData.whatsapp
-      ) {
-        return;
-      }
-
-
-      let number =
-        String(
-          siteData.whatsapp
-        ).replace(
-          /\D/g,
-          ""
-        );
-
-
-      if (
-        number.startsWith("0")
-      ) {
-
-        number =
-          "20" +
-          number.substring(1);
+        document
+          .getElementById("loading")
+          .style.display = "none";
 
       }
 
 
-      if (
-        !number.startsWith("20")
-      ) {
+      /*
+        بعد ذلك نتحقق من Supabase
+        في الخلفية.
+      */
 
-        number =
-          "20" +
-          number;
+      await refreshFromDatabase();
+
+
+      /*
+        نعيد الرسم بعد تحديث البيانات
+      */
+
+      if (siteData) {
+
+        renderSite();
+
+        document
+          .getElementById("loading")
+          .style.display = "none";
+
+      } else {
+
+        document
+          .getElementById("loading")
+          .style.display = "none";
+
+        renderSite();
 
       }
 
-
-      window.open(
-        "https://wa.me/" +
-        number,
-        "_blank"
-      );
-
     }
 
 
-    /* =========================================
-       لا يوجد موقع
-    ========================================= */
-
-    function showEmpty() {
-
-      document.getElementById(
-        "site"
-      ).innerHTML = `
-
-        <div class="empty">
-
-          <h2>
-            مفيش موقع محفوظ لسه
-          </h2>
-
-          <p>
-            ابدأ بإنشاء موقع المطعم والمنيو.
-          </p>
-
-          <button
-            onclick="editSite()"
-          >
-            🍽️ إنشاء الموقع
-          </button>
-
-        </div>
-
-      `;
-
-    }
-
-
-    /* =========================================
-       حماية HTML
-    ========================================= */
-
-    function escapeHTML(value) {
-
-      return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
-
-
-    /* تشغيل الصفحة */
-
-    loadSite();
+    init();
 
   </script>
 
