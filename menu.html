@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>المنيو | ورشة ويب</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Cairo", sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 25px 15px 50px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #111827, #2563eb);
+      color: white;
+      border-radius: 24px;
+      padding: 30px 22px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo {
+      width: 65px;
+      height: 65px;
+      margin: 0 auto 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .business-type {
+      margin-top: 8px;
+      opacity: 0.9;
+      font-size: 15px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    }
+
+    .category-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      font-size: 22px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .category-title::before {
+      content: "";
+      width: 6px;
+      height: 30px;
+      border-radius: 10px;
+      background: #2563eb;
+      display: block;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid #eef0f4;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .item:first-of-type {
+      padding-top: 0;
+    }
+
+    .item-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: #374151;
+      flex: 1;
+    }
+
+    .item-price {
+      white-space: nowrap;
+      font-size: 17px;
+      font-weight: 800;
+      color: #2563eb;
+      background: #eff6ff;
+      padding: 6px 12px;
+      border-radius: 10px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    }
+
+    .empty-icon {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    .empty h2 {
+      margin: 0 0 8px;
+    }
+
+    .empty p {
+      margin: 0;
+      color: #6b7280;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 80px 20px;
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    .error {
+      text-align: center;
+      padding: 60px 20px;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    }
+
+    .error-icon {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 13px;
+      margin-top: 25px;
+    }
+
+    .footer strong {
+      color: #2563eb;
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 15px 10px 35px;
+      }
+
+      .header {
+        border-radius: 20px;
+        padding: 25px 15px;
+      }
+
+      .header h1 {
+        font-size: 23px;
+      }
+
+      .menu-card {
+        padding: 18px 15px;
+        border-radius: 18px;
+      }
+
+      .category-title {
+        font-size: 20px;
+      }
+
+      .item-name,
+      .item-price {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+    <div class="container">
+
+      <div id="loading" class="loading">
+        ⏳ جاري تحميل المنيو...
+      </div>
+
+      <div id="content" style="display:none;">
+
+        <div class="header">
+          <div class="logo">W</div>
+
+          <h1 id="businessName">المنيو</h1>
+
+          <div id="businessType" class="business-type">
+            منيو إلكتروني
+          </div>
+        </div>
+
+        <div id="menuContainer"></div>
+
+        <div class="footer">
+          تم إنشاء المنيو بواسطة <strong>ورشة ويب</strong>
+        </div>
+
+      </div>
+
+      <div id="error" class="error" style="display:none;">
+        <div class="error-icon">😔</div>
+        <h2>المنيو غير موجودة</h2>
+        <p>
+          الرابط غير صحيح أو أن المنيو لم تعد متاحة.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://qupoxgclybgbetqxzzwf.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    function escapeHtml(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    function getBusinessTypeName(type) {
+
+      const types = {
+        restaurant: "مطعم",
+        cafe: "كافيه",
+        "restaurant-cafe": "مطعم وكافيه",
+        bakery: "مخبز / مخبوزات",
+        other: "نشاط تجاري"
+      };
+
+      return types[type] || "منيو إلكتروني";
+
+    }
+
+
+    function normalizeCategories(menuData) {
+
+      /*
+        الشكل الجديد:
+        {
+          categories: [
+            {
+              name: "المشروبات",
+              items: [
+                { name: "بيبسي", price: "30" }
+              ]
+            }
+          ]
+        }
+      */
+
+      if (
+        menuData &&
+        Array.isArray(menuData.categories)
+      ) {
+
+        return menuData.categories;
+
+      }
+
+
+      /*
+        دعم الشكل القديم لو موجود
+      */
+
+      if (
+        menuData &&
+        Array.isArray(menuData.menu_categories)
+      ) {
+
+        return menuData.menu_categories;
+
+      }
+
+
+      if (
+        menuData &&
+        Array.isArray(menuData.categories)
+      ) {
+
+        return menuData.categories;
+
+      }
+
+
+      return [];
+
+    }
+
+
+    function renderMenu(menu) {
+
+      const menuData =
+        menu.menu_data || {};
+
+      const categories =
+        normalizeCategories(menuData);
+
+      document.getElementById("businessName")
+        .textContent =
+        menu.menu_name || "المنيو";
+
+      document.getElementById("businessType")
+        .textContent =
+        getBusinessTypeName(menu.business_type);
+
+
+      const container =
+        document.getElementById("menuContainer");
+
+      container.innerHTML = "";
+
+
+      if (!categories.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">🍽️</div>
+            <h2>المنيو لسه فاضية</h2>
+            <p>لم تتم إضافة أصناف للمنيو حتى الآن.</p>
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      let hasItems = false;
+
+
+      categories.forEach(category => {
+
+        if (!category) return;
+
+
+        const categoryName =
+          category.name ||
+          category.title ||
+          "قسم";
+
+
+        const items =
+          Array.isArray(category.items)
+            ? category.items
+            : [];
+
+
+        if (!items.length) return;
+
+
+        hasItems = true;
+
+
+        const card =
+          document.createElement("div");
+
+        card.className = "menu-card";
+
+
+        let itemsHtml = "";
+
+
+        items.forEach(item => {
+
+          if (!item) return;
+
+
+          const name =
+            item.name ||
+            item.title ||
+            "صنف";
+
+
+          const price =
+            item.price ??
+            item.amount ??
+            "";
+
+
+          itemsHtml += `
+            <div class="item">
+
+              <div class="item-name">
+                ${escapeHtml(name)}
+              </div>
+
+              ${
+                price !== ""
+                  ? `
+                    <div class="item-price">
+                      ${escapeHtml(price)} جنيه
+                    </div>
+                  `
+                  : ""
+              }
+
+            </div>
+          `;
+
+        });
+
+
+        card.innerHTML = `
+          <h2 class="category-title">
+            ${escapeHtml(categoryName)}
+          </h2>
+
+          ${itemsHtml}
+        `;
+
+
+        container.appendChild(card);
+
+      });
+
+
+      if (!hasItems) {
+
+        container.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">🍽️</div>
+            <h2>المنيو لسه فاضية</h2>
+            <p>لم تتم إضافة أصناف للمنيو حتى الآن.</p>
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    async function loadMenu() {
+
+      try {
+
+        const params =
+          new URLSearchParams(
+            window.location.search
+          );
+
+        const slug =
+          params.get("slug");
+
+
+        if (!slug) {
+
+          throw new Error(
+            "Missing menu slug"
+          );
+
+        }
+
+
+        const { data, error } =
+          await supabaseClient
+            .from("restaurant_menus")
+            .select(
+              "id, menu_name, business_type, menu_data, public_slug"
+            )
+            .eq("public_slug", slug)
+            .maybeSingle();
+
+
+        if (error) {
+
+          console.error(
+            "Supabase error:",
+            error
+          );
+
+          throw error;
+
+        }
+
+
+        if (!data) {
+
+          throw new Error(
+            "Menu not found"
+          );
+
+        }
+
+
+        renderMenu(data);
+
+
+        document.getElementById("loading")
+          .style.display = "none";
+
+        document.getElementById("content")
+          .style.display = "block";
+
+
+      } catch (error) {
+
+        console.error(
+          "Menu loading error:",
+          error
+        );
+
+
+        document.getElementById("loading")
+          .style.display = "none";
+
+        document.getElementById("error")
+          .style.display = "block";
+
+      }
+
+    }
+
+
+    loadMenu();
+
+  </script>
+
+</body>
+</html>
