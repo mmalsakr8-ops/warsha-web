@@ -5,15 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>إعداد موقعك | ورشة ويب</title>
+  <title>إعداد موقع المطعم | ورشة ويب</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -23,76 +19,93 @@
     body {
       margin: 0;
       font-family: "Cairo", sans-serif;
-      background: #f6f8fb;
+      background: #f5f7fb;
       color: #172033;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font-family: inherit;
     }
 
     .topbar {
       background: #111827;
-      color: white;
-      padding: 15px 20px;
+      color: #fff;
+      padding: 12px 16px;
       text-align: center;
       font-size: 14px;
     }
 
     header {
-      background: white;
+      background: #fff;
       border-bottom: 1px solid #e5e7eb;
-      padding: 18px 6%;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 15px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 20px;
+      color: #111827;
+      text-decoration: none;
     }
 
     .logo {
-      font-size: 23px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111827;
+      color: #fff;
       font-weight: 800;
-      color: #111827;
-    }
-
-    .logo span {
-      color: #f97316;
-    }
-
-    .back {
-      border: 0;
-      background: #f3f4f6;
-      padding: 10px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 600;
+      font-size: 22px;
     }
 
     .container {
-      width: min(1000px, 92%);
-      margin: 35px auto 60px;
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 15px 60px;
     }
 
-    .hero {
-      background: linear-gradient(135deg, #111827, #1f2937);
-      color: white;
-      border-radius: 22px;
-      padding: 30px;
-      margin-bottom: 25px;
+    .page-title {
+      margin-bottom: 20px;
     }
 
-    .hero h1 {
-      margin: 0 0 8px;
+    .page-title h1 {
+      margin: 0 0 7px;
       font-size: 28px;
     }
 
-    .hero p {
+    .page-title p {
       margin: 0;
-      color: #d1d5db;
+      color: #6b7280;
     }
 
     .card {
-      background: white;
+      background: #fff;
       border-radius: 18px;
-      padding: 25px;
+      padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.05);
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 8px 30px rgba(0,0,0,.04);
     }
 
     .card h2 {
@@ -102,32 +115,35 @@
 
     label {
       display: block;
-      margin: 14px 0 7px;
-      font-weight: 600;
+      font-weight: 700;
+      margin-bottom: 7px;
     }
 
     input,
-    select,
-    textarea {
+    textarea,
+    select {
       width: 100%;
       padding: 13px 14px;
       border: 1px solid #d1d5db;
-      border-radius: 10px;
-      font-family: inherit;
-      font-size: 15px;
+      border-radius: 11px;
       outline: none;
-      background: white;
+      background: #fff;
+      font-size: 15px;
     }
 
     input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: #f97316;
+    textarea:focus,
+    select:focus {
+      border-color: #111827;
     }
 
     textarea {
-      min-height: 90px;
+      min-height: 100px;
       resize: vertical;
+    }
+
+    .field {
+      margin-bottom: 17px;
     }
 
     .grid {
@@ -136,212 +152,156 @@
       gap: 15px;
     }
 
-    .category-box {
-      border: 2px solid #e5e7eb;
+    .category {
+      border: 1px solid #e5e7eb;
       border-radius: 16px;
       padding: 18px;
       margin-top: 18px;
       background: #fafafa;
     }
 
-    .category-header {
+    .category-head {
       display: flex;
-      align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      align-items: center;
+      margin-bottom: 12px;
     }
 
-    .category-header input {
+    .category-head input {
       flex: 1;
-      font-weight: 700;
-      background: white;
     }
 
-    .category-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: #111827;
-      margin-bottom: 8px;
-    }
-
-    .items-container {
-      margin-top: 10px;
-    }
-
-    .menu-item {
+    .item {
+      background: #fff;
       border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 15px;
-      margin-top: 12px;
-      background: white;
-    }
-
-    .menu-item-grid {
-      display: grid;
-      grid-template-columns: 1fr 150px;
-      gap: 12px;
-    }
-
-    .remove-btn {
+      border-radius: 13px;
+      padding: 12px;
       margin-top: 10px;
-      background: #fee2e2;
-      color: #b91c1c;
+    }
+
+    .item-grid {
+      display: grid;
+      grid-template-columns: 1fr 140px auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
       border: 0;
-      padding: 8px 12px;
-      border-radius: 8px;
+      border-radius: 11px;
+      padding: 11px 16px;
       cursor: pointer;
-      font-family: inherit;
-    }
-
-    .remove-category-btn {
-      background: #fee2e2;
-      color: #b91c1c;
-      border: 0;
-      padding: 9px 12px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-family: inherit;
       font-weight: 700;
-      white-space: nowrap;
+      font-size: 14px;
     }
 
-    .add-btn {
-      margin-top: 15px;
-      background: #fff7ed;
-      color: #ea580c;
-      border: 1px dashed #fb923c;
-      padding: 11px 17px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 700;
-    }
-
-    .add-category-btn {
-      width: 100%;
+    .btn-primary {
       background: #111827;
-      color: white;
-      border: 0;
-      padding: 15px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 16px;
-      font-weight: 800;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .btn-light {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 20px;
     }
 
-    .empty-message {
-      background: #f9fafb;
-      border: 1px dashed #d1d5db;
-      border-radius: 12px;
-      padding: 18px;
-      text-align: center;
-      color: #6b7280;
-      margin-top: 15px;
+    .bottom-actions {
+      position: sticky;
+      bottom: 0;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(10px);
+      padding: 14px;
+      border-top: 1px solid #e5e7eb;
+      z-index: 15;
     }
 
-    .designs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
+    .bottom-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      gap: 10px;
     }
 
-    .design {
-      border: 2px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: .2s;
-    }
-
-    .design:hover {
-      border-color: #f97316;
-    }
-
-    .design.selected {
-      border-color: #f97316;
-      background: #fff7ed;
-    }
-
-    .design-icon {
-      font-size: 34px;
-      margin-bottom: 8px;
-    }
-
-    .save-area {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .start-btn {
-      background: #f97316;
-      color: white;
-      border: 0;
-      padding: 15px 35px;
-      border-radius: 12px;
-      font-family: inherit;
-      font-size: 17px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(249,115,22,.25);
-    }
-
-    .start-btn:disabled {
-      opacity: .6;
-      cursor: not-allowed;
+    .bottom-inner button {
+      flex: 1;
     }
 
     .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 10px;
       display: none;
-      line-height: 1.8;
+      border-radius: 12px;
+      padding: 13px 15px;
+      margin-bottom: 15px;
+      font-weight: 600;
     }
 
-    .error {
+    .message.error {
+      display: block;
       background: #fee2e2;
       color: #991b1b;
     }
 
-    .success {
+    .message.success {
+      display: block;
       background: #dcfce7;
       color: #166534;
     }
 
-    .qr-info {
-      margin-top: 20px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1e40af;
-      border-radius: 12px;
-      padding: 13px 15px;
-      font-size: 13px;
-      line-height: 1.9;
-      text-align: center;
+    .saved-url {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 14px;
+      padding: 15px;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .saved-url strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .saved-url a {
+      word-break: break-all;
+      color: #166534;
     }
 
     @media (max-width: 700px) {
-
-      .grid,
-      .designs,
-      .menu-item-grid {
+      .grid {
         grid-template-columns: 1fr;
       }
 
-      .category-header {
+      .item-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-head {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .hero h1 {
-        font-size: 23px;
+      .bottom-inner {
+        flex-direction: column;
       }
 
-      .card {
-        padding: 18px;
+      .page-title h1 {
+        font-size: 23px;
       }
     }
   </style>
@@ -350,319 +310,125 @@
 <body>
 
   <div class="topbar">
-    🚀 ورشة ويب — ابدأ ببناء موقعك الآن
+    🚀 ورشة ويب — أنشئ موقعك وعدّل بياناته في أي وقت
   </div>
 
   <header>
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <span class="logo">W</span>
+        ورشة ويب
+      </a>
 
-    <div class="logo">
-      ورشة <span>ويب</span>
+      <button class="btn btn-light" onclick="goBack()">
+        ← رجوع
+      </button>
     </div>
-
-    <button
-      class="back"
-      onclick="goBack()"
-    >
-      ← رجوع
-    </button>
-
   </header>
-
 
   <main class="container">
 
-    <section class="hero">
+    <div class="page-title">
+      <h1>🛠️ إعداد موقع المطعم</h1>
+      <p>أدخل بيانات المطعم والمنيو ثم احفظ الموقع.</p>
+    </div>
 
-      <h1 id="pageTitle">
-        🍽️ إنشاء موقعك
-      </h1>
+    <div id="message" class="message"></div>
 
-      <p>
-        جهّز بيانات موقعك، وأنشئ أقسام المنيو والأصناف والأسعار بالطريقة التي تريدها.
-      </p>
+    <div class="card">
+      <h2>🏪 بيانات المطعم</h2>
 
-    </section>
-
-
-    <section class="card">
-
-      <h2 id="businessDataTitle">
-        🏪 بيانات النشاط
-      </h2>
-
-
-      <label>
-        اسم المكان
-      </label>
-
-      <input
-        id="businessName"
-        type="text"
-        placeholder="مثال: كافيه ورشة"
-      >
-
+      <div class="field">
+        <label>اسم المطعم / الكافيه</label>
+        <input id="businessName" type="text" placeholder="مثال: البيت بيتك">
+      </div>
 
       <div class="grid">
 
-        <div>
-
-          <label>
-            نوع النشاط
-          </label>
-
-          <select
-            id="businessType"
-            onchange="updateActivityText()"
-          >
-
-            <option value="restaurant">
-              مطعم
-            </option>
-
-            <option value="cafe">
-              كافيه
-            </option>
-
-            <option value="restaurant-cafe">
-              مطعم وكافيه
-            </option>
-
-            <option value="bakery">
-              مخبوزات وحلويات
-            </option>
-
-            <option value="other">
-              نشاط آخر
-            </option>
-
+        <div class="field">
+          <label>نوع النشاط</label>
+          <select id="businessType">
+            <option value="مطعم">🍽️ مطعم</option>
+            <option value="كافيه">☕ كافيه</option>
+            <option value="مطعم وكافيه">🍽️☕ مطعم وكافيه</option>
+            <option value="حلويات">🍰 حلويات</option>
+            <option value="مخبز">🥐 مخبز</option>
+            <option value="أخرى">أخرى</option>
           </select>
-
         </div>
 
-
-        <div>
-
-          <label>
-            رقم الهاتف
-          </label>
-
-          <input
-            id="businessPhone"
-            type="tel"
-            placeholder="مثال: 011xxxxxxxx"
-          >
-
+        <div class="field">
+          <label>رقم الهاتف</label>
+          <input id="phone" type="tel" placeholder="01111111111">
         </div>
 
       </div>
-
-
-      <label>
-        العنوان
-      </label>
-
-      <input
-        id="businessAddress"
-        type="text"
-        placeholder="اكتب عنوان المكان"
-      >
-
-
-      <label>
-        وصف قصير
-      </label>
-
-      <textarea
-        id="businessDescription"
-        placeholder="اكتب وصفًا بسيطًا عن المكان..."
-      ></textarea>
-
-    </section>
-
-
-    <section class="card">
-
-      <h2>
-        🎨 اختر شكل الموقع
-      </h2>
-
-      <div class="designs">
-
-        <div
-          class="design selected"
-          data-design="modern"
-          onclick="selectDesign(this)"
-        >
-
-          <div class="design-icon">
-            ✨
-          </div>
-
-          <strong>
-            مودرن
-          </strong>
-
-          <p>
-            شكل عصري وبسيط
-          </p>
-
-        </div>
-
-
-        <div
-          class="design"
-          data-design="luxury"
-          onclick="selectDesign(this)"
-        >
-
-          <div class="design-icon">
-            👑
-          </div>
-
-          <strong>
-            فاخر
-          </strong>
-
-          <p>
-            شكل راقي ومميز
-          </p>
-
-        </div>
-
-
-        <div
-          class="design"
-          data-design="simple"
-          onclick="selectDesign(this)"
-        >
-
-          <div class="design-icon">
-            🍽️
-          </div>
-
-          <strong>
-            بسيط
-          </strong>
-
-          <p>
-            شكل واضح وسريع
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section class="card">
-
-      <h2>
-        📋 المنيو
-      </h2>
-
-      <p>
-        اعمل أي عدد من الأقسام، وكل قسم تقدر تضيف بداخله عدد كبير من الأصناف والأسعار.
-      </p>
-
-      <div id="categoriesContainer"></div>
-
-
-      <button
-        class="add-category-btn"
-        onclick="addCategory()"
-      >
-        ➕ إضافة قسم جديد
-      </button>
-
-    </section>
-
-
-    <section class="card">
-
-      <h2>
-        📍 معلومات إضافية
-      </h2>
 
       <div class="grid">
 
-        <div>
-
-          <label>
-            مواعيد العمل
-          </label>
-
-          <input
-            id="workingHours"
-            type="text"
-            placeholder="مثال: يوميًا من 10 صباحًا إلى 12 مساءً"
-          >
-
+        <div class="field">
+          <label>العنوان</label>
+          <input id="address" type="text" placeholder="مثال: شارع الشعب">
         </div>
 
-
-        <div>
-
-          <label>
-            رابط واتساب
-          </label>
-
-          <input
-            id="whatsapp"
-            type="text"
-            placeholder="اختياري"
-          >
-
+        <div class="field">
+          <label>مواعيد العمل</label>
+          <input id="workingHours" type="text" placeholder="مثال: ٢٤ ساعه">
         </div>
 
       </div>
 
-    </section>
-
-
-    <div class="save-area">
-
-      <button
-        id="saveButton"
-        class="start-btn"
-        onclick="createRestaurantSite()"
-      >
-        🚀 حفظ المنيو وإنشاء الرابط
-      </button>
-
-
-      <div
-        id="message"
-        class="message"
-      ></div>
-
-
-      <div class="qr-info">
-
-        🔐 <strong>مهم:</strong>
-        عند تعديل المنيو أو تغيير الأسعار،
-        سيتم الاحتفاظ بنفس رابط المنيو ونفس الـ QR Code.
-
+      <div class="field">
+        <label>وصف قصير</label>
+        <textarea id="description" placeholder="اكتب وصفًا بسيطًا عن المطعم أو الكافيه"></textarea>
       </div>
+    </div>
 
+    <div class="card">
+      <h2>🍽️ المنيو</h2>
+
+      <div id="categories"></div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="addCategory()">
+          + إضافة قسم
+        </button>
+      </div>
+    </div>
+
+    <div id="savedUrlBox" class="saved-url">
+      <strong>🔗 رابط المنيو الثابت</strong>
+      <a id="savedUrl" href="#" target="_blank"></a>
     </div>
 
   </main>
 
+  <div class="bottom-actions">
+    <div class="bottom-inner">
+      <button class="btn btn-light" onclick="goBack()">
+        إلغاء
+      </button>
 
-  <!-- Supabase -->
+      <button id="saveBtn" class="btn btn-primary" onclick="createRestaurantSite()">
+        💾 حفظ الموقع
+      </button>
+    </div>
+  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
   <script>
+
+    /* =========================
+       SUPABASE
+    ========================= */
 
     const SUPABASE_URL =
       "https://qupoxgclybgbetqxzzwf.supabase.co";
 
     const SUPABASE_KEY =
       "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
-
 
     const supabaseClient =
       window.supabase.createClient(
@@ -671,1323 +437,786 @@
       );
 
 
-    let selectedDesign = "modern";
+    /* =========================
+       ELEMENTS
+    ========================= */
 
-    let categories = [];
+    const categoriesEl =
+      document.getElementById("categories");
 
+    const messageEl =
+      document.getElementById("message");
 
-    /* ==========================================
-       تسجيل الدخول
-    ========================================== */
+    const savedUrlBox =
+      document.getElementById("savedUrlBox");
 
-    async function checkLogin() {
-
-      const {
-        data: { session },
-        error
-      } =
-        await supabaseClient.auth.getSession();
-
-
-      if (
-        error ||
-        !session
-      ) {
-
-        window.location.href =
-          "login.html";
-
-        return false;
-
-      }
+    const savedUrlEl =
+      document.getElementById("savedUrl");
 
 
-      return true;
+    /* =========================
+       MESSAGE
+    ========================= */
 
+    function showMessage(text, type = "error") {
+
+      messageEl.textContent = text;
+
+      messageEl.className =
+        "message " + type;
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
 
 
-    /* ==========================================
-       نوع النشاط
-    ========================================== */
+    function clearMessage() {
 
-    function updateActivityText() {
+      messageEl.textContent = "";
 
-      const type =
-        document
-          .getElementById(
-            "businessType"
-          )
-          .value;
-
-
-      const pageTitle =
-        document.getElementById(
-          "pageTitle"
-        );
-
-
-      const dataTitle =
-        document.getElementById(
-          "businessDataTitle"
-        );
-
-
-      if (
-        type === "cafe"
-      ) {
-
-        pageTitle.textContent =
-          "☕ إنشاء موقع كافيه";
-
-        dataTitle.textContent =
-          "☕ بيانات الكافيه";
-
-      }
-
-      else if (
-        type === "restaurant"
-      ) {
-
-        pageTitle.textContent =
-          "🍽️ إنشاء موقع مطعم";
-
-        dataTitle.textContent =
-          "🍽️ بيانات المطعم";
-
-      }
-
-      else if (
-        type === "restaurant-cafe"
-      ) {
-
-        pageTitle.textContent =
-          "🍽️☕ إنشاء موقع مطعم وكافيه";
-
-        dataTitle.textContent =
-          "🍽️☕ بيانات المطعم والكافيه";
-
-      }
-
-      else if (
-        type === "bakery"
-      ) {
-
-        pageTitle.textContent =
-          "🥐 إنشاء موقع مخبوزات وحلويات";
-
-        dataTitle.textContent =
-          "🥐 بيانات النشاط";
-
-      }
-
-      else {
-
-        pageTitle.textContent =
-          "🏪 إنشاء موقع نشاطك";
-
-        dataTitle.textContent =
-          "🏪 بيانات النشاط";
-
-      }
-
+      messageEl.className = "message";
     }
 
 
-    /* ==========================================
-       التصميم
-    ========================================== */
+    /* =========================
+       BACK
+    ========================= */
 
-    function selectDesign(element) {
+    function goBack() {
 
-      document
-        .querySelectorAll(".design")
-        .forEach(
-          item =>
-            item.classList.remove(
-              "selected"
-            )
-        );
-
-
-      element.classList.add(
-        "selected"
-      );
-
-
-      selectedDesign =
-        element.dataset.design;
-
+      if (document.referrer) {
+        history.back();
+      } else {
+        window.location.href = "index.html";
+      }
     }
 
 
-    /* ==========================================
-       إنشاء ID للقسم
-    ========================================== */
+    /* =========================
+       SLUG
+    ========================= */
 
-    function createCategoryId() {
+    function createMenuSlug(name) {
 
-      return (
-        Date.now().toString(36) +
+      let clean =
+        String(name || "")
+          .trim()
+          .toLowerCase()
+          .replace(/[^\u0600-\u06FFa-z0-9]+/gi, "-")
+          .replace(/^-+|-+$/g, "");
+
+      if (!clean) {
+        clean = "menu";
+      }
+
+      const random =
         Math.random()
           .toString(36)
-          .slice(2)
+          .substring(2, 8);
+
+      return clean + "-" + random;
+    }
+
+
+    /* =========================
+       PUBLIC URL
+    ========================= */
+
+    function buildPublicMenuUrl(slug) {
+
+      if (!slug) return "";
+
+      const url =
+        new URL(
+          "menu.html",
+          window.location.origin + "/"
+        );
+
+      url.searchParams.set(
+        "slug",
+        slug
       );
 
+      return url.href;
     }
 
 
-    /* ==========================================
-       إضافة قسم
-    ========================================== */
-
-    function addCategory(
-      categoryData = null
-    ) {
-
-      const category = {
-
-        id:
-          createCategoryId(),
-
-        name:
-          categoryData?.name ||
-          "",
-
-        items:
-          Array.isArray(
-            categoryData?.items
-          )
-
-            ? categoryData.items.map(
-                item => ({
-
-                  name:
-                    item?.name ||
-                    "",
-
-                  price:
-                    item?.price ||
-                    ""
-
-                })
-              )
-
-            : []
-
-      };
-
-
-      categories.push(
-        category
-      );
-
-
-      renderCategories();
-
-    }
-
-
-    /* ==========================================
-       حذف قسم
-    ========================================== */
-
-    function removeCategory(
-      categoryId
-    ) {
-
-      if (
-        categories.length <= 1
-      ) {
-
-        showMessage(
-          "لازم يكون عندك قسم واحد على الأقل.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      categories =
-        categories.filter(
-          category =>
-            category.id !==
-            categoryId
-        );
-
-
-      renderCategories();
-
-    }
-
-
-    /* ==========================================
-       إضافة صنف
-    ========================================== */
-
-    function addItem(
-      categoryId
-    ) {
-
-      const category =
-        categories.find(
-          category =>
-            category.id ===
-            categoryId
-        );
-
-
-      if (!category) {
-        return;
-      }
-
-
-      category.items.push({
-
-        name:
-          "",
-
-        price:
-          ""
-
-      });
-
-
-      renderCategories();
-
-    }
-
-
-    /* ==========================================
-       حذف صنف
-    ========================================== */
-
-    function removeItem(
-      categoryId,
-      itemIndex
-    ) {
-
-      const category =
-        categories.find(
-          category =>
-            category.id ===
-            categoryId
-        );
-
-
-      if (!category) {
-        return;
-      }
-
-
-      if (
-        category.items.length <= 1
-      ) {
-
-        showMessage(
-          "لازم يكون عندك صنف واحد على الأقل داخل كل قسم.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      category.items.splice(
-        itemIndex,
-        1
-      );
-
-
-      renderCategories();
-
-    }
-
-
-    /* ==========================================
-       رسم الأقسام
-    ========================================== */
-
-    function renderCategories() {
-
-      const container =
-        document.getElementById(
-          "categoriesContainer"
-        );
-
-
-      container.innerHTML = "";
-
-
-      if (
-        categories.length === 0
-      ) {
-
-        container.innerHTML = `
-
-          <div class="empty-message">
-            لسه مفيش أقسام.
-            اضغط «إضافة قسم جديد» وابدأ المنيو.
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      categories.forEach(
-        (
-          category,
-          categoryIndex
-        ) => {
-
-          const box =
-            document.createElement(
-              "div"
-            );
-
-
-          box.className =
-            "category-box";
-
-
-          let itemsHTML =
-            "";
-
-
-          category.items.forEach(
-            (
-              item,
-              itemIndex
-            ) => {
-
-              itemsHTML += `
-
-                <div class="menu-item">
-
-                  <div class="menu-item-grid">
-
-                    <div>
-
-                      <label>
-                        اسم الصنف
-                      </label>
-
-                      <input
-                        type="text"
-                        value="${escapeHtml(item.name)}"
-                        placeholder="مثال: كابتشينو"
-                        oninput="
-                          updateItemName(
-                            ${categoryIndex},
-                            ${itemIndex},
-                            this.value
-                          )
-                        "
-                      >
-
-                    </div>
-
-
-                    <div>
-
-                      <label>
-                        السعر
-                      </label>
-
-                      <input
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        value="${escapeHtml(item.price)}"
-                        placeholder="100"
-                        oninput="
-                          updateItemPrice(
-                            ${categoryIndex},
-                            ${itemIndex},
-                            this.value
-                          )
-                        "
-                      >
-
-                    </div>
-
-                  </div>
-
-
-                  <button
-                    class="remove-btn"
-                    onclick="
-                      removeItem(
-                        '${category.id}',
-                        ${itemIndex}
-                      )
-                    "
-                  >
-                    🗑️ حذف الصنف
-                  </button>
-
-                </div>
-
-              `;
-
-            }
-          );
-
-
-          box.innerHTML = `
-
-            <div class="category-header">
-
-              <input
-                type="text"
-                value="${escapeHtml(category.name)}"
-                placeholder="اكتب اسم القسم"
-                oninput="
-                  updateCategoryName(
-                    ${categoryIndex},
-                    this.value
-                  )
-                "
-              >
-
-
-              <button
-                class="remove-category-btn"
-                onclick="
-                  removeCategory(
-                    '${category.id}'
-                  )
-                "
-              >
-                🗑️ حذف القسم
-              </button>
-
-            </div>
-
-
-            <div class="category-title">
-              📂 أصناف القسم
-            </div>
-
-
-            <div class="items-container">
-
-              ${
-                itemsHTML ||
-                `
-                  <div class="empty-message">
-                    أضف أول صنف لهذا القسم.
-                  </div>
-                `
-              }
-
-            </div>
-
-
-            <button
-              class="add-btn"
-              onclick="
-                addItem(
-                  '${category.id}'
-                )
-              "
-            >
-              ➕ إضافة صنف لهذا القسم
-            </button>
-
-          `;
-
-
-          container.appendChild(
-            box
-          );
-
-        }
-      );
-
-    }
-
-
-    /* ==========================================
-       تحديث اسم القسم
-    ========================================== */
-
-    function updateCategoryName(
-      categoryIndex,
-      value
-    ) {
-
-      if (
-        !categories[categoryIndex]
-      ) {
-        return;
-      }
-
-
-      categories[
-        categoryIndex
-      ].name =
-        value;
-
-    }
-
-
-    /* ==========================================
-       تحديث اسم الصنف
-    ========================================== */
-
-    function updateItemName(
-      categoryIndex,
-      itemIndex,
-      value
-    ) {
-
-      if (
-        !categories[categoryIndex] ||
-        !categories[
-          categoryIndex
-        ].items[itemIndex]
-      ) {
-
-        return;
-
-      }
-
-
-      categories[
-        categoryIndex
-      ].items[
-        itemIndex
-      ].name =
-        value;
-
-    }
-
-
-    /* ==========================================
-       تحديث السعر
-    ========================================== */
-
-    function updateItemPrice(
-      categoryIndex,
-      itemIndex,
-      value
-    ) {
-
-      if (
-        !categories[categoryIndex] ||
-        !categories[
-          categoryIndex
-        ].items[itemIndex]
-      ) {
-
-        return;
-
-      }
-
-
-      categories[
-        categoryIndex
-      ].items[
-        itemIndex
-      ].price =
-        value;
-
-    }
-
-
-    /* ==========================================
-       إنشاء Slug جديد
-       يستخدم فقط لو المنيو جديدة
-    ========================================== */
-
-    function createMenuSlug(
-      businessName
-    ) {
-
-      let randomPart =
-        "";
-
-
-      if (
-        window.crypto &&
-        typeof window.crypto.randomUUID ===
-          "function"
-      ) {
-
-        randomPart =
-          window.crypto
-            .randomUUID()
-            .replace(
-              /-/g,
-              ""
-            )
-            .slice(
-              0,
-              12
-            );
-
-      }
-
-      else {
-
-        randomPart =
-          Math.random()
-            .toString(36)
-            .slice(
-              2,
-              14
-            );
-
-      }
-
+    /* =========================
+       GET SAVED SLUG
+    ========================= */
+
+    function getSavedSlug() {
 
       let slug =
-        String(
-          businessName || ""
-        )
-          .toLowerCase()
-          .replace(
-            /[^a-z0-9\u0600-\u06FF]+/g,
-            "-"
-          )
-          .replace(
-            /^-+|-+$/g,
-            ""
-          )
-          .slice(
-            0,
-            30
-          );
-
-
-      if (!slug) {
-        slug = "menu";
-      }
-
-
-      return (
-        slug +
-        "-" +
-        randomPart
-      );
-
-    }
-
-
-    /* ==========================================
-       البحث عن المنيو القديمة
-    ========================================== */
-
-    async function findExistingMenu(
-      userId
-    ) {
-
-      let savedMenuId =
-        localStorage.getItem(
-          "warsha_restaurant_menu_id"
-        );
-
-
-      let savedSlug =
         localStorage.getItem(
           "warsha_restaurant_menu_slug"
         );
 
+      if (slug) return slug;
 
-      /*
-        لو البيانات القديمة داخل siteData
-        نستخرجها أيضًا
-      */
+
+      const savedUrl =
+        localStorage.getItem(
+          "warsha_restaurant_menu_url"
+        );
+
+      if (savedUrl) {
+
+        try {
+
+          const url =
+            new URL(savedUrl);
+
+          slug =
+            url.searchParams.get("slug");
+
+          if (slug) {
+
+            localStorage.setItem(
+              "warsha_restaurant_menu_slug",
+              slug
+            );
+
+            return slug;
+          }
+
+        } catch (e) {}
+      }
+
+      return "";
+    }
+
+
+    /* =========================
+       CATEGORIES
+    ========================= */
+
+    function addCategory(categoryData = null) {
+
+      const category =
+        document.createElement("div");
+
+      category.className = "category";
+
+      category.innerHTML = `
+
+        <div class="category-head">
+
+          <input
+            class="category-name"
+            type="text"
+            placeholder="اسم القسم — مثال: سخن"
+            value="${escapeHtml(
+              categoryData?.name || ""
+            )}"
+          >
+
+          <button
+            class="btn btn-danger"
+            type="button"
+            onclick="this.closest('.category').remove()"
+          >
+            حذف القسم
+          </button>
+
+        </div>
+
+        <div class="items"></div>
+
+        <button
+          class="btn btn-light"
+          type="button"
+          onclick="addItem(this)"
+        >
+          + إضافة صنف
+        </button>
+
+      `;
+
+      categoriesEl.appendChild(category);
+
+
+      const items =
+        categoryData?.items || [];
+
+      if (items.length) {
+
+        items.forEach(item => {
+
+          addItem(
+            category.querySelector(
+              ".btn-light"
+            ),
+            item
+          );
+
+        });
+
+      } else {
+
+        addItem(
+          category.querySelector(
+            ".btn-light"
+          )
+        );
+
+      }
+    }
+
+
+    function addItem(button, itemData = null) {
+
+      const category =
+        button.closest(".category");
+
+      const itemsEl =
+        category.querySelector(".items");
+
+      const item =
+        document.createElement("div");
+
+      item.className = "item";
+
+      item.innerHTML = `
+
+        <div class="item-grid">
+
+          <input
+            class="item-name"
+            type="text"
+            placeholder="اسم الصنف"
+            value="${escapeHtml(
+              itemData?.name || ""
+            )}"
+          >
+
+          <input
+            class="item-price"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="السعر"
+            value="${itemData?.price ?? ""}"
+          >
+
+          <button
+            class="btn btn-danger"
+            type="button"
+            onclick="this.closest('.item').remove()"
+          >
+            حذف
+          </button>
+
+        </div>
+
+      `;
+
+      itemsEl.appendChild(item);
+    }
+
+
+    /* =========================
+       ESCAPE HTML
+    ========================= */
+
+    function escapeHtml(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================
+       COLLECT MENU
+    ========================= */
+
+    function collectCategories() {
+
+      const categories = [];
+
+      document
+        .querySelectorAll(".category")
+        .forEach(category => {
+
+          const name =
+            category
+              .querySelector(".category-name")
+              .value
+              .trim();
+
+          const items = [];
+
+          category
+            .querySelectorAll(".item")
+            .forEach(item => {
+
+              const itemName =
+                item
+                  .querySelector(".item-name")
+                  .value
+                  .trim();
+
+              const price =
+                item
+                  .querySelector(".item-price")
+                  .value
+                  .trim();
+
+              if (itemName) {
+
+                items.push({
+                  name: itemName,
+                  price: price
+                });
+
+              }
+
+            });
+
+
+          if (name) {
+
+            categories.push({
+              name: name,
+              items: items
+            });
+
+          }
+
+        });
+
+      return categories;
+    }
+
+
+    /* =========================
+       SAVE SITE
+    ========================= */
+
+    async function createRestaurantSite() {
+
+      clearMessage();
+
+      const saveBtn =
+        document.getElementById("saveBtn");
+
+      saveBtn.disabled = true;
+
+      saveBtn.textContent =
+        "⏳ جاري الحفظ...";
+
 
       try {
 
-        const savedSite =
-          localStorage.getItem(
-            "warsha_restaurant_site"
+        /* ---------- USER ---------- */
+
+        const {
+          data: {
+            user
+          },
+          error: userError
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        if (userError || !user) {
+
+          throw new Error(
+            "يجب تسجيل الدخول أولاً."
           );
 
-
-        if (savedSite) {
-
-          const parsed =
-            JSON.parse(
-              savedSite
-            );
+        }
 
 
-          if (
-            !savedSlug &&
-            parsed.public_slug
-          ) {
+        /* ---------- FORM ---------- */
 
-            savedSlug =
-              parsed.public_slug;
+        const businessName =
+          document
+            .getElementById("businessName")
+            .value
+            .trim();
+
+        const businessType =
+          document
+            .getElementById("businessType")
+            .value;
+
+        const phone =
+          document
+            .getElementById("phone")
+            .value
+            .trim();
+
+        const address =
+          document
+            .getElementById("address")
+            .value
+            .trim();
+
+        const workingHours =
+          document
+            .getElementById("workingHours")
+            .value
+            .trim();
+
+        const description =
+          document
+            .getElementById("description")
+            .value
+            .trim();
+
+        const categories =
+          collectCategories();
+
+
+        if (!businessName) {
+
+          throw new Error(
+            "اكتب اسم المطعم أو الكافيه."
+          );
+
+        }
+
+
+        if (!categories.length) {
+
+          throw new Error(
+            "أضف قسمًا واحدًا على الأقل للمنيو."
+          );
+
+        }
+
+
+        /* =========================
+           EXISTING MENU
+        ========================= */
+
+        let savedMenuId =
+          localStorage.getItem(
+            "warsha_restaurant_menu_id"
+          ) || "";
+
+        let savedSlug =
+          getSavedSlug() || "";
+
+        let existingMenu = null;
+
+
+        /*
+          1) البحث باستخدام ID المحفوظ
+        */
+
+        if (savedMenuId) {
+
+          const result =
+            await supabaseClient
+              .from("restaurant_menus")
+              .select(
+                "id, public_slug, menu_data"
+              )
+              .eq("id", savedMenuId)
+              .eq("user_id", user.id)
+              .maybeSingle();
+
+          if (!result.error &&
+              result.data) {
+
+            existingMenu =
+              result.data;
 
           }
 
         }
 
-      } catch (e) {
-
-        console.log(
-          "Saved site parse skipped"
-        );
-
-      }
-
-
-      /*
-        البحث الأول بالـ ID
-      */
-
-      if (savedMenuId) {
-
-        const result =
-          await supabaseClient
-            .from(
-              "restaurant_menus"
-            )
-            .select(
-              "id, public_slug"
-            )
-            .eq(
-              "id",
-              savedMenuId
-            )
-            .eq(
-              "user_id",
-              userId
-            )
-            .maybeSingle();
-
-
-        if (
-          !result.error &&
-          result.data
-        ) {
-
-          return result.data;
-
-        }
-
-      }
-
-
-      /*
-        البحث الثاني بالـ slug
-      */
-
-      if (savedSlug) {
-
-        const result =
-          await supabaseClient
-            .from(
-              "restaurant_menus"
-            )
-            .select(
-              "id, public_slug"
-            )
-            .eq(
-              "public_slug",
-              savedSlug
-            )
-            .eq(
-              "user_id",
-              userId
-            )
-            .maybeSingle();
-
-
-        if (
-          !result.error &&
-          result.data
-        ) {
-
-          return result.data;
-
-        }
-
-      }
-
-
-      return null;
-
-    }
-
-
-    /* ==========================================
-       حفظ المنيو
-    ========================================== */
-
-    async function createRestaurantSite() {
-
-      const loggedIn =
-        await checkLogin();
-
-
-      if (!loggedIn) {
-        return;
-      }
-
-
-      const {
-        data: { user },
-        error: userError
-      } =
-        await supabaseClient.auth.getUser();
-
-
-      if (
-        userError ||
-        !user
-      ) {
-
-        showMessage(
-          "لازم تسجل الدخول أولًا.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      const businessName =
-        document
-          .getElementById(
-            "businessName"
-          )
-          .value
-          .trim();
-
-
-      const businessType =
-        document
-          .getElementById(
-            "businessType"
-          )
-          .value;
-
-
-      if (!businessName) {
-
-        showMessage(
-          "اكتب اسم المكان أولًا.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (
-        categories.length === 0
-      ) {
-
-        showMessage(
-          "أضف قسمًا واحدًا على الأقل للمنيو.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      const finalCategories =
-        [];
-
-
-      for (
-        const category of categories
-      ) {
-
-        const categoryName =
-          String(
-            category.name || ""
-          ).trim();
-
-
-        if (!categoryName) {
-
-          showMessage(
-            "اكتب اسم كل قسم قبل الحفظ.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        const finalItems =
-          category.items
-            .map(
-              item => ({
-
-                name:
-                  String(
-                    item.name || ""
-                  ).trim(),
-
-                price:
-                  String(
-                    item.price || ""
-                  ).trim()
-
-              })
-            )
-            .filter(
-              item =>
-                item.name !== ""
-            );
-
-
-        if (
-          finalItems.length === 0
-        ) {
-
-          showMessage(
-            `أضف صنفًا واحدًا على الأقل داخل قسم «${categoryName}».`,
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        finalCategories.push({
-
-          name:
-            categoryName,
-
-          items:
-            finalItems
-
-        });
-
-      }
-
-
-      const saveButton =
-        document.getElementById(
-          "saveButton"
-        );
-
-
-      saveButton.disabled =
-        true;
-
-
-      showMessage(
-        "جاري حفظ المنيو... ⏳",
-        "success"
-      );
-
-
-      /*
-      ==========================================
-      نبحث عن المنيو القديمة
-      ==========================================
-      */
-
-      let existingMenu =
-        null;
-
-
-      try {
-
-        existingMenu =
-          await findExistingMenu(
-            user.id
-          );
-
-      } catch (error) {
-
-        console.error(
-          "Find existing menu error:",
-          error
-        );
-
-      }
-
-
-      /*
-      ==========================================
-      تحديد الـ ID والـ SLUG
-      ==========================================
-      */
-
-      let savedMenuId =
-        "";
-
-
-      let savedSlug =
-        "";
-
-
-      if (
-        existingMenu
-      ) {
 
         /*
-          أهم نقطة:
-          لو المنيو موجودة بالفعل
-          نستخدم نفس الـ ID ونفس الـ SLUG.
+          2) لو مفيش ID:
+             البحث باستخدام الـslug المحفوظ
         */
 
-        savedMenuId =
-          String(
-            existingMenu.id
-          );
+        if (!existingMenu && savedSlug) {
 
+          const result =
+            await supabaseClient
+              .from("restaurant_menus")
+              .select(
+                "id, public_slug, menu_data"
+              )
+              .eq(
+                "public_slug",
+                savedSlug
+              )
+              .eq(
+                "user_id",
+                user.id
+              )
+              .maybeSingle();
 
-        savedSlug =
-          existingMenu.public_slug ||
-          "";
+          if (!result.error &&
+              result.data) {
 
-      }
+            existingMenu =
+              result.data;
 
+            savedMenuId =
+              result.data.id;
 
-      /*
-        لو مفيش سجل في قاعدة البيانات
-        نحاول استخدام slug المحفوظ محليًا.
-      */
-
-      if (!savedSlug) {
-
-        savedSlug =
-          localStorage.getItem(
-            "warsha_restaurant_menu_slug"
-          ) ||
-          "";
-
-      }
-
-
-      /*
-        لو دي منيو جديدة فقط
-        ننشئ slug جديد.
-      */
-
-      if (!savedSlug) {
-
-        savedSlug =
-          createMenuSlug(
-            businessName
-          );
-
-      }
-
-
-      /*
-      ==========================================
-      بيانات المنيو
-      ==========================================
-      */
-
-      const siteData = {
-
-        type:
-          "restaurant",
-
-        business_name:
-          businessName,
-
-        business_type:
-          businessType,
-
-        phone:
-          document
-            .getElementById(
-              "businessPhone"
-            )
-            .value
-            .trim(),
-
-        address:
-          document
-            .getElementById(
-              "businessAddress"
-            )
-            .value
-            .trim(),
-
-        description:
-          document
-            .getElementById(
-              "businessDescription"
-            )
-            .value
-            .trim(),
-
-        design:
-          selectedDesign,
-
-        categories:
-          finalCategories,
-
-        working_hours:
-          document
-            .getElementById(
-              "workingHours"
-            )
-            .value
-            .trim(),
-
-        whatsapp:
-          document
-            .getElementById(
-              "whatsapp"
-            )
-            .value
-            .trim(),
-
-        public_slug:
-          savedSlug
-
-      };
-
-
-      let databaseSuccess =
-        false;
-
-
-      /*
-      ==========================================
-      الحالة 1:
-      المنيو موجودة بالفعل
-      ==========================================
-      */
-
-      if (
-        existingMenu &&
-        savedMenuId
-      ) {
-
-        const {
-          error: updateError
-        } =
-          await supabaseClient
-            .from(
-              "restaurant_menus"
-            )
-            .update({
-
-              menu_name:
-                businessName,
-
-              business_type:
-                businessType,
-
-              menu_data:
-                siteData,
-
-              /*
-                لا نغير الـ slug
-              */
-
-              public_slug:
-                savedSlug,
-
-              updated_at:
-                new Date()
-                  .toISOString()
-
-            })
-            .eq(
-              "id",
-              savedMenuId
-            )
-            .eq(
-              "user_id",
-              user.id
-            );
-
-
-        if (!updateError) {
-
-          databaseSuccess =
-            true;
+          }
 
         }
 
-        else {
 
-          console.error(
-            "Update error:",
-            updateError
+        /*
+          3) لو مفيش ID ولا slug:
+             نبحث عن آخر منيو لهذا المستخدم.
+
+             ده فقط عند أول إنشاء،
+             وليس أثناء التعديل.
+        */
+
+        if (!existingMenu &&
+            !savedMenuId &&
+            !savedSlug) {
+
+          const result =
+            await supabaseClient
+              .from("restaurant_menus")
+              .select(
+                "id, public_slug, menu_data"
+              )
+              .eq(
+                "user_id",
+                user.id
+              )
+              .order(
+                "updated_at",
+                { ascending: false }
+              )
+              .limit(1)
+              .maybeSingle();
+
+          if (!result.error &&
+              result.data) {
+
+            /*
+              نستخدم السجل السابق فقط
+              لو كان مرتبطًا بالموقع الحالي.
+            */
+
+            const oldData =
+              result.data.menu_data;
+
+            if (
+              oldData &&
+              typeof oldData === "object" &&
+              (
+                oldData.businessName === businessName ||
+                oldData.public_slug === result.data.public_slug
+              )
+            ) {
+
+              existingMenu =
+                result.data;
+
+              savedMenuId =
+                result.data.id;
+
+              savedSlug =
+                result.data.public_slug || "";
+
+            }
+
+          }
+
+        }
+
+
+        /* =========================
+           STABLE SLUG
+        ========================= */
+
+        /*
+          أهم جزء:
+
+          لو عندنا slug قديم:
+          نستخدمه كما هو.
+
+          ممنوع إنشاء slug جديد
+          أثناء التعديل.
+        */
+
+        if (existingMenu &&
+            existingMenu.public_slug) {
+
+          savedSlug =
+            existingMenu.public_slug;
+
+        }
+
+
+        /*
+          لو الـslug موجود في localStorage
+          لكنه غير موجود في DB،
+          نحافظ عليه أيضًا إذا كان لدينا ID.
+        */
+
+        if (!savedSlug &&
+            existingMenu &&
+            existingMenu.public_slug) {
+
+          savedSlug =
+            existingMenu.public_slug;
+
+        }
+
+
+        /*
+          إنشاء slug جديد فقط
+          عند إنشاء منيو جديدة تمامًا.
+        */
+
+        if (!savedSlug) {
+
+          savedSlug =
+            createMenuSlug(
+              businessName
+            );
+
+        }
+
+
+        const publicMenuUrl =
+          buildPublicMenuUrl(
+            savedSlug
           );
+
+
+        /* =========================
+           SITE DATA
+        ========================= */
+
+        const siteData = {
+
+          businessName,
+          businessType,
+          phone,
+          address,
+          workingHours,
+          description,
+
+          categories,
+
+          public_slug:
+            savedSlug,
+
+          public_menu_url:
+            publicMenuUrl
+
+        };
+
+
+        /* =========================
+           DATABASE DATA
+        ========================= */
+
+        const menuData = {
+
+          businessName,
+          businessType,
+          phone,
+          address,
+          workingHours,
+          description,
+
+          categories,
+
+          public_slug:
+            savedSlug,
+
+          public_menu_url:
+            publicMenuUrl,
+
+          updated_from:
+            "restaurant-setup"
+
+        };
+
+
+        /* =========================
+           UPDATE EXISTING
+        ========================= */
+
+        if (savedMenuId) {
+
+          const updateResult =
+            await supabaseClient
+              .from("restaurant_menus")
+              .update({
+
+                menu_name:
+                  businessName,
+
+                business_type:
+                  businessType,
+
+                menu_data:
+                  menuData,
+
+                public_slug:
+                  savedSlug,
+
+                updated_at:
+                  new Date().toISOString()
+
+              })
+              .eq(
+                "id",
+                savedMenuId
+              )
+              .eq(
+                "user_id",
+                user.id
+              );
 
 
           /*
-            مهم:
-            لا ننشئ منيو جديدة هنا.
-            لأننا نريد الحفاظ على نفس QR.
+            مهم جدًا:
+
+            لا نستخدم .select()
+            هنا.
+
+            لأن RLS ممكن يسمح بالتحديث
+            لكنه يمنع رجوع الصف،
+            وبالتالي الكود القديم كان
+            يظن أن التحديث فشل.
           */
 
-          saveButton.disabled =
-            false;
+          if (updateResult.error) {
 
+            throw new Error(
+              "تعذر تحديث المنيو القديمة: " +
+              updateResult.error.message
+            );
 
-          showMessage(
-            "حصل خطأ أثناء تحديث المنيو القديمة. لم يتم تغيير الرابط أو الـ QR. حاول مرة أخرى.",
-            "error"
-          );
-
-
-          return;
+          }
 
         }
 
-      }
+        /* =========================
+           INSERT NEW
+        ========================= */
 
+        else {
 
-      /*
-      ==========================================
-      الحالة 2:
-      منيو جديدة
-      ==========================================
-      */
-
-      if (
-        !databaseSuccess
-      ) {
-
-        let inserted =
-          false;
-
-
-        let attempts =
-          0;
-
-
-        while (
-          !inserted &&
-          attempts < 5
-        ) {
-
-          attempts++;
-
-
-          const {
-            data,
-            error:
-              insertError
-          } =
+          const insertResult =
             await supabaseClient
-              .from(
-                "restaurant_menus"
-              )
+              .from("restaurant_menus")
               .insert({
 
                 user_id:
@@ -2000,10 +1229,13 @@
                   businessType,
 
                 menu_data:
-                  siteData,
+                  menuData,
 
                 public_slug:
-                  savedSlug
+                  savedSlug,
+
+                updated_at:
+                  new Date().toISOString()
 
               })
               .select(
@@ -2012,57 +1244,18 @@
               .single();
 
 
-          if (
-            !insertError &&
-            data
-          ) {
-
-            savedMenuId =
-              String(
-                data.id
-              );
-
-
-            savedSlug =
-              data.public_slug ||
-              savedSlug;
-
-
-            inserted =
-              true;
-
-            databaseSuccess =
-              true;
-
-          }
-
-          else {
-
-            console.error(
-              "Insert error:",
-              insertError
-            );
-
+          if (insertResult.error) {
 
             /*
-              لو الـ slug مكرر:
-              نغيره فقط لأن هذه منيو جديدة.
+              احتمال ضئيل أن الـslug
+              موجود بالفعل.
             */
 
             if (
-              insertError &&
-              (
-                insertError.code ===
-                  "23505" ||
-                String(
-                  insertError.message ||
-                  ""
-                )
-                  .toLowerCase()
-                  .includes(
-                    "duplicate"
-                  )
-              )
+              String(
+                insertResult.error.message
+              ).toLowerCase()
+              .includes("duplicate")
             ) {
 
               savedSlug =
@@ -2070,309 +1263,263 @@
                   businessName
                 );
 
+              const retryUrl =
+                buildPublicMenuUrl(
+                  savedSlug
+                );
+
+              menuData.public_slug =
+                savedSlug;
+
+              menuData.public_menu_url =
+                retryUrl;
 
               siteData.public_slug =
                 savedSlug;
 
+              siteData.public_menu_url =
+                retryUrl;
+
+
+              const retry =
+                await supabaseClient
+                  .from("restaurant_menus")
+                  .insert({
+
+                    user_id:
+                      user.id,
+
+                    menu_name:
+                      businessName,
+
+                    business_type:
+                      businessType,
+
+                    menu_data:
+                      menuData,
+
+                    public_slug:
+                      savedSlug,
+
+                    updated_at:
+                      new Date().toISOString()
+
+                  })
+                  .select(
+                    "id, public_slug"
+                  )
+                  .single();
+
+
+              if (retry.error) {
+
+                throw new Error(
+                  retry.error.message
+                );
+
+              }
+
+              savedMenuId =
+                retry.data.id;
+
+            } else {
+
+              throw new Error(
+                insertResult.error.message
+              );
+
             }
 
-            else {
+          } else {
 
-              break;
+            savedMenuId =
+              insertResult.data.id;
 
-            }
+            savedSlug =
+              insertResult.data.public_slug ||
+              savedSlug;
 
           }
 
         }
 
 
-        if (!inserted) {
+        /* =========================
+           FINAL URL
+        ========================= */
 
-          saveButton.disabled =
-            false;
-
-
-          showMessage(
-            "حصل خطأ أثناء إنشاء المنيو. راجع إعدادات Supabase وحاول مرة أخرى.",
-            "error"
+        const finalUrl =
+          buildPublicMenuUrl(
+            savedSlug
           );
 
 
-          return;
+        /* =========================
+           LOCAL STORAGE
+        ========================= */
 
-        }
+        siteData.public_slug =
+          savedSlug;
 
-      }
+        siteData.public_menu_url =
+          finalUrl;
 
 
-      /*
-      ==========================================
-      إنشاء الرابط العام
-      ==========================================
-      */
+        localStorage.setItem(
+          "warsha_restaurant_site",
+          JSON.stringify(siteData)
+        );
 
-      const publicMenuUrl =
-        new URL(
-          "menu.html",
-          window.location.href
+        localStorage.setItem(
+          "warsha_restaurant_menu_id",
+          String(savedMenuId)
+        );
+
+        localStorage.setItem(
+          "warsha_restaurant_menu_slug",
+          savedSlug
+        );
+
+        localStorage.setItem(
+          "warsha_restaurant_menu_url",
+          finalUrl
         );
 
 
-      publicMenuUrl.searchParams.set(
-        "slug",
-        savedSlug
-      );
+        /* =========================
+           SHOW URL
+        ========================= */
+
+        savedUrlEl.href =
+          finalUrl;
+
+        savedUrlEl.textContent =
+          finalUrl;
+
+        savedUrlBox.style.display =
+          "block";
 
 
-      const finalPublicMenuUrl =
-        publicMenuUrl.href;
+        showMessage(
+          "✅ تم حفظ الموقع بنجاح. رابط المنيو والباركود سيظلان ثابتين عند التعديل.",
+          "success"
+        );
 
 
-      /*
-        حفظ الرابط داخل البيانات نفسها
-      */
+        /*
+          ننتظر قليلًا حتى يظهر
+          نجاح الحفظ ثم نذهب للمعاينة.
+        */
 
-      siteData.public_slug =
-        savedSlug;
-
-
-      siteData.public_menu_url =
-        finalPublicMenuUrl;
-
-
-      /*
-      ==========================================
-      تحديث menu_data بالرابط أيضًا
-      ==========================================
-      */
-
-      if (
-        savedMenuId
-      ) {
-
-        const {
-          error: finalUpdateError
-        } =
-          await supabaseClient
-            .from(
-              "restaurant_menus"
-            )
-            .update({
-
-              menu_data:
-                siteData,
-
-              public_slug:
-                savedSlug,
-
-              updated_at:
-                new Date()
-                  .toISOString()
-
-            })
-            .eq(
-              "id",
-              savedMenuId
-            )
-            .eq(
-              "user_id",
-              user.id
-            );
-
-
-        if (finalUpdateError) {
-
-          console.error(
-            "Final data update error:",
-            finalUpdateError
-          );
-
-        }
-
-      }
-
-
-      /*
-      ==========================================
-      حفظ كل شيء في الجهاز
-      ==========================================
-      */
-
-      localStorage.setItem(
-        "warsha_restaurant_site",
-        JSON.stringify(
-          siteData
-        )
-      );
-
-
-      localStorage.setItem(
-        "warsha_restaurant_menu_id",
-        String(
-          savedMenuId
-        )
-      );
-
-
-      localStorage.setItem(
-        "warsha_restaurant_menu_slug",
-        savedSlug
-      );
-
-
-      localStorage.setItem(
-        "warsha_restaurant_menu_url",
-        finalPublicMenuUrl
-      );
-
-
-      /*
-      ==========================================
-      نجاح
-      ==========================================
-      */
-
-      showMessage(
-        "✅ تم حفظ المنيو بنجاح. الرابط والـ QR أصبحا جاهزين.",
-        "success"
-      );
-
-
-      setTimeout(
-        () => {
+        setTimeout(() => {
 
           window.location.href =
             "restaurant-preview.html";
 
-        },
-        700
-      );
+        }, 800);
+
+
+      } catch (error) {
+
+        console.error(
+          "SAVE ERROR:",
+          error
+        );
+
+        showMessage(
+          error.message ||
+          "حدث خطأ أثناء حفظ الموقع."
+        );
+
+        saveBtn.disabled =
+          false;
+
+        saveBtn.textContent =
+          "💾 حفظ الموقع";
+
+      }
 
     }
 
 
-    /* ==========================================
-       تحميل البيانات القديمة
-    ========================================== */
+    /* =========================
+       LOAD SAVED DATA
+    ========================= */
 
     function loadSavedData() {
 
-      const saved =
+      let raw =
         localStorage.getItem(
           "warsha_restaurant_site"
         );
 
+      if (!raw) {
 
-      if (!saved) {
+        /*
+          منيو جديدة
+        */
 
-        addCategory();
+        addCategory({
+          name: "سخن",
+          items: [
+            {
+              name: "شاي",
+              price: "9"
+            }
+          ]
+        });
 
         return;
-
       }
 
 
       try {
 
         const data =
-          JSON.parse(
-            saved
-          );
+          JSON.parse(raw);
 
 
         document
-          .getElementById(
-            "businessName"
-          )
+          .getElementById("businessName")
           .value =
-          data.business_name ||
-          "";
+          data.businessName || "";
 
 
         document
-          .getElementById(
-            "businessType"
-          )
+          .getElementById("businessType")
           .value =
-          data.business_type ||
-          "restaurant";
+          data.businessType || "مطعم";
 
 
         document
-          .getElementById(
-            "businessPhone"
-          )
+          .getElementById("phone")
           .value =
-          data.phone ||
-          "";
+          data.phone || "";
 
 
         document
-          .getElementById(
-            "businessAddress"
-          )
+          .getElementById("address")
           .value =
-          data.address ||
-          "";
+          data.address || "";
 
 
         document
-          .getElementById(
-            "businessDescription"
-          )
+          .getElementById("workingHours")
           .value =
-          data.description ||
-          "";
+          data.workingHours || "";
 
 
         document
-          .getElementById(
-            "workingHours"
-          )
+          .getElementById("description")
           .value =
-          data.working_hours ||
-          "";
-
-
-        document
-          .getElementById(
-            "whatsapp"
-          )
-          .value =
-          data.whatsapp ||
-          "";
-
-
-        selectedDesign =
-          data.design ||
-          "modern";
-
-
-        document
-          .querySelectorAll(
-            ".design"
-          )
-          .forEach(
-            design => {
-
-              design.classList.toggle(
-                "selected",
-                design.dataset.design ===
-                  selectedDesign
-              );
-
-            }
-          );
+          data.description || "";
 
 
         /*
-          استرجاع الـ slug
+          استرجاع الرابط والـslug
         */
 
-        if (
-          data.public_slug
-        ) {
+        if (data.public_slug) {
 
           localStorage.setItem(
             "warsha_restaurant_menu_slug",
@@ -2382,13 +1529,7 @@
         }
 
 
-        /*
-          استرجاع الرابط
-        */
-
-        if (
-          data.public_menu_url
-        ) {
+        if (data.public_menu_url) {
 
           localStorage.setItem(
             "warsha_restaurant_menu_url",
@@ -2398,78 +1539,58 @@
         }
 
 
+        const categories =
+          data.categories || [];
+
+
+        categoriesEl.innerHTML =
+          "";
+
+
+        if (categories.length) {
+
+          categories.forEach(
+            category => addCategory(category)
+          );
+
+        } else {
+
+          addCategory();
+
+        }
+
+
         /*
-          استرجاع الأقسام
+          إظهار الرابط الموجود
         */
 
-        if (
-          Array.isArray(
-            data.categories
-          )
-        ) {
+        const slug =
+          data.public_slug ||
+          getSavedSlug();
 
-          categories =
-            data.categories.map(
-              category => ({
 
-                id:
-                  createCategoryId(),
+        if (slug) {
 
-                name:
-                  category.name ||
-                  "",
+          const url =
+            buildPublicMenuUrl(slug);
 
-                items:
-                  Array.isArray(
-                    category.items
-                  )
+          savedUrlEl.href =
+            url;
 
-                    ? category.items.map(
-                        item => ({
+          savedUrlEl.textContent =
+            url;
 
-                          name:
-                            item?.name ||
-                            "",
-
-                          price:
-                            item?.price ||
-                            ""
-
-                        })
-                      )
-
-                    : []
-
-              })
-            );
+          savedUrlBox.style.display =
+            "block";
 
         }
 
-        else {
-
-          categories =
-            [];
-
-        }
-
-
-        updateActivityText();
-
-        renderCategories();
-
-      }
-
-      catch (error) {
+      } catch (error) {
 
         console.error(
-          "Load saved data error:",
+          "LOAD ERROR:",
           error
         );
-
-
-        categories =
-          [];
-
 
         addCategory();
 
@@ -2478,103 +1599,56 @@
     }
 
 
-    /* ==========================================
-       الرسائل
-    ========================================== */
+    /* =========================
+       START
+    ========================= */
 
-    function showMessage(
-      text,
-      type
-    ) {
+    async function init() {
 
-      const message =
-        document.getElementById(
-          "message"
-        );
+      try {
 
-
-      message.textContent =
-        text;
+        const {
+          data: {
+            session
+          }
+        } =
+          await supabaseClient.auth.getSession();
 
 
-      message.className =
-        "message " +
-        type;
+        if (!session) {
 
+          showMessage(
+            "يجب تسجيل الدخول أولاً."
+          );
 
-      message.style.display =
-        "block";
+          setTimeout(() => {
 
-    }
+            window.location.href =
+              "login.html";
 
+          }, 1200);
 
-    /* ==========================================
-       رجوع
-    ========================================== */
-
-    function goBack() {
-
-      window.location.href =
-        "create-site.html";
-
-    }
-
-
-    /* ==========================================
-       حماية HTML
-    ========================================== */
-
-    function escapeHtml(
-      value
-    ) {
-
-      return String(
-        value ?? ""
-      )
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
-
-
-    /* ==========================================
-       تشغيل الصفحة
-    ========================================== */
-
-    checkLogin().then(
-      loggedIn => {
-
-        if (loggedIn) {
-
-          loadSavedData();
+          return;
 
         }
 
+
+        loadSavedData();
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          "تعذر التحقق من تسجيل الدخول."
+        );
+
       }
-    );
+
+    }
+
+
+    init();
 
   </script>
 
