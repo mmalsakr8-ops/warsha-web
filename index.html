@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -6,10 +7,11 @@
 
   <title>ورشة ويب | أنشئ موقعك بنفسك</title>
 
-  <meta
-    name="description"
-    content="ورشة ويب - أنشئ موقعك بنفسك واختر بين مطعم وكافيه، موقع شخصي، أو متجر إلكتروني."
-  >
+<meta
+name="description"
+content="ورشة ويب - أنشئ موقعك بنفسك واختر بين مطعم وكافيه، موقع شخصي، أو متجر إلكتروني."
+
+>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,7 +48,6 @@
       margin: auto;
     }
 
-    /* Header */
     header {
       background: #ffffff;
       border-bottom: 1px solid #e8ecf3;
@@ -133,7 +134,78 @@
       background: #0e1525;
     }
 
-    /* Hero */
+    /* حساب المستخدم */
+    .account-box {
+      display: none;
+      position: relative;
+    }
+
+    .account-btn {
+      background: #172033;
+      color: #fff;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 15px;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .account-menu {
+      display: none;
+      position: absolute;
+      top: 52px;
+      left: 0;
+      width: 270px;
+      background: #fff;
+      border: 1px solid #e3e7ef;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+
+    .account-menu.show {
+      display: block;
+    }
+
+    .account-name {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .account-email,
+    .account-phone {
+      color: #687386;
+      font-size: 13px;
+      margin-bottom: 3px;
+      word-break: break-word;
+    }
+
+    .account-menu a,
+    .logout-btn {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .account-menu a {
+      background: #f1f3f8;
+      color: #172033;
+    }
+
+    .logout-btn {
+      background: #fff1f1;
+      color: #c62828;
+      border: 1px solid #ffd5d5;
+    }
+
     .hero {
       padding: 90px 0 70px;
       background:
@@ -203,7 +275,6 @@
       color: #172033;
     }
 
-    /* Types */
     .section {
       padding: 80px 0;
     }
@@ -274,7 +345,6 @@
       color: #4d5bd5;
     }
 
-    /* How */
     .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -309,7 +379,6 @@
       font-size: 14px;
     }
 
-    /* Trial */
     .trial-box {
       background: #172033;
       color: #ffffff;
@@ -334,7 +403,6 @@
       padding: 13px 25px;
     }
 
-    /* Footer */
     footer {
       background: #ffffff;
       border-top: 1px solid #e8ecf2;
@@ -350,8 +418,8 @@
       gap: 20px;
     }
 
-    /* Mobile */
     @media (max-width: 800px) {
+
       .nav-links {
         display: none;
       }
@@ -380,9 +448,6 @@
     }
 
     @media (max-width: 480px) {
-      .nav-buttons .btn-outline {
-        display: none;
-      }
 
       .nav {
         min-height: 68px;
@@ -408,8 +473,13 @@
       .hero-actions .btn {
         width: 100%;
       }
+
+      .account-menu {
+        left: -80px;
+      }
     }
   </style>
+
 </head>
 
 <body>
@@ -417,204 +487,507 @@
   <header>
     <div class="container nav">
 
-      <a href="#" class="logo">
-        <span class="logo-icon">W</span>
-        <span>ورشة ويب</span>
-      </a>
+```
+  <a href="#" class="logo">
+    <span class="logo-icon">W</span>
+    <span>ورشة ويب</span>
+  </a>
 
-      <nav class="nav-links">
-        <a href="#home">الرئيسية</a>
-        <a href="#types">أنواع المواقع</a>
-        <a href="#how">كيف تعمل؟</a>
-        <a href="#trial">التجربة</a>
-      </nav>
+  <nav class="nav-links">
+    <a href="#home">الرئيسية</a>
+    <a href="#types">أنواع المواقع</a>
+    <a href="#how">كيف تعمل؟</a>
+    <a href="#trial">التجربة</a>
+  </nav>
 
-      <div class="nav-buttons">
-        <button class="btn btn-outline">تسجيل الدخول</button>
-        <button class="btn btn-primary" onclick="startBuilding()">
-          ابدأ الآن
+  <div class="nav-buttons">
+
+    <div id="guestButtons">
+      <button
+        class="btn btn-outline"
+        onclick="goToLogin()"
+      >
+        تسجيل الدخول
+      </button>
+
+      <button
+        class="btn btn-primary"
+        onclick="startBuilding()"
+      >
+        ابدأ الآن
+      </button>
+    </div>
+
+    <div id="accountBox" class="account-box">
+
+      <button
+        class="account-btn"
+        onclick="toggleAccountMenu()"
+      >
+        👤 <span id="accountButtonName">حسابي</span>
+      </button>
+
+      <div id="accountMenu" class="account-menu">
+
+        <div class="account-name" id="accountName">
+          جاري التحميل...
+        </div>
+
+        <div class="account-email" id="accountEmail"></div>
+
+        <div class="account-phone" id="accountPhone"></div>
+
+        <a href="dashboard.html">
+          📊 لوحة التحكم
+        </a>
+
+        <button
+          class="logout-btn"
+          onclick="logout()"
+        >
+          🚪 تسجيل الخروج
         </button>
+
       </div>
 
     </div>
-  </header>
 
+  </div>
+
+</div>
+```
+
+  </header>
 
   <main id="home">
 
-    <section class="hero">
-      <div class="container hero-content">
+```
+<section class="hero">
+  <div class="container hero-content">
 
-        <div class="badge">
-          🚀 أنشئ موقعك بنفسك
-        </div>
+    <div class="badge">
+      🚀 أنشئ موقعك بنفسك
+    </div>
 
-        <h1>
-          اعمل موقعك بنفسك
-          <br>
-          <span>في دقائق</span>
-        </h1>
+    <h1>
+      اعمل موقعك بنفسك
+      <br>
+      <span>في دقائق</span>
+    </h1>
+
+    <p>
+      اختار نوع موقعك، صممه بطريقتك، أضف المحتوى الخاص بك،
+      وانشره برابط خاص بك بدون الحاجة للبرمجة.
+    </p>
+
+    <div class="hero-actions">
+
+      <button
+        class="btn btn-primary"
+        onclick="startBuilding()"
+      >
+        ابدأ إنشاء موقعي
+      </button>
+
+      <a href="#types" class="btn btn-outline">
+        استكشف أنواع المواقع
+      </a>
+
+    </div>
+
+    <div class="trial">
+      🎁 ابدأ بـ <strong>3 شهور تجربة</strong> لموقعك
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section" id="types">
+
+  <div class="container">
+
+    <div class="section-heading">
+      <h2>اختار نوع موقعك</h2>
+      <p>ابدأ من القالب المناسب لفكرتك</p>
+    </div>
+
+    <div class="types">
+
+      <div
+        class="type-card"
+        onclick="chooseType('restaurant')"
+      >
+        <div class="type-icon">🍽️</div>
+
+        <h3>مطعم / كافيه</h3>
 
         <p>
-          اختار نوع موقعك، صممه بطريقتك، أضف المحتوى الخاص بك،
-          وانشره برابط خاص بك بدون الحاجة للبرمجة.
+          اعمل موقع احترافي لمطعمك أو كافيهك
+          مع منيو قابلة للتعديل.
         </p>
 
-        <div class="hero-actions">
-          <button class="btn btn-primary" onclick="startBuilding()">
-            ابدأ إنشاء موقعي
-          </button>
-
-          <a href="#types" class="btn btn-outline">
-            استكشف أنواع المواقع
-          </a>
-        </div>
-
-        <div class="trial">
-          🎁 ابدأ بـ <strong>3 شهور تجربة</strong> لموقعك
-        </div>
-
+        <span class="choose">
+          ابدأ بهذا النوع ←
+        </span>
       </div>
-    </section>
 
 
-    <section class="section" id="types">
-      <div class="container">
+      <div
+        class="type-card"
+        onclick="chooseType('personal')"
+      >
+        <div class="type-icon">👤</div>
 
-        <div class="section-heading">
-          <h2>اختار نوع موقعك</h2>
-          <p>ابدأ من القالب المناسب لفكرتك</p>
-        </div>
+        <h3>موقع شخصي</h3>
 
-        <div class="types">
+        <p>
+          اعرض نفسك وأعمالك ومهاراتك وروابط التواصل
+          في موقع واحد.
+        </p>
 
-          <div class="type-card" onclick="chooseType('restaurant')">
-            <div class="type-icon">🍽️</div>
-            <h3>مطعم / كافيه</h3>
-            <p>
-              اعمل موقع احترافي لمطعمك أو كافيهك
-              مع منيو قابلة للتعديل.
-            </p>
-            <span class="choose">ابدأ بهذا النوع ←</span>
-          </div>
-
-          <div class="type-card" onclick="chooseType('personal')">
-            <div class="type-icon">👤</div>
-            <h3>موقع شخصي</h3>
-            <p>
-              اعرض نفسك وأعمالك ومهاراتك وروابط التواصل
-              في موقع واحد.
-            </p>
-            <span class="choose">ابدأ بهذا النوع ←</span>
-          </div>
-
-          <div class="type-card" onclick="chooseType('store')">
-            <div class="type-icon">🛒</div>
-            <h3>متجر إلكتروني</h3>
-            <p>
-              اعرض منتجاتك وأنشئ متجرك الخاص
-              واستعد لاستقبال العملاء.
-            </p>
-            <span class="choose">ابدأ بهذا النوع ←</span>
-          </div>
-
-        </div>
-
+        <span class="choose">
+          ابدأ بهذا النوع ←
+        </span>
       </div>
-    </section>
 
 
-    <section class="section" id="how">
-      <div class="container">
+      <div
+        class="type-card"
+        onclick="chooseType('store')"
+      >
+        <div class="type-icon">🛒</div>
 
-        <div class="section-heading">
-          <h2>كيف تعمل ورشة ويب؟</h2>
-          <p>3 خطوات بسيطة وتكون جاهز للنشر</p>
-        </div>
+        <h3>متجر إلكتروني</h3>
 
-        <div class="steps">
+        <p>
+          اعرض منتجاتك وأنشئ متجرك الخاص
+          واستعد لاستقبال العملاء.
+        </p>
 
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>اختار</h3>
-            <p>
-              اختار نوع الموقع المناسب لفكرتك.
-            </p>
-          </div>
-
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>صمّم وعدّل</h3>
-            <p>
-              أضف بياناتك وصورك ومحتواك وعدّل موقعك
-              بالطريقة التي تناسبك.
-            </p>
-          </div>
-
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>انشر</h3>
-            <p>
-              انشر موقعك واحصل على رابط خاص
-              يقدر أي شخص يدخل عليه مباشرة.
-            </p>
-          </div>
-
-        </div>
-
+        <span class="choose">
+          ابدأ بهذا النوع ←
+        </span>
       </div>
-    </section>
+
+    </div>
+
+  </div>
+
+</section>
 
 
-    <section class="section" id="trial">
-      <div class="container">
+<section class="section" id="how">
 
-        <div class="trial-box">
+  <div class="container">
 
-          <h2>🎁 ابدأ بـ 3 شهور تجربة</h2>
+    <div class="section-heading">
+      <h2>كيف تعمل ورشة ويب؟</h2>
+      <p>3 خطوات بسيطة وتكون جاهز للنشر</p>
+    </div>
 
-          <p>
-            أنشئ موقعك وجرب المنصة، وبعد انتهاء فترة التجربة
-            تقدر تختار الباقة المناسبة لك.
-          </p>
+    <div class="steps">
 
-          <button class="btn" onclick="startBuilding()">
-            ابدأ الآن
-          </button>
+      <div class="step">
+        <div class="step-number">1</div>
 
-        </div>
+        <h3>اختار</h3>
 
+        <p>
+          اختار نوع الموقع المناسب لفكرتك.
+        </p>
       </div>
-    </section>
+
+
+      <div class="step">
+        <div class="step-number">2</div>
+
+        <h3>صمّم وعدّل</h3>
+
+        <p>
+          أضف بياناتك وصورك ومحتواك وعدّل موقعك
+          بالطريقة التي تناسبك.
+        </p>
+      </div>
+
+
+      <div class="step">
+        <div class="step-number">3</div>
+
+        <h3>انشر</h3>
+
+        <p>
+          انشر موقعك واحصل على رابط خاص
+          يقدر أي شخص يدخل عليه مباشرة.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="trial">
+
+  <div class="container">
+
+    <div class="trial-box">
+
+      <h2>🎁 ابدأ بـ 3 شهور تجربة</h2>
+
+      <p>
+        أنشئ موقعك وجرب المنصة، وبعد انتهاء فترة التجربة
+        تقدر تختار الباقة المناسبة لك.
+      </p>
+
+      <button
+        class="btn"
+        onclick="startBuilding()"
+      >
+        ابدأ الآن
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+```
 
   </main>
 
-
   <footer>
-    <div class="container footer-content">
-      <div>© 2026 ورشة ويب — Warsha Web</div>
-      <div>أنشئ موقعك. انشر فكرتك. 🚀</div>
-    </div>
+
+```
+<div class="container footer-content">
+
+  <div>
+    © 2026 ورشة ويب — Warsha Web
+  </div>
+
+  <div>
+    أنشئ موقعك. انشر فكرتك. 🚀
+  </div>
+
+</div>
+```
+
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    function startBuilding() {
-      alert("🚀 قريبًا هنبدأ إنشاء موقعك خطوة بخطوة!");
+
+    const SUPABASE_URL =
+      "https://qupoxgclybgbetqxzzwf.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    async function loadUser() {
+
+      const {
+        data: { session },
+        error
+      } = await supabaseClient.auth.getSession();
+
+      if (error) {
+
+        console.error(
+          "خطأ في جلسة الدخول:",
+          error
+        );
+
+        return;
+
+      }
+
+
+      if (!session) {
+
+        document.getElementById(
+          "guestButtons"
+        ).style.display = "flex";
+
+        document.getElementById(
+          "accountBox"
+        ).style.display = "none";
+
+        return;
+
+      }
+
+
+      const user = session.user;
+
+
+      document.getElementById(
+        "guestButtons"
+      ).style.display = "none";
+
+      document.getElementById(
+        "accountBox"
+      ).style.display = "block";
+
+
+      const {
+        data: profile,
+        error: profileError
+      } = await supabaseClient
+        .from("profiles")
+        .select("full_name, phone")
+        .eq("id", user.id)
+        .single();
+
+
+      if (profileError) {
+
+        console.error(
+          "خطأ بيانات الحساب:",
+          profileError
+        );
+
+        document.getElementById(
+          "accountName"
+        ).textContent = "حسابي";
+
+        document.getElementById(
+          "accountButtonName"
+        ).textContent = "حسابي";
+
+        document.getElementById(
+          "accountEmail"
+        ).textContent = user.email || "";
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "accountName"
+      ).textContent =
+        profile.full_name || "حسابي";
+
+
+      document.getElementById(
+        "accountButtonName"
+      ).textContent =
+        profile.full_name || "حسابي";
+
+
+      document.getElementById(
+        "accountEmail"
+      ).textContent =
+        "📧 " + (user.email || "");
+
+
+      document.getElementById(
+        "accountPhone"
+      ).textContent =
+        "📱 " + (profile.phone || "");
+
     }
+
+
+    function goToLogin() {
+
+      window.location.href = "login.html";
+
+    }
+
+
+    function startBuilding() {
+
+      window.location.href = "create-site.html";
+
+    }
+
 
     function chooseType(type) {
-      const names = {
-        restaurant: "مطعم / كافيه",
-        personal: "موقع شخصي",
-        store: "متجر إلكتروني"
-      };
 
-      alert(
-        "اخترت: " + names[type] +
-        "\\n\\nالخطوة القادمة: إنشاء حساب ثم بدء تصميم موقعك."
-      );
+      if (type === "restaurant") {
+
+        startBuilding();
+
+        return;
+
+      }
+
+
+      if (type === "personal") {
+
+        startBuilding();
+
+        return;
+
+      }
+
+
+      if (type === "store") {
+
+        startBuilding();
+
+        return;
+
+      }
+
     }
+
+
+    function toggleAccountMenu() {
+
+      const menu =
+        document.getElementById("accountMenu");
+
+      menu.classList.toggle("show");
+
+    }
+
+
+    async function logout() {
+
+      const {
+        error
+      } = await supabaseClient.auth.signOut();
+
+      if (error) {
+
+        alert(
+          "حصل خطأ أثناء تسجيل الخروج."
+        );
+
+        console.error(error);
+
+        return;
+
+      }
+
+      window.location.href = "index.html";
+
+    }
+
+
+    supabaseClient.auth.onAuthStateChange(
+      function(event, session) {
+
+        loadUser();
+
+      }
+    );
+
+
+    loadUser();
+
   </script>
 
 </body>
