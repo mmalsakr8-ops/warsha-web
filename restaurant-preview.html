@@ -1,0 +1,638 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>معاينة الموقع | ورشة ويب</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Cairo", sans-serif;
+      background: #f4f5f7;
+      color: #1f2937;
+    }
+
+    .topbar {
+      background: #111827;
+      color: white;
+      padding: 12px 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .preview-bar {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 12px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .preview-title {
+      font-weight: 800;
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      border: 0;
+      background: #f97316;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 9px;
+      font-weight: 700;
+    }
+
+    .back-btn {
+      border: 0;
+      background: #f3f4f6;
+      color: #374151;
+      padding: 10px 16px;
+      border-radius: 9px;
+      font-weight: 600;
+    }
+
+    .site {
+      min-height: calc(100vh - 100px);
+    }
+
+    .hero {
+      padding: 70px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .hero.modern {
+      background: linear-gradient(135deg, #111827, #374151);
+    }
+
+    .hero.luxury {
+      background: linear-gradient(135deg, #18181b, #3f3f46);
+    }
+
+    .hero.simple {
+      background: #374151;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin: 0 0 10px;
+      font-weight: 800;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #e5e7eb;
+      line-height: 1.9;
+    }
+
+    .info {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .info span {
+      background: rgba(255,255,255,.12);
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 14px;
+    }
+
+    .content {
+      width: min(950px, 92%);
+      margin: 35px auto 60px;
+    }
+
+    .section {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 22px;
+      box-shadow: 0 7px 25px rgba(0,0,0,.05);
+    }
+
+    .section h2 {
+      margin: 0 0 20px;
+      font-size: 23px;
+      border-bottom: 2px solid #f97316;
+      padding-bottom: 10px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 17px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .menu-item:last-child {
+      border-bottom: 0;
+    }
+
+    .item-name {
+      font-weight: 700;
+      font-size: 17px;
+    }
+
+    .item-price {
+      font-weight: 800;
+      color: #f97316;
+      white-space: nowrap;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .contact-box {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .contact-icon {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .contact-box strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .contact-box div {
+      color: #6b7280;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .actions {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .main-action {
+      border: 0;
+      background: #f97316;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 11px;
+      font-size: 16px;
+      font-weight: 800;
+      margin: 5px;
+    }
+
+    .secondary-action {
+      border: 0;
+      background: #111827;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 11px;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 5px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .empty h2 {
+      margin-bottom: 10px;
+    }
+
+    .empty button {
+      border: 0;
+      background: #f97316;
+      color: white;
+      padding: 13px 25px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 700;
+    }
+
+    footer {
+      background: #111827;
+      color: #9ca3af;
+      text-align: center;
+      padding: 25px;
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      .preview-bar {
+        flex-direction: column;
+      }
+
+      .preview-actions {
+        width: 100%;
+      }
+
+      .preview-actions button {
+        flex: 1;
+      }
+
+      .hero {
+        padding: 50px 18px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    👀 أنت الآن تشاهد معاينة موقعك
+  </div>
+
+  <div class="preview-bar">
+
+    <div class="preview-title">
+      🛠️ ورشة ويب — معاينة الموقع
+    </div>
+
+    <div class="preview-actions">
+      <button class="back-btn" onclick="goBack()">
+        ← رجوع
+      </button>
+
+      <button class="edit-btn" onclick="editSite()">
+        ✏️ تعديل الموقع
+      </button>
+    </div>
+
+  </div>
+
+  <main id="site" class="site"></main>
+
+  <footer>
+    تم إنشاء الموقع بواسطة <strong>ورشة ويب</strong>
+  </footer>
+
+  <script>
+
+    let siteData = null;
+
+    function loadSite() {
+
+      const saved =
+        localStorage.getItem("warsha_restaurant_site");
+
+      if (!saved) {
+        showEmpty();
+        return;
+      }
+
+      try {
+        siteData = JSON.parse(saved);
+        renderSite();
+      } catch (error) {
+        showEmpty();
+      }
+    }
+
+    function renderSite() {
+
+      const site =
+        document.getElementById("site");
+
+      const design =
+        siteData.design || "modern";
+
+      const businessName =
+        escapeHTML(siteData.business_name || "مطعمي");
+
+      const description =
+        escapeHTML(
+          siteData.description ||
+          "أهلاً بكم، نتمنى لكم تجربة رائعة."
+        );
+
+      const phone =
+        escapeHTML(siteData.phone || "غير مضاف");
+
+      const address =
+        escapeHTML(siteData.address || "غير مضاف");
+
+      const hours =
+        escapeHTML(
+          siteData.working_hours ||
+          "غير مضافة"
+        );
+
+      const category =
+        escapeHTML(
+          siteData.menu_category ||
+          "المنيو"
+        );
+
+      const items =
+        Array.isArray(siteData.menu_items)
+          ? siteData.menu_items
+          : [];
+
+      let menuHTML = "";
+
+      items.forEach(item => {
+
+        const name =
+          escapeHTML(item.name || "صنف");
+
+        const price =
+          escapeHTML(item.price || "");
+
+        menuHTML += `
+          <div class="menu-item">
+
+            <div class="item-name">
+              ${name}
+            </div>
+
+            <div class="item-price">
+              ${price ? price + " جنيه" : ""}
+            </div>
+
+          </div>
+        `;
+      });
+
+      site.innerHTML = `
+
+        <section class="hero ${design}">
+
+          <h1>
+            ${businessName}
+          </h1>
+
+          <p>
+            ${description}
+          </p>
+
+          <div class="info">
+
+            <span>
+              🍽️ ${getBusinessType(siteData.business_type)}
+            </span>
+
+            <span>
+              🕐 ${hours}
+            </span>
+
+          </div>
+
+        </section>
+
+        <div class="content">
+
+          <section class="section">
+
+            <h2>
+              📋 ${category}
+            </h2>
+
+            ${menuHTML}
+
+          </section>
+
+          <section class="section">
+
+            <h2>
+              📍 تواصل معنا
+            </h2>
+
+            <div class="contact-grid">
+
+              <div class="contact-box">
+
+                <div class="contact-icon">
+                  📞
+                </div>
+
+                <strong>
+                  الهاتف
+                </strong>
+
+                <div>
+                  ${phone}
+                </div>
+
+              </div>
+
+              <div class="contact-box">
+
+                <div class="contact-icon">
+                  📍
+                </div>
+
+                <strong>
+                  العنوان
+                </strong>
+
+                <div>
+                  ${address}
+                </div>
+
+              </div>
+
+              <div class="contact-box">
+
+                <div class="contact-icon">
+                  🕐
+                </div>
+
+                <strong>
+                  مواعيد العمل
+                </strong>
+
+                <div>
+                  ${hours}
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <div class="actions">
+
+            ${
+              siteData.phone
+              ? `
+                <button
+                  class="main-action"
+                  onclick="callBusiness()"
+                >
+                  📞 اتصل بنا
+                </button>
+              `
+              : ""
+            }
+
+            ${
+              siteData.whatsapp
+              ? `
+                <button
+                  class="secondary-action"
+                  onclick="openWhatsApp()"
+                >
+                  💬 واتساب
+                </button>
+              `
+              : ""
+            }
+
+          </div>
+
+        </div>
+      `;
+    }
+
+    function getBusinessType(type) {
+
+      const types = {
+        restaurant: "مطعم",
+        cafe: "كافيه",
+        "restaurant-cafe": "مطعم وكافيه",
+        bakery: "مخبوزات وحلويات",
+        other: "نشاط تجاري"
+      };
+
+      return types[type] || "مطعم";
+    }
+
+    function callBusiness() {
+
+      if (!siteData || !siteData.phone) {
+        return;
+      }
+
+      window.location.href =
+        "tel:" + siteData.phone;
+    }
+
+    function openWhatsApp() {
+
+      if (!siteData || !siteData.whatsapp) {
+        return;
+      }
+
+      let number =
+        siteData.whatsapp
+          .replace(/\D/g, "");
+
+      if (number.startsWith("0")) {
+        number =
+          "20" + number.substring(1);
+      }
+
+      if (!number.startsWith("20")) {
+        number = "20" + number;
+      }
+
+      window.open(
+        "https://wa.me/" + number,
+        "_blank"
+      );
+    }
+
+    function editSite() {
+      window.location.href =
+        "restaurant-setup.html";
+    }
+
+    function goBack() {
+      window.location.href =
+        "create-site.html";
+    }
+
+    function showEmpty() {
+
+      document.getElementById("site").innerHTML = `
+
+        <div class="empty">
+
+          <h2>
+            مفيش موقع محفوظ لسه
+          </h2>
+
+          <p>
+            ابدأ بإدخال بيانات المطعم والمنيو.
+          </p>
+
+          <button onclick="editSite()">
+            🍽️ ابدأ إنشاء الموقع
+          </button>
+
+        </div>
+
+      `;
+    }
+
+    function escapeHTML(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    loadSite();
+
+  </script>
+
+</body>
+</html>
+```
