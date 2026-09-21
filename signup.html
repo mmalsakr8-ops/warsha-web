@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -172,114 +172,111 @@
       }
     }
   </style>
-
 </head>
 
 <body>
 
   <div class="signup-container">
 
-```
-<div class="logo">
-  ورشة <span>ويب</span>
-</div>
-
-<div class="card">
-
-  <h1>إنشاء حساب جديد</h1>
-
-  <p class="subtitle">
-    أنشئ حسابك وابدأ في بناء موقعك من ورشة ويب
-  </p>
-
-  <form id="signupForm">
-
-    <div class="field">
-      <label for="fullName">الاسم بالكامل</label>
-      <input
-        type="text"
-        id="fullName"
-        placeholder="اكتب اسمك بالكامل"
-        autocomplete="name"
-        required
-      >
+    <div class="logo">
+      ورشة <span>ويب</span>
     </div>
 
-    <div class="field">
-      <label for="phone">رقم الهاتف المصري</label>
-      <input
-        type="tel"
-        id="phone"
-        placeholder="مثال: 01012345678"
-        inputmode="numeric"
-        autocomplete="tel"
-        maxlength="11"
-        required
-      >
+    <div class="card">
+
+      <h1>إنشاء حساب جديد</h1>
+
+      <p class="subtitle">
+        أنشئ حسابك وابدأ في بناء موقعك من ورشة ويب
+      </p>
+
+      <form id="signupForm">
+
+        <div class="field">
+          <label for="fullName">الاسم بالكامل</label>
+          <input
+            type="text"
+            id="fullName"
+            placeholder="اكتب اسمك بالكامل"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="phone">رقم الهاتف المصري</label>
+          <input
+            type="tel"
+            id="phone"
+            placeholder="مثال: 01012345678"
+            inputmode="numeric"
+            autocomplete="tel"
+            maxlength="11"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="email">البريد الإلكتروني</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="example@email.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">كلمة المرور</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="اكتب كلمة المرور"
+            minlength="6"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">تأكيد كلمة المرور</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="أعد كتابة كلمة المرور"
+            minlength="6"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <button type="submit" class="signup-btn" id="signupBtn">
+          إنشاء الحساب
+        </button>
+
+        <div id="message" class="message"></div>
+
+      </form>
+
+      <div class="login-link">
+        لديك حساب بالفعل؟
+        <a href="login.html">تسجيل الدخول</a>
+      </div>
+
+      <a href="index.html" class="back">
+        ← العودة إلى الصفحة الرئيسية
+      </a>
+
     </div>
-
-    <div class="field">
-      <label for="email">البريد الإلكتروني</label>
-      <input
-        type="email"
-        id="email"
-        placeholder="example@email.com"
-        autocomplete="email"
-        required
-      >
-    </div>
-
-    <div class="field">
-      <label for="password">كلمة المرور</label>
-      <input
-        type="password"
-        id="password"
-        placeholder="اكتب كلمة المرور"
-        minlength="6"
-        autocomplete="new-password"
-        required
-      >
-    </div>
-
-    <div class="field">
-      <label for="confirmPassword">تأكيد كلمة المرور</label>
-      <input
-        type="password"
-        id="confirmPassword"
-        placeholder="أعد كتابة كلمة المرور"
-        minlength="6"
-        autocomplete="new-password"
-        required
-      >
-    </div>
-
-    <button type="submit" class="signup-btn" id="signupBtn">
-      إنشاء الحساب
-    </button>
-
-    <div id="message" class="message"></div>
-
-  </form>
-
-  <div class="login-link">
-    لديك حساب بالفعل؟
-    <a href="login.html">تسجيل الدخول</a>
-  </div>
-
-  <a href="index.html" class="back">
-    ← العودة إلى الصفحة الرئيسية
-  </a>
-
-</div>
-```
-
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
 
-    const SUPABASE_URL = "https://qupoxgclybgbetqxzzwf.supabase.co";
+    const SUPABASE_URL =
+      "https://qupoxgclybgbetqxzzwf.supabase.co";
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
@@ -307,7 +304,7 @@
         return "٠١٢٣٤٥٦٧٨٩".indexOf(digit);
       });
 
-      // إزالة المسافات والرموز
+      // إزالة المسافات والشرطات
       value = value.replace(/\s+/g, "");
       value = value.replace(/-/g, "");
 
@@ -335,13 +332,17 @@
 
       message.className = "message";
 
-      const fullName = document.getElementById("fullName").value.trim();
+      const fullName =
+        document.getElementById("fullName").value.trim();
 
-      let phone = document.getElementById("phone").value.trim();
+      let phone =
+        document.getElementById("phone").value.trim();
 
-      const email = document.getElementById("email").value.trim().toLowerCase();
+      const email =
+        document.getElementById("email").value.trim().toLowerCase();
 
-      const password = document.getElementById("password").value;
+      const password =
+        document.getElementById("password").value;
 
       const confirmPassword =
         document.getElementById("confirmPassword").value;
@@ -351,7 +352,10 @@
 
       // التحقق من الاسم
       if (fullName.length < 2) {
-        showMessage("من فضلك اكتب اسمك بالكامل.", "error");
+        showMessage(
+          "من فضلك اكتب اسمك بالكامل.",
+          "error"
+        );
         return;
       }
 
@@ -366,7 +370,10 @@
 
       // التحقق من كلمة المرور
       if (password !== confirmPassword) {
-        showMessage("كلمتا المرور غير متطابقتين.", "error");
+        showMessage(
+          "كلمتا المرور غير متطابقتين.",
+          "error"
+        );
         return;
       }
 
@@ -383,13 +390,14 @@
 
       try {
 
-        // فحص رقم الهاتف قبل إنشاء الحساب
-        const { data: existingProfile, error: phoneCheckError } =
-          await supabaseClient
-            .from("profiles")
-            .select("id")
-            .eq("phone", phone)
-            .maybeSingle();
+        // فحص رقم الهاتف باستخدام RPC آمنة
+        const { data: phoneExists, error: phoneCheckError } =
+          await supabaseClient.rpc(
+            "check_phone_exists",
+            {
+              phone_input: phone
+            }
+          );
 
         if (phoneCheckError) {
           console.error(phoneCheckError);
@@ -402,7 +410,7 @@
           return;
         }
 
-        if (existingProfile) {
+        if (phoneExists === true) {
           showMessage(
             "رقم الهاتف ده مستخدم بالفعل في حساب آخر. استخدم رقمًا مختلفًا.",
             "error"
@@ -429,7 +437,8 @@
 
           console.error(error);
 
-          const errorMessage = error.message.toLowerCase();
+          const errorMessage =
+            error.message.toLowerCase();
 
           if (
             errorMessage.includes("user already registered") ||
@@ -446,6 +455,15 @@
           ) {
             showMessage(
               "تم تجاوز حد إرسال رسائل التأكيد مؤقتًا. حاول مرة أخرى لاحقًا.",
+              "error"
+            );
+
+          } else if (
+            errorMessage.includes("duplicate") ||
+            errorMessage.includes("profiles_phone_unique")
+          ) {
+            showMessage(
+              "رقم الهاتف ده مستخدم بالفعل في حساب آخر. استخدم رقمًا مختلفًا.",
               "error"
             );
 
@@ -488,3 +506,4 @@
 
 </body>
 </html>
+```
