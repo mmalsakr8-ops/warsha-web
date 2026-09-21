@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>تسجيل الدخول | ورشة ويب</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7ff, #eef2ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #172033;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 30px;
+      font-weight: 800;
+      color: #5b4bdb;
+    }
+
+    .logo span {
+      color: #172033;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 22px;
+      padding: 32px 26px;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #697386;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d9deea;
+      border-radius: 12px;
+      outline: none;
+      font-size: 15px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    input:focus {
+      border-color: #5b4bdb;
+      box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.10);
+    }
+
+    .login-btn {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      background: #5b4bdb;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .login-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .message.success {
+      display: block;
+      background: #eaf8ef;
+      color: #187a3d;
+    }
+
+    .message.error {
+      display: block;
+      background: #fff0f0;
+      color: #b42318;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 2;
+      color: #697386;
+    }
+
+    .links a {
+      color: #5b4bdb;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #697386;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 25px 18px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">
+      ورشة <span>ويب</span>
+    </div>
+
+    <div class="card">
+
+      <h1>تسجيل الدخول</h1>
+
+      <p class="subtitle">
+        ادخل إلى حسابك وابدأ العمل على موقعك
+      </p>
+
+      <form id="loginForm">
+
+        <div class="field">
+          <label for="email">البريد الإلكتروني</label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="example@email.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">كلمة المرور</label>
+
+          <input
+            type="password"
+            id="password"
+            placeholder="اكتب كلمة المرور"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="login-btn"
+          id="loginBtn"
+        >
+          تسجيل الدخول
+        </button>
+
+        <div
+          id="message"
+          class="message">
+        </div>
+
+      </form>
+
+      <div class="links">
+
+        ليس لديك حساب؟
+        <a href="signup.html">إنشاء حساب جديد</a>
+
+      </div>
+
+      <a href="index.html" class="back">
+        ← العودة إلى الصفحة الرئيسية
+      </a>
+
+    </div>
+  </div>
+
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://qupoxgclybgbetqxzzwf.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    const form =
+      document.getElementById("loginForm");
+
+    const loginBtn =
+      document.getElementById("loginBtn");
+
+    const message =
+      document.getElementById("message");
+
+
+    function showMessage(text, type) {
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    form.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+        const password =
+          document
+            .getElementById("password")
+            .value;
+
+
+        loginBtn.disabled = true;
+
+        loginBtn.textContent =
+          "جاري تسجيل الدخول...";
+
+
+        const { data, error } =
+          await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+          });
+
+
+        loginBtn.disabled = false;
+
+        loginBtn.textContent =
+          "تسجيل الدخول";
+
+
+        if (error) {
+
+          if (
+            error.message
+              .toLowerCase()
+              .includes("email not confirmed")
+          ) {
+
+            showMessage(
+              "البريد الإلكتروني لم يتم تأكيده بعد. راجع رسالة التأكيد في بريدك الإلكتروني.",
+              "error"
+            );
+
+          } else {
+
+            showMessage(
+              "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+              "error"
+            );
+
+          }
+
+          return;
+
+        }
+
+
+        showMessage(
+          "تم تسجيل الدخول بنجاح.",
+          "success"
+        );
+
+
+        /*
+          مؤقتًا بعد تسجيل الدخول
+          سننقلك إلى الصفحة الرئيسية.
+
+          وبعد ما نعمل لوحة التحكم الخاصة بالمستخدم،
+          هنغير الرابط إليها.
+        */
+
+        setTimeout(function() {
+
+          window.location.href =
+            "index.html";
+
+        }, 800);
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
