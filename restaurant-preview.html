@@ -17,10 +17,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -147,11 +144,7 @@
     .hero {
       padding: 45px 20px;
       text-align: center;
-      background: linear-gradient(
-        135deg,
-        #111827,
-        #374151
-      );
+      background: linear-gradient(135deg, #111827, #374151);
       color: #fff;
     }
 
@@ -296,12 +289,12 @@
     }
 
     /* =========================
-       QR SECTION
+       QR CODE
     ========================= */
 
     .qr-section {
       margin: 0;
-      padding: 35px 18px;
+      padding: 38px 18px;
       text-align: center;
       background: #fff;
       border-top: 1px solid #e5e7eb;
@@ -309,7 +302,7 @@
 
     .qr-section h3 {
       margin: 0 0 8px;
-      font-size: 23px;
+      font-size: 24px;
     }
 
     .qr-description {
@@ -318,30 +311,30 @@
     }
 
     .qr-box {
-      width: 230px;
-      min-height: 230px;
+      width: 250px;
+      height: 250px;
       margin: 0 auto 20px;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       background: #fff;
       border: 1px solid #e5e7eb;
       border-radius: 18px;
-      padding: 18px;
+      padding: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.05);
     }
 
-    #qrcode {
-      width: 190px;
-      min-height: 190px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    #qrImage {
+      width: 220px;
+      height: 220px;
+      object-fit: contain;
+      display: block;
     }
 
-    #qrcode img,
-    #qrcode canvas {
-      max-width: 190px;
-      height: auto;
+    .qr-loading {
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .public-url-box {
@@ -386,6 +379,11 @@
       color: #3730a3;
     }
 
+    .download-btn {
+      background: #16a34a;
+      color: #fff;
+    }
+
     .stable-note {
       margin-top: 15px;
       font-size: 13px;
@@ -418,7 +416,6 @@
     }
 
     @media (max-width: 700px) {
-
       .header-inner {
         align-items: stretch;
       }
@@ -443,8 +440,16 @@
         font-size: 23px;
       }
 
-    }
+      .qr-box {
+        width: 240px;
+        height: 240px;
+      }
 
+      #qrImage {
+        width: 210px;
+        height: 210px;
+      }
+    }
   </style>
 </head>
 
@@ -483,7 +488,6 @@
     </div>
   </header>
 
-
   <main class="container">
 
     <div class="preview-title">
@@ -491,16 +495,13 @@
       <p>راجع شكل الموقع والرابط العام للمنيو.</p>
     </div>
 
-
     <div id="loading" class="loading">
       ⏳ جاري تحميل الموقع...
     </div>
 
-
     <div id="siteContainer"></div>
 
   </main>
-
 
   <footer>
     تم إنشاء الموقع بواسطة <strong>ورشة ويب</strong>
@@ -538,18 +539,12 @@
 
       if (!slug) return "";
 
-      const url =
-        new URL(
-          "menu.html",
-          window.location.origin + "/"
-        );
-
-      url.searchParams.set(
-        "slug",
-        slug
+      return (
+        window.location.origin +
+        "/menu.html?slug=" +
+        encodeURIComponent(slug)
       );
 
-      return url.href;
     }
 
 
@@ -565,83 +560,51 @@
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
     }
 
 
     /* =========================
-       LOAD LOCAL DATA FIRST
+       GET SLUG
     ========================= */
 
-    function loadLocalData() {
-
-      try {
-
-        const raw =
-          localStorage.getItem(
-            "warsha_restaurant_site"
-          );
-
-        if (raw) {
-
-          siteData =
-            JSON.parse(raw);
-
-        }
-
-      } catch (error) {
-
-        console.error(error);
-
-      }
-
-
-      /*
-        أهم جزء:
-
-        ناخد الـslug من localStorage
-        قبل ما نستنى Supabase.
-      */
+    function getSavedSlug() {
 
       let slug =
         localStorage.getItem(
           "warsha_restaurant_menu_slug"
         ) || "";
 
+      if (slug) return slug;
 
-      /*
-        لو مفيش slug نحاول نطلعه
-        من الرابط القديم.
-      */
 
-      if (!slug) {
+      const savedUrl =
+        localStorage.getItem(
+          "warsha_restaurant_menu_url"
+        );
 
-        const savedUrl =
-          localStorage.getItem(
-            "warsha_restaurant_menu_url"
+
+      if (savedUrl) {
+
+        try {
+
+          const url =
+            new URL(savedUrl);
+
+          slug =
+            url.searchParams.get("slug") || "";
+
+        } catch (error) {
+
+          console.error(
+            "URL ERROR:",
+            error
           );
-
-        if (savedUrl) {
-
-          try {
-
-            const url =
-              new URL(savedUrl);
-
-            slug =
-              url.searchParams.get(
-                "slug"
-              ) || "";
-
-          } catch (e) {}
 
         }
 
       }
 
-
-      /*
-        لو siteData فيه slug
-      */
 
       if (!slug &&
           siteData &&
@@ -653,19 +616,57 @@
       }
 
 
+      return slug;
+
+    }
+
+
+    /* =========================
+       LOAD LOCAL DATA
+    ========================= */
+
+    function loadLocalData() {
+
+      try {
+
+        const raw =
+          localStorage.getItem(
+            "warsha_restaurant_site"
+          );
+
+
+        if (raw) {
+
+          siteData =
+            JSON.parse(raw);
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "LOCAL DATA ERROR:",
+          error
+        );
+
+      }
+
+
+      const slug =
+        getSavedSlug();
+
+
       if (slug) {
 
         publicMenuUrl =
           buildPublicMenuUrl(slug);
 
-        /*
-          حفظه مرة أخرى للتأكد
-        */
 
         localStorage.setItem(
           "warsha_restaurant_menu_slug",
           slug
         );
+
 
         localStorage.setItem(
           "warsha_restaurant_menu_url",
@@ -681,7 +682,7 @@
 
 
     /* =========================
-       LOAD FROM SUPABASE
+       LOAD DATABASE
     ========================= */
 
     async function refreshFromDatabase() {
@@ -714,9 +715,7 @@
         let menu = null;
 
 
-        /*
-          البحث بالـID أولاً
-        */
+        /* البحث بالـID */
 
         if (savedId) {
 
@@ -737,8 +736,10 @@
               .maybeSingle();
 
 
-          if (!result.error &&
-              result.data) {
+          if (
+            !result.error &&
+            result.data
+          ) {
 
             menu =
               result.data;
@@ -748,9 +749,7 @@
         }
 
 
-        /*
-          البحث بالـslug ثانيًا
-        */
+        /* البحث بالـslug */
 
         if (!menu && savedSlug) {
 
@@ -771,8 +770,10 @@
               .maybeSingle();
 
 
-          if (!result.error &&
-              result.data) {
+          if (
+            !result.error &&
+            result.data
+          ) {
 
             menu =
               result.data;
@@ -785,9 +786,7 @@
         if (!menu) return;
 
 
-        /*
-          تحديث ID
-        */
+        /* حفظ ID */
 
         localStorage.setItem(
           "warsha_restaurant_menu_id",
@@ -795,9 +794,7 @@
         );
 
 
-        /*
-          الحفاظ على الـslug
-        */
+        /* حفظ slug */
 
         if (menu.public_slug) {
 
@@ -806,10 +803,12 @@
               menu.public_slug
             );
 
+
           localStorage.setItem(
             "warsha_restaurant_menu_slug",
             menu.public_slug
           );
+
 
           localStorage.setItem(
             "warsha_restaurant_menu_url",
@@ -819,10 +818,7 @@
         }
 
 
-        /*
-          لو menu_data موجود،
-          نستخدمه لتحديث الموقع.
-        */
+        /* تحديث بيانات الموقع */
 
         if (
           menu.menu_data &&
@@ -832,13 +828,16 @@
           siteData =
             menu.menu_data;
 
+
           siteData.public_slug =
             menu.public_slug ||
             siteData.public_slug ||
             "";
 
+
           siteData.public_menu_url =
             publicMenuUrl;
+
 
           localStorage.setItem(
             "warsha_restaurant_site",
@@ -847,22 +846,33 @@
 
         }
 
-
       } catch (error) {
 
-        /*
-          لا نوقف الصفحة.
-
-          لو Supabase فشل،
-          نستخدم البيانات المحلية.
-        */
-
         console.error(
-          "DATABASE REFRESH ERROR:",
+          "DATABASE ERROR:",
           error
         );
 
       }
+
+    }
+
+
+    /* =========================
+       CREATE QR IMAGE URL
+    ========================= */
+
+    function getQRImageUrl(url) {
+
+      if (!url) return "";
+
+      return (
+        "https://api.qrserver.com/v1/create-qr-code/" +
+        "?size=500x500" +
+        "&margin=15" +
+        "&data=" +
+        encodeURIComponent(url)
+      );
 
     }
 
@@ -877,6 +887,7 @@
         document.getElementById(
           "siteContainer"
         );
+
 
       if (!siteData) {
 
@@ -923,7 +934,6 @@
         items.forEach(item => {
 
           itemsHtml += `
-
             <div class="item">
 
               <div class="item-name">
@@ -936,14 +946,12 @@
               </div>
 
             </div>
-
           `;
 
         });
 
 
         categoriesHtml += `
-
           <section class="category">
 
             <h4 class="category-title">
@@ -953,21 +961,25 @@
             ${itemsHtml}
 
           </section>
-
         `;
 
       });
 
 
+      /* =========================
+         QR SECTION
+      ========================= */
+
       let qrSection = "";
 
 
-      /*
-        لو الرابط موجود:
-        نظهر QR والرابط دائمًا.
-      */
-
       if (publicMenuUrl) {
+
+        const qrImageUrl =
+          getQRImageUrl(
+            publicMenuUrl
+          );
+
 
         qrSection = `
 
@@ -981,11 +993,18 @@
               امسح الباركود بالموبايل لفتح المنيو مباشرة
             </p>
 
+
             <div class="qr-box">
 
-              <div id="qrcode"></div>
+              <img
+                id="qrImage"
+                src="${escapeHtml(qrImageUrl)}"
+                alt="باركود المنيو"
+                onerror="qrError()"
+              >
 
             </div>
+
 
             <div class="public-url-box">
 
@@ -993,14 +1012,17 @@
                 🔗 رابط المنيو العام
               </div>
 
+
               <a
                 id="publicUrl"
                 class="public-url"
                 href="${escapeHtml(publicMenuUrl)}"
                 target="_blank"
+                rel="noopener"
               >
                 ${escapeHtml(publicMenuUrl)}
               </a>
+
 
               <div class="qr-actions">
 
@@ -1011,15 +1033,28 @@
                   📋 نسخ الرابط
                 </button>
 
+
                 <a
                   class="btn open-btn"
                   href="${escapeHtml(publicMenuUrl)}"
                   target="_blank"
+                  rel="noopener"
                 >
                   🔗 فتح المنيو
                 </a>
 
+
+                <a
+                  class="btn download-btn"
+                  href="${escapeHtml(qrImageUrl)}"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  ⬇️ فتح الباركود
+                </a>
+
               </div>
+
 
               <div class="stable-note">
                 🔒 هذا الرابط والباركود ثابتان حتى بعد تعديل المنيو.
@@ -1033,11 +1068,6 @@
 
       } else {
 
-        /*
-          في حالة عدم وجود slug،
-          نظهر رسالة واضحة بدل اختفاء القسم.
-        */
-
         qrSection = `
 
           <section class="qr-section">
@@ -1046,11 +1076,17 @@
               📱 باركود المنيو
             </h3>
 
-            <p style="color:#b91c1c;font-weight:700;">
+            <p style="
+              color:#b91c1c;
+              font-weight:700;
+            ">
               لم يتم إنشاء رابط المنيو العام حتى الآن.
             </p>
 
-            <div style="margin-top:15px;">
+            <div style="
+              margin-top:15px;
+              color:#6b7280;
+            ">
               اضغط "تعديل الموقع" ثم اضغط "حفظ الموقع" مرة أخرى.
             </div>
 
@@ -1060,6 +1096,10 @@
 
       }
 
+
+      /* =========================
+         SITE HTML
+      ========================= */
 
       container.innerHTML = `
 
@@ -1105,6 +1145,7 @@
               )}
             </div>
 
+
             ${
               siteData.workingHours
               ? `
@@ -1140,6 +1181,7 @@
             <h3>
               📍 تواصل معنا
             </h3>
+
 
             <div class="contact-grid">
 
@@ -1241,6 +1283,7 @@
                     class="btn action-whatsapp"
                     href="https://wa.me/${phone.replace(/\D/g, "")}"
                     target="_blank"
+                    rel="noopener"
                   >
                     💬 واتساب
                   </a>
@@ -1259,97 +1302,43 @@
 
       `;
 
-
-      /*
-        إنشاء QR بعد وضع HTML
-      */
-
-      createQRCode();
-
     }
 
 
     /* =========================
-       CREATE QR
+       QR ERROR
     ========================= */
 
-    function createQRCode() {
+    function qrError() {
 
-      const qrElement =
-        document.getElementById(
-          "qrcode"
+      const box =
+        document.querySelector(
+          ".qr-box"
         );
 
 
-      if (!qrElement) return;
+      if (!box) return;
 
 
-      qrElement.innerHTML = "";
+      box.innerHTML = `
 
+        <div style="
+          text-align:center;
+          color:#b91c1c;
+          font-weight:700;
+          font-size:14px;
+          line-height:1.8;
+        ">
 
-      if (!publicMenuUrl) return;
+          ⚠️ تعذر تحميل صورة الباركود
 
+          <br>
 
-      /*
-        نتأكد أن مكتبة QRCode موجودة
-      */
+          استخدم رابط المنيو الموجود بالأسفل.
 
-      if (
-        typeof QRCode ===
-        "undefined"
-      ) {
+        </div>
 
-        qrElement.innerHTML = `
-
-          <div style="
-            color:#b91c1c;
-            font-size:13px;
-            font-weight:700;
-            text-align:center;
-          ">
-            تعذر تحميل الباركود.
-            <br>
-            استخدم رابط المنيو الموجود أسفل الباركود.
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      try {
-
-        new QRCode(
-          qrElement,
-          {
-            text: publicMenuUrl,
-            width: 190,
-            height: 190,
-            correctLevel:
-              QRCode.CorrectLevel.H
-          }
-        );
-
-      } catch (error) {
-
-        console.error(
-          "QR ERROR:",
-          error
-        );
-
-        qrElement.innerHTML = `
-          <div style="
-            color:#b91c1c;
-            font-weight:700;
-            font-size:13px;
-          ">
-            حدث خطأ في إنشاء الباركود.
-          </div>
-        `;
-
-      }
+      `;
 
     }
 
@@ -1365,9 +1354,23 @@
 
       try {
 
-        await navigator.clipboard.writeText(
-          publicMenuUrl
-        );
+        if (
+          navigator.clipboard &&
+          navigator.clipboard.writeText
+        ) {
+
+          await navigator.clipboard.writeText(
+            publicMenuUrl
+          );
+
+        } else {
+
+          throw new Error(
+            "Clipboard unavailable"
+          );
+
+        }
+
 
         alert(
           "✅ تم نسخ رابط المنيو"
@@ -1375,29 +1378,36 @@
 
       } catch (error) {
 
-        /*
-          طريقة بديلة للآيفون
-        */
-
         const input =
           document.createElement(
             "input"
           );
 
+
         input.value =
           publicMenuUrl;
+
 
         document.body.appendChild(
           input
         );
 
+
+        input.focus();
         input.select();
 
-        document.execCommand(
-          "copy"
-        );
+
+        try {
+
+          document.execCommand(
+            "copy"
+          );
+
+        } catch (e) {}
+
 
         input.remove();
+
 
         alert(
           "✅ تم نسخ رابط المنيو"
@@ -1413,12 +1423,6 @@
     ========================= */
 
     function editSite() {
-
-      /*
-        لا نمسح أي بيانات.
-
-        ID + slug يظلوا محفوظين.
-      */
 
       window.location.href =
         "restaurant-setup.html";
@@ -1444,10 +1448,7 @@
 
     async function init() {
 
-      /*
-        أولًا نقرأ localStorage
-        ونظهر الموقع والرابط فورًا.
-      */
+      /* تحميل البيانات المحلية */
 
       const hasLocal =
         loadLocalData();
@@ -1464,35 +1465,27 @@
       }
 
 
-      /*
-        بعد ذلك نتحقق من Supabase
-        في الخلفية.
-      */
+      /* تحديث من Supabase */
 
       await refreshFromDatabase();
 
 
-      /*
-        نعيد الرسم بعد تحديث البيانات
-      */
+      /* إعادة الرسم */
 
       if (siteData) {
 
         renderSite();
 
-        document
-          .getElementById("loading")
-          .style.display = "none";
-
       } else {
-
-        document
-          .getElementById("loading")
-          .style.display = "none";
 
         renderSite();
 
       }
+
+
+      document
+        .getElementById("loading")
+        .style.display = "none";
 
     }
 
