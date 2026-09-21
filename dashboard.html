@@ -1,0 +1,516 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>لوحة التحكم | ورشة ويب</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: #f5f7ff;
+      color: #172033;
+    }
+
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid #e7eaf2;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #5b4bdb;
+    }
+
+    .logo span {
+      color: #172033;
+    }
+
+    .logout-btn {
+      border: none;
+      background: #fff0f0;
+      color: #b42318;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px 50px;
+    }
+
+    .welcome {
+      background: linear-gradient(135deg, #5b4bdb, #7465e8);
+      color: white;
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 25px;
+      box-shadow: 0 15px 35px rgba(91, 75, 219, 0.18);
+    }
+
+    .welcome h1 {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      opacity: 0.9;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .account-info {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .account-item {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 9px 13px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin: 25px 0 15px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      border: 1px solid #e8ebf3;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .card p {
+      color: #697386;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .card-btn {
+      display: inline-block;
+      border: none;
+      background: #5b4bdb;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .card-btn.secondary {
+      background: #eef0ff;
+      color: #5143c7;
+    }
+
+    .profile-box {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      border: 1px solid #e8ebf3;
+      margin-top: 25px;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 13px 0;
+      border-bottom: 1px solid #edf0f5;
+      font-size: 14px;
+    }
+
+    .profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .profile-label {
+      color: #697386;
+    }
+
+    .profile-value {
+      font-weight: 700;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 50px 20px;
+      color: #697386;
+    }
+
+    .error {
+      background: #fff0f0;
+      color: #b42318;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 800px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .topbar {
+        padding: 13px 15px;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      .container {
+        padding: 20px 15px 40px;
+      }
+
+      .welcome {
+        padding: 22px;
+      }
+
+      .welcome h1 {
+        font-size: 23px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="logo">
+      ورشة <span>ويب</span>
+    </div>
+
+    <button class="logout-btn" id="logoutBtn">
+      تسجيل الخروج
+    </button>
+  </header>
+
+  <main class="container">
+
+    <div id="loading" class="loading">
+      جاري تحميل حسابك...
+    </div>
+
+    <div id="dashboard" style="display:none;">
+
+      <section class="welcome">
+
+        <h1>
+          أهلاً يا <span id="userName">...</span> 👋
+        </h1>
+
+        <p>
+          دي لوحة التحكم الخاصة بيك في ورشة ويب.
+          من هنا تقدر تبدأ إنشاء موقعك وتتابع مشاريعك ومنتجاتك.
+        </p>
+
+        <div class="account-info">
+          <div class="account-item">
+            📧 <span id="userEmail">...</span>
+          </div>
+
+          <div class="account-item">
+            📱 <span id="userPhone">...</span>
+          </div>
+        </div>
+
+      </section>
+
+      <h2 class="section-title">
+        ابدأ من هنا 🚀
+      </h2>
+
+      <section class="cards">
+
+        <div class="card">
+          <div class="icon">🌐</div>
+
+          <h3>إنشاء موقع جديد</h3>
+
+          <p>
+            اختار نوع موقعك وابدأ تصميمه خطوة بخطوة.
+          </p>
+
+          <button class="card-btn" onclick="startWebsite()">
+            ابدأ الآن
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="icon">📂</div>
+
+          <h3>مواقعي</h3>
+
+          <p>
+            هنا هتقدر تشوف وتعدل كل المواقع اللي أنشأتها.
+          </p>
+
+          <button class="card-btn secondary" onclick="myWebsites()">
+            مواقعي
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="icon">🛒</div>
+
+          <h3>منتجاتي</h3>
+
+          <p>
+            إدارة المنتجات اللي بتبيعها على ورشة ويب.
+          </p>
+
+          <button class="card-btn secondary" onclick="myProducts()">
+            منتجاتي
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="icon">📣</div>
+
+          <h3>التسويق</h3>
+
+          <p>
+            أدوات وأفكار تساعدك في تسويق موقعك ومنتجاتك.
+          </p>
+
+          <button class="card-btn secondary" onclick="marketing()">
+            التسويق
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="icon">⚙️</div>
+
+          <h3>إعدادات الحساب</h3>
+
+          <p>
+            تعديل بيانات الحساب والإعدادات الخاصة بيك.
+          </p>
+
+          <button class="card-btn secondary" onclick="settings()">
+            الإعدادات
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="icon">💳</div>
+
+          <h3>المدفوعات</h3>
+
+          <p>
+            متابعة عمليات الدفع والمبيعات الخاصة بيك.
+          </p>
+
+          <button class="card-btn secondary" onclick="payments()">
+            المدفوعات
+          </button>
+        </div>
+
+      </section>
+
+      <section class="profile-box">
+
+        <h2 class="section-title" style="margin-top:0;">
+          بيانات الحساب
+        </h2>
+
+        <div class="profile-row">
+          <span class="profile-label">الاسم</span>
+          <span class="profile-value" id="profileName">...</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="profile-label">رقم الهاتف</span>
+          <span class="profile-value" id="profilePhone">...</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="profile-label">البريد الإلكتروني</span>
+          <span class="profile-value" id="profileEmail">...</span>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://qupoxgclybgbetqxzzwf.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_-K5wIbqUcdaJbXlyLZaa2g_Y-BlCDis";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    async function loadDashboard() {
+
+      const {
+        data: { user },
+        error: authError
+      } = await supabaseClient.auth.getUser();
+
+      if (authError || !user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const {
+        data: profile,
+        error: profileError
+      } = await supabaseClient
+        .from("profiles")
+        .select("full_name, phone")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (profileError) {
+        console.error(profileError);
+
+        document.getElementById("loading").innerHTML =
+          '<div class="error">تعذر تحميل بيانات الحساب. حاول مرة أخرى.</div>';
+
+        return;
+      }
+
+      const name =
+        profile?.full_name ||
+        user.user_metadata?.full_name ||
+        "مستخدم ورشة ويب";
+
+      const phone =
+        profile?.phone ||
+        user.user_metadata?.phone ||
+        "غير مسجل";
+
+      document.getElementById("userName").textContent = name;
+      document.getElementById("userEmail").textContent = user.email || "";
+      document.getElementById("userPhone").textContent = phone;
+
+      document.getElementById("profileName").textContent = name;
+      document.getElementById("profilePhone").textContent = phone;
+      document.getElementById("profileEmail").textContent =
+        user.email || "";
+
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+    }
+
+    document
+      .getElementById("logoutBtn")
+      .addEventListener("click", async function() {
+
+        const { error } =
+          await supabaseClient.auth.signOut();
+
+        if (error) {
+          alert("تعذر تسجيل الخروج. حاول مرة أخرى.");
+          return;
+        }
+
+        window.location.href = "login.html";
+      });
+
+    function startWebsite() {
+      alert("🚀 إنشاء الموقع هنبدأه في الخطوة القادمة.");
+    }
+
+    function myWebsites() {
+      alert("📂 قسم مواقعي هنجهزه في الخطوة القادمة.");
+    }
+
+    function myProducts() {
+      alert("🛒 قسم منتجاتي هنجهزه في الخطوة القادمة.");
+    }
+
+    function marketing() {
+      alert("📣 قسم التسويق هنجهزه في الخطوة القادمة.");
+    }
+
+    function settings() {
+      alert("⚙️ إعدادات الحساب هنجهزها في الخطوة القادمة.");
+    }
+
+    function payments() {
+      alert("💳 قسم المدفوعات هنجهزه في الخطوة القادمة.");
+    }
+
+    loadDashboard();
+
+  </script>
+
+</body>
+</html>
+```
