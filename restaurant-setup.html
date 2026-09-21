@@ -3,13 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>إعداد موقعك | ورشة ويب</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -286,6 +292,11 @@
       box-shadow: 0 8px 20px rgba(249,115,22,.25);
     }
 
+    .start-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .message {
       margin-top: 15px;
       padding: 12px;
@@ -304,6 +315,7 @@
     }
 
     @media (max-width: 700px) {
+
       .grid,
       .designs,
       .menu-item-grid {
@@ -322,7 +334,9 @@
       .card {
         padding: 18px;
       }
+
     }
+
   </style>
 </head>
 
@@ -333,6 +347,7 @@
   </div>
 
   <header>
+
     <div class="logo">
       ورشة <span>ويب</span>
     </div>
@@ -340,23 +355,35 @@
     <button class="back" onclick="goBack()">
       ← رجوع
     </button>
+
   </header>
 
   <main class="container">
 
     <section class="hero">
-      <h1 id="pageTitle">🍽️ إنشاء موقعك</h1>
+
+      <h1 id="pageTitle">
+        🍽️ إنشاء موقعك
+      </h1>
+
       <p>
         جهّز بيانات موقعك، وأنشئ أقسام المنيو والأصناف والأسعار بالطريقة التي تريدها.
       </p>
+
     </section>
+
 
     <!-- بيانات النشاط -->
 
     <section class="card">
-      <h2 id="businessDataTitle">🏪 بيانات النشاط</h2>
 
-      <label>اسم المكان</label>
+      <h2 id="businessDataTitle">
+        🏪 بيانات النشاط
+      </h2>
+
+      <label>
+        اسم المكان
+      </label>
 
       <input
         id="businessName"
@@ -367,30 +394,59 @@
       <div class="grid">
 
         <div>
-          <label>نوع النشاط</label>
 
-          <select id="businessType" onchange="updateActivityText()">
-            <option value="restaurant">مطعم</option>
-            <option value="cafe">كافيه</option>
-            <option value="restaurant-cafe">مطعم وكافيه</option>
-            <option value="bakery">مخبوزات وحلويات</option>
-            <option value="other">نشاط آخر</option>
+          <label>
+            نوع النشاط
+          </label>
+
+          <select
+            id="businessType"
+            onchange="updateActivityText()"
+          >
+
+            <option value="restaurant">
+              مطعم
+            </option>
+
+            <option value="cafe">
+              كافيه
+            </option>
+
+            <option value="restaurant-cafe">
+              مطعم وكافيه
+            </option>
+
+            <option value="bakery">
+              مخبوزات وحلويات
+            </option>
+
+            <option value="other">
+              نشاط آخر
+            </option>
+
           </select>
+
         </div>
 
         <div>
-          <label>رقم الهاتف</label>
+
+          <label>
+            رقم الهاتف
+          </label>
 
           <input
             id="businessPhone"
             type="tel"
             placeholder="مثال: 011xxxxxxxx"
           >
+
         </div>
 
       </div>
 
-      <label>العنوان</label>
+      <label>
+        العنوان
+      </label>
 
       <input
         id="businessAddress"
@@ -398,7 +454,9 @@
         placeholder="اكتب عنوان المكان"
       >
 
-      <label>وصف قصير</label>
+      <label>
+        وصف قصير
+      </label>
 
       <textarea
         id="businessDescription"
@@ -407,10 +465,14 @@
 
     </section>
 
+
     <!-- التصميم -->
 
     <section class="card">
-      <h2>🎨 اختر شكل الموقع</h2>
+
+      <h2>
+        🎨 اختر شكل الموقع
+      </h2>
 
       <div class="designs">
 
@@ -419,39 +481,75 @@
           data-design="modern"
           onclick="selectDesign(this)"
         >
-          <div class="design-icon">✨</div>
-          <strong>مودرن</strong>
-          <p>شكل عصري وبسيط</p>
+
+          <div class="design-icon">
+            ✨
+          </div>
+
+          <strong>
+            مودرن
+          </strong>
+
+          <p>
+            شكل عصري وبسيط
+          </p>
+
         </div>
+
 
         <div
           class="design"
           data-design="luxury"
           onclick="selectDesign(this)"
         >
-          <div class="design-icon">👑</div>
-          <strong>فاخر</strong>
-          <p>شكل راقي ومميز</p>
+
+          <div class="design-icon">
+            👑
+          </div>
+
+          <strong>
+            فاخر
+          </strong>
+
+          <p>
+            شكل راقي ومميز
+          </p>
+
         </div>
+
 
         <div
           class="design"
           data-design="simple"
           onclick="selectDesign(this)"
         >
-          <div class="design-icon">🍽️</div>
-          <strong>بسيط</strong>
-          <p>شكل واضح وسريع</p>
+
+          <div class="design-icon">
+            🍽️
+          </div>
+
+          <strong>
+            بسيط
+          </strong>
+
+          <p>
+            شكل واضح وسريع
+          </p>
+
         </div>
 
       </div>
+
     </section>
+
 
     <!-- المنيو -->
 
     <section class="card">
 
-      <h2>📋 المنيو</h2>
+      <h2>
+        📋 المنيو
+      </h2>
 
       <p>
         اعمل أي عدد من الأقسام، وكل قسم تقدر تضيف بداخله عدد كبير من الأصناف والأسعار.
@@ -468,17 +566,22 @@
 
     </section>
 
+
     <!-- معلومات إضافية -->
 
     <section class="card">
 
-      <h2>📍 معلومات إضافية</h2>
+      <h2>
+        📍 معلومات إضافية
+      </h2>
 
       <div class="grid">
 
         <div>
 
-          <label>مواعيد العمل</label>
+          <label>
+            مواعيد العمل
+          </label>
 
           <input
             id="workingHours"
@@ -490,7 +593,9 @@
 
         <div>
 
-          <label>رابط واتساب</label>
+          <label>
+            رابط واتساب
+          </label>
 
           <input
             id="whatsapp"
@@ -504,13 +609,17 @@
 
     </section>
 
+
+    <!-- الحفظ -->
+
     <div class="save-area">
 
       <button
+        id="saveButton"
         class="start-btn"
         onclick="createRestaurantSite()"
       >
-        🚀 ابدأ بناء موقعي
+        🚀 حفظ المنيو وإنشاء الرابط
       </button>
 
       <div
@@ -522,9 +631,15 @@
 
   </main>
 
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
   <script>
+
+    /* =========================
+       Supabase
+    ========================= */
 
     const SUPABASE_URL =
       "https://qupoxgclybgbetqxzzwf.supabase.co";
@@ -538,9 +653,11 @@
         SUPABASE_KEY
       );
 
+
     let selectedDesign = "modern";
 
     let categories = [];
+
 
     /* =========================
        تسجيل الدخول
@@ -550,17 +667,20 @@
 
       const {
         data: { session }
-      } = await supabaseClient.auth.getSession();
+      } =
+        await supabaseClient.auth.getSession();
 
       if (!session) {
 
-        window.location.href = "login.html";
+        window.location.href =
+          "login.html";
 
         return false;
       }
 
       return true;
     }
+
 
     /* =========================
        نوع النشاط
@@ -569,13 +689,18 @@
     function updateActivityText() {
 
       const type =
-        document.getElementById("businessType").value;
+        document
+          .getElementById("businessType")
+          .value;
 
       const pageTitle =
-        document.getElementById("pageTitle");
+        document
+          .getElementById("pageTitle");
 
       const dataTitle =
-        document.getElementById("businessDataTitle");
+        document
+          .getElementById("businessDataTitle");
+
 
       if (type === "cafe") {
 
@@ -585,7 +710,9 @@
         dataTitle.textContent =
           "☕ بيانات الكافيه";
 
-      } else if (type === "restaurant") {
+      }
+
+      else if (type === "restaurant") {
 
         pageTitle.textContent =
           "🍽️ إنشاء موقع مطعم";
@@ -593,7 +720,9 @@
         dataTitle.textContent =
           "🍽️ بيانات المطعم";
 
-      } else if (type === "restaurant-cafe") {
+      }
+
+      else if (type === "restaurant-cafe") {
 
         pageTitle.textContent =
           "🍽️☕ إنشاء موقع مطعم وكافيه";
@@ -601,7 +730,9 @@
         dataTitle.textContent =
           "🍽️☕ بيانات المطعم والكافيه";
 
-      } else if (type === "bakery") {
+      }
+
+      else if (type === "bakery") {
 
         pageTitle.textContent =
           "🥐 إنشاء موقع مخبوزات وحلويات";
@@ -609,18 +740,23 @@
         dataTitle.textContent =
           "🥐 بيانات النشاط";
 
-      } else {
+      }
+
+      else {
 
         pageTitle.textContent =
           "🏪 إنشاء موقع نشاطك";
 
         dataTitle.textContent =
           "🏪 بيانات النشاط";
+
       }
+
     }
 
+
     /* =========================
-       التصميم
+       اختيار التصميم
     ========================= */
 
     function selectDesign(element) {
@@ -636,6 +772,7 @@
       selectedDesign =
         element.dataset.design;
     }
+
 
     /* =========================
        إضافة قسم
@@ -664,6 +801,7 @@
       renderCategories();
     }
 
+
     /* =========================
        حذف قسم
     ========================= */
@@ -688,6 +826,7 @@
 
       renderCategories();
     }
+
 
     /* =========================
        إضافة صنف
@@ -714,11 +853,15 @@
       renderCategories();
     }
 
+
     /* =========================
        حذف صنف
     ========================= */
 
-    function removeItem(categoryId, itemIndex) {
+    function removeItem(
+      categoryId,
+      itemIndex
+    ) {
 
       const category =
         categories.find(
@@ -746,6 +889,7 @@
       renderCategories();
     }
 
+
     /* =========================
        رسم الأقسام والأصناف
     ========================= */
@@ -759,6 +903,7 @@
 
       container.innerHTML = "";
 
+
       if (categories.length === 0) {
 
         container.innerHTML = `
@@ -770,6 +915,7 @@
         return;
       }
 
+
       categories.forEach(
         (category, categoryIndex) => {
 
@@ -779,16 +925,21 @@
           box.className =
             "category-box";
 
+
           const itemsHTML =
             category.items
               .map(
                 (item, itemIndex) => `
+
                   <div class="menu-item">
 
                     <div class="menu-item-grid">
 
                       <div>
-                        <label>اسم الصنف</label>
+
+                        <label>
+                          اسم الصنف
+                        </label>
 
                         <input
                           type="text"
@@ -802,10 +953,15 @@
                             )
                           "
                         >
+
                       </div>
 
+
                       <div>
-                        <label>السعر</label>
+
+                        <label>
+                          السعر
+                        </label>
 
                         <input
                           type="number"
@@ -819,9 +975,11 @@
                             )
                           "
                         >
+
                       </div>
 
                     </div>
+
 
                     <button
                       class="remove-btn"
@@ -836,9 +994,11 @@
                     </button>
 
                   </div>
+
                 `
               )
               .join("");
+
 
           box.innerHTML = `
 
@@ -856,6 +1016,7 @@
                 "
               >
 
+
               <button
                 class="remove-category-btn"
                 onclick="
@@ -869,9 +1030,11 @@
 
             </div>
 
+
             <div class="category-title">
               📂 أصناف القسم
             </div>
+
 
             <div class="items-container">
 
@@ -886,6 +1049,7 @@
 
             </div>
 
+
             <button
               class="add-btn"
               onclick="
@@ -899,11 +1063,14 @@
 
           `;
 
+
           container.appendChild(box);
 
         }
       );
+
     }
+
 
     /* =========================
        تعديل اسم القسم
@@ -914,11 +1081,13 @@
       value
     ) {
 
-      if (!categories[categoryIndex]) return;
+      if (!categories[categoryIndex])
+        return;
 
       categories[categoryIndex].name =
         value;
     }
+
 
     /* =========================
        تعديل اسم الصنف
@@ -933,15 +1102,17 @@
       if (
         !categories[categoryIndex] ||
         !categories[categoryIndex].items[itemIndex]
-      ) return;
+      )
+        return;
 
       categories[categoryIndex]
         .items[itemIndex]
         .name = value;
     }
 
+
     /* =========================
-       تعديل سعر الصنف
+       تعديل السعر
     ========================= */
 
     function updateItemPrice(
@@ -953,15 +1124,17 @@
       if (
         !categories[categoryIndex] ||
         !categories[categoryIndex].items[itemIndex]
-      ) return;
+      )
+        return;
 
       categories[categoryIndex]
         .items[itemIndex]
         .price = value;
     }
 
+
     /* =========================
-       حماية النص
+       حماية النصوص
     ========================= */
 
     function escapeHtml(value) {
@@ -974,8 +1147,51 @@
         .replace(/'/g, "&#039;");
     }
 
+
     /* =========================
-       حفظ الموقع
+       إنشاء رابط المنيو
+    ========================= */
+
+    function createMenuSlug(
+      businessName
+    ) {
+
+      const randomPart =
+        crypto
+          .randomUUID()
+          .replace(/-/g, "")
+          .slice(0, 12);
+
+
+      let slug =
+        businessName
+          .toLowerCase()
+          .replace(
+            /[^a-z0-9\u0600-\u06FF]+/g,
+            "-"
+          )
+          .replace(
+            /^-+|-+$/g,
+            ""
+          )
+          .slice(0, 30);
+
+
+      if (!slug) {
+        slug = "menu";
+      }
+
+
+      return (
+        slug +
+        "-" +
+        randomPart
+      );
+    }
+
+
+    /* =========================
+       حفظ الموقع والمنيو
     ========================= */
 
     async function createRestaurantSite() {
@@ -983,13 +1199,40 @@
       const loggedIn =
         await checkLogin();
 
-      if (!loggedIn) return;
+      if (!loggedIn)
+        return;
+
+
+      const {
+        data: { user },
+        error: userError
+      } =
+        await supabaseClient.auth.getUser();
+
+
+      if (userError || !user) {
+
+        showMessage(
+          "لازم تسجل الدخول أولًا.",
+          "error"
+        );
+
+        return;
+      }
+
 
       const businessName =
         document
           .getElementById("businessName")
           .value
           .trim();
+
+
+      const businessType =
+        document
+          .getElementById("businessType")
+          .value;
+
 
       if (!businessName) {
 
@@ -1001,6 +1244,7 @@
         return;
       }
 
+
       if (categories.length === 0) {
 
         showMessage(
@@ -1011,13 +1255,19 @@
         return;
       }
 
+
       const finalCategories = [];
 
-      for (const category of categories) {
+
+      for (
+        const category of categories
+      ) {
 
         const categoryName =
-          String(category.name || "")
-            .trim();
+          String(
+            category.name || ""
+          ).trim();
+
 
         if (!categoryName) {
 
@@ -1029,23 +1279,31 @@
           return;
         }
 
+
         const finalItems =
           category.items
             .map(item => ({
+
               name:
-                String(item.name || "")
-                  .trim(),
+                String(
+                  item.name || ""
+                ).trim(),
 
               price:
-                String(item.price || "")
-                  .trim()
+                String(
+                  item.price || ""
+                ).trim()
+
             }))
             .filter(
               item =>
                 item.name !== ""
             );
 
-        if (finalItems.length === 0) {
+
+        if (
+          finalItems.length === 0
+        ) {
 
           showMessage(
             `أضف صنفًا واحدًا على الأقل داخل قسم «${categoryName}».`,
@@ -1054,6 +1312,7 @@
 
           return;
         }
+
 
         finalCategories.push({
 
@@ -1064,19 +1323,61 @@
             finalItems
 
         });
+
       }
+
+
+      /*
+        نبحث عن منيو محفوظة
+      */
+
+      let savedMenuId =
+        localStorage.getItem(
+          "warsha_restaurant_menu_id"
+        );
+
+
+      let savedSlug =
+        localStorage.getItem(
+          "warsha_restaurant_menu_slug"
+        );
+
+
+      /*
+        لو مفيش رابط قبل كده
+        ننشئ رابط جديد
+      */
+
+      if (!savedSlug) {
+
+        savedSlug =
+          createMenuSlug(
+            businessName
+          );
+
+
+        localStorage.setItem(
+          "warsha_restaurant_menu_slug",
+          savedSlug
+        );
+
+      }
+
+
+      /*
+        بيانات الموقع
+      */
 
       const siteData = {
 
-        type: "restaurant",
+        type:
+          "restaurant",
 
         business_name:
           businessName,
 
         business_type:
-          document
-            .getElementById("businessType")
-            .value,
+          businessType,
 
         phone:
           document
@@ -1112,18 +1413,197 @@
           document
             .getElementById("whatsapp")
             .value
-            .trim()
+            .trim(),
+
+        public_slug:
+          savedSlug
+
       };
+
+
+      /*
+        حفظ محلي
+      */
 
       localStorage.setItem(
         "warsha_restaurant_site",
         JSON.stringify(siteData)
       );
 
+
+      /*
+        تعطيل زر الحفظ
+      */
+
+      const saveButton =
+        document.getElementById(
+          "saveButton"
+        );
+
+      saveButton.disabled = true;
+
+
       showMessage(
-        "تم حفظ الموقع والمنيو بنجاح 🎉 جاري الانتقال للمعاينة...",
+        "جاري حفظ المنيو وإنشاء الرابط... ⏳",
         "success"
       );
+
+
+      /*
+        تحديث منيو موجودة
+      */
+
+      if (savedMenuId) {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("restaurant_menus")
+            .update({
+
+              menu_name:
+                businessName,
+
+              business_type:
+                businessType,
+
+              menu_data:
+                siteData,
+
+              updated_at:
+                new Date().toISOString()
+
+            })
+            .eq(
+              "id",
+              savedMenuId
+            )
+            .eq(
+              "user_id",
+              user.id
+            );
+
+
+        if (error) {
+
+          console.error(error);
+
+          saveButton.disabled =
+            false;
+
+          showMessage(
+            "حصل خطأ أثناء تحديث المنيو. حاول مرة تانية.",
+            "error"
+          );
+
+          return;
+        }
+
+      }
+
+
+      /*
+        إنشاء منيو جديدة
+      */
+
+      else {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("restaurant_menus")
+            .insert({
+
+              user_id:
+                user.id,
+
+              menu_name:
+                businessName,
+
+              business_type:
+                businessType,
+
+              menu_data:
+                siteData,
+
+              public_slug:
+                savedSlug
+
+            })
+            .select(
+              "id, public_slug"
+            )
+            .single();
+
+
+        if (error) {
+
+          console.error(error);
+
+          saveButton.disabled =
+            false;
+
+          showMessage(
+            "حصل خطأ أثناء إنشاء المنيو. حاول مرة تانية.",
+            "error"
+          );
+
+          return;
+        }
+
+
+        savedMenuId =
+          data.id;
+
+
+        savedSlug =
+          data.public_slug;
+
+
+        localStorage.setItem(
+          "warsha_restaurant_menu_id",
+          savedMenuId
+        );
+
+
+        localStorage.setItem(
+          "warsha_restaurant_menu_slug",
+          savedSlug
+        );
+
+      }
+
+
+      /*
+        إنشاء رابط العرض العام
+      */
+
+      const publicMenuUrl =
+        window.location.origin +
+        "/menu.html?slug=" +
+        encodeURIComponent(
+          savedSlug
+        );
+
+
+      localStorage.setItem(
+        "warsha_restaurant_menu_url",
+        publicMenuUrl
+      );
+
+
+      /*
+        نجاح
+      */
+
+      showMessage(
+        "تم حفظ المنيو بنجاح 🎉 جاري فتح المعاينة...",
+        "success"
+      );
+
 
       setTimeout(() => {
 
@@ -1131,7 +1611,9 @@
           "restaurant-preview.html";
 
       }, 900);
+
     }
+
 
     /* =========================
        استرجاع البيانات
@@ -1144,6 +1626,7 @@
           "warsha_restaurant_site"
         );
 
+
       if (!saved) {
 
         addCategory();
@@ -1151,67 +1634,114 @@
         return;
       }
 
+
       try {
 
         const data =
           JSON.parse(saved);
 
+
         document
-          .getElementById("businessName")
+          .getElementById(
+            "businessName"
+          )
           .value =
           data.business_name || "";
 
-        document
-          .getElementById("businessType")
-          .value =
-          data.business_type || "restaurant";
 
         document
-          .getElementById("businessPhone")
+          .getElementById(
+            "businessType"
+          )
+          .value =
+          data.business_type ||
+          "restaurant";
+
+
+        document
+          .getElementById(
+            "businessPhone"
+          )
           .value =
           data.phone || "";
 
+
         document
-          .getElementById("businessAddress")
+          .getElementById(
+            "businessAddress"
+          )
           .value =
           data.address || "";
 
+
         document
-          .getElementById("businessDescription")
+          .getElementById(
+            "businessDescription"
+          )
           .value =
           data.description || "";
 
+
         document
-          .getElementById("workingHours")
+          .getElementById(
+            "workingHours"
+          )
           .value =
           data.working_hours || "";
 
+
         document
-          .getElementById("whatsapp")
+          .getElementById(
+            "whatsapp"
+          )
           .value =
           data.whatsapp || "";
 
+
         selectedDesign =
-          data.design || "modern";
+          data.design ||
+          "modern";
+
 
         document
           .querySelectorAll(".design")
-          .forEach(design => {
+          .forEach(
+            design => {
 
-            design.classList.toggle(
-              "selected",
-              design.dataset.design ===
-              selectedDesign
-            );
+              design.classList.toggle(
+                "selected",
+                design.dataset.design ===
+                selectedDesign
+              );
 
-          });
+            }
+          );
+
+
+        /*
+          استرجاع الرابط
+        */
+
+        if (
+          data.public_slug
+        ) {
+
+          localStorage.setItem(
+            "warsha_restaurant_menu_slug",
+            data.public_slug
+          );
+
+        }
+
 
         /*
           البيانات الجديدة
         */
 
         if (
-          Array.isArray(data.categories)
+          Array.isArray(
+            data.categories
+          )
         ) {
 
           categories =
@@ -1223,16 +1753,24 @@
                   Math.random(),
 
                 name:
-                  category.name || "",
+                  category.name ||
+                  "",
 
                 items:
-                  Array.isArray(category.items)
+                  Array.isArray(
+                    category.items
+                  )
                     ? category.items.map(
                         item => ({
+
                           name:
-                            item.name || "",
+                            item.name ||
+                            "",
+
                           price:
-                            item.price || ""
+                            item.price ||
+                            ""
+
                         })
                       )
                     : []
@@ -1242,9 +1780,9 @@
 
         }
 
+
         /*
           تحويل البيانات القديمة
-          لقسم جديد تلقائيًا
         */
 
         else if (
@@ -1261,7 +1799,9 @@
               data.menu_category,
 
             items:
-              Array.isArray(data.menu_items)
+              Array.isArray(
+                data.menu_items
+              )
                 ? data.menu_items
                 : []
 
@@ -1269,25 +1809,33 @@
 
         }
 
+
         else {
 
           categories = [];
 
         }
 
+
         updateActivityText();
 
         renderCategories();
 
-      } catch (error) {
+      }
+
+
+      catch (error) {
 
         console.error(error);
 
         categories = [];
 
         addCategory();
+
       }
+
     }
+
 
     /* =========================
        الرسائل
@@ -1303,15 +1851,21 @@
           "message"
         );
 
+
       message.textContent =
         text;
 
+
       message.className =
-        "message " + type;
+        "message " +
+        type;
+
 
       message.style.display =
         "block";
+
     }
+
 
     /* =========================
        رجوع
@@ -1321,7 +1875,9 @@
 
       window.location.href =
         "create-site.html";
+
     }
+
 
     /* =========================
        البداية
